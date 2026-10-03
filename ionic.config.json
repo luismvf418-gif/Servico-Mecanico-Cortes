@@ -1,0 +1,7 @@
+{
+  "name": "Servico-Mecanico-Cortes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
