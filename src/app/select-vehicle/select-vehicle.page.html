@@ -1,0 +1,71 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/cart" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Seleccionar automóvil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding content">
+  <div class="container">
+    
+    <p class="subtitle">Elige el vehículo para tu cita</p>
+
+    <!-- Lista de vehículos para seleccionar -->
+    <div class="vehicle-list">
+      
+      <div 
+        class="vehicle-card" 
+        *ngFor="let v of vehicles" 
+        [class.selected]="v.selected"
+        (click)="selectVehicle(v)">
+        
+        <div class="card-left">
+          <div class="car-icon">
+            <ion-icon name="car-outline"></ion-icon>
+          </div>
+          <div class="car-details">
+            <h3>{{ v.brand }} {{ v.model }}</h3>
+            <p>{{ v.year }}</p>
+            <span class="plate-km">{{ v.plate }} | {{ v.mileage | number }} km</span>
+          </div>
+        </div>
+
+        <div class="card-right">
+          <div class="radio-check" *ngIf="v.selected">✓</div>
+          <ion-icon name="chevron-forward-outline" *ngIf="!v.selected"></ion-icon>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Botón Agregar nuevo automóvil -->
+    <div class="add-card" (click)="goToAddVehicle()">
+      <div class="add-icon">
+        <ion-icon name="add-outline"></ion-icon>
+      </div>
+      <div class="add-info">
+        <h3>Agregar nuevo automóvil</h3>
+        <p>Registra otro vehículo en tu cuenta</p>
+      </div>
+    </div>
+
+    <!-- Botón Continuar -->
+    <div class="action-container">
+      <ion-button expand="block" class="btn-continue" (click)="proceedToAppointments()">
+        Continuar &rarr;
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Navegación inferior -->
+<div class="bottom-nav">
+  <div class="nav-item" routerLink="/dashboard"><ion-icon name="home-outline"></ion-icon><span>Inicio</span></div>
+  <div class="nav-item" routerLink="/cart"><ion-icon name="cart-outline"></ion-icon><span>Carrito</span></div>
+  <div class="nav-item active" routerLink="/appointments"><ion-icon name="calendar-outline"></ion-icon><span>Citas</span></div>
+  <div class="nav-item" routerLink="/vehicles"><ion-icon name="person-outline"></ion-icon><span>Perfil</span></div>
+</div>

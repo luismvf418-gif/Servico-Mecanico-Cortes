@@ -12,9 +12,10 @@ import {
   IonSearchbar, 
   IonTitle 
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { searchOutline, cartOutline, constructOutline, waterOutline, shieldOutline, carOutline, chevronBackOutline, homeOutline, calendarOutline, personOutline } from 'ionicons/icons';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-services',
@@ -38,7 +39,7 @@ import { searchOutline, cartOutline, constructOutline, waterOutline, shieldOutli
 })
 export class ServicesPage implements OnInit {
   selectedCategory = 'Todos';
-  searchQuery = ''; // Variable para el texto de búsqueda
+  searchQuery = '';
 
   servicesList = [
     {
@@ -71,7 +72,10 @@ export class ServicesPage implements OnInit {
     }
   ];
 
-  constructor() {
+  constructor(
+    private cartService: CartService, 
+    private router: Router
+  ) {
     addIcons({ 
       searchOutline, 
       cartOutline, 
@@ -92,7 +96,18 @@ export class ServicesPage implements OnInit {
     this.selectedCategory = category;
   }
 
-  // Propiedad que filtra la lista según la categoría seleccionada y lo que escribas en el buscador
+  // <--- Agrega el servicio y redirige automáticamente al carrito
+  addToCart(service: any, event: Event) {
+    event.stopPropagation(); 
+    this.cartService.addItem(service);
+    this.router.navigate(['/cart']);
+  }
+
+  // Método para navegar a la vista del carrito desde el menú inferior
+  goToCart() {
+    this.router.navigate(['/cart']);
+  }
+
   get filteredServices() {
     return this.servicesList.filter(service => {
       const matchesCategory = this.selectedCategory === 'Todos' || service.category === this.selectedCategory;

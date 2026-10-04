@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonToolbar, IonButton, IonIcon, IonGrid, IonRow, IonCol } from '@ionic/angular';
+import { 
+  IonContent, 
+  IonHeader, 
+  IonToolbar, 
+  IonTitle, 
+  IonIcon 
+} from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { 
   constructOutline, 
-  carOutline, 
   calendarOutline, 
   cartOutline, 
   chevronForwardOutline, 
   homeOutline, 
-  personOutline 
+  personOutline,
+  carOutline 
 } from 'ionicons/icons';
 
 @Component({
@@ -25,24 +31,22 @@ import {
     IonContent, 
     IonHeader, 
     IonToolbar, 
-    IonButton, 
-    IonIcon, 
-    IonGrid, 
-    IonRow, 
-    IonCol,
+    IonTitle, 
+    IonIcon,
     RouterModule
   ]
 })
 export class DashboardPage implements OnInit {
+
   constructor() {
     addIcons({ 
-      'construct-outline': constructOutline,
-      carOutline, 
+      constructOutline, 
       calendarOutline, 
       cartOutline, 
       chevronForwardOutline, 
       homeOutline, 
-      personOutline 
+      personOutline,
+      carOutline 
     });
   }
 

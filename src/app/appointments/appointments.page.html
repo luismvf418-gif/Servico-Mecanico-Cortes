@@ -1,0 +1,73 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="appointments-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/select-vehicle" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Fecha y Hora</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding appointments-content">
+  <div class="appointments-container">
+
+    <!-- Tarjeta del Vehículo Seleccionado (Estilo idéntico a Mis Automóviles) -->
+    <div class="vehicle-card selected" routerLink="/select-vehicle">
+      <div class="card-left">
+        <div class="car-icon">
+          <ion-icon name="car-outline"></ion-icon>
+        </div>
+        <div class="card-details">
+          <h3>{{ selectedVehicle?.brand }} {{ selectedVehicle?.model }}</h3>
+          <p>{{ selectedVehicle?.year }} • {{ selectedVehicle?.color }}</p>
+          <span class="plate-km">{{ selectedVehicle?.plate }} | {{ selectedVehicle?.mileage | number }} km</span>
+        </div>
+      </div>
+      <div class="card-right">
+        <span class="change-text">Cambiar &gt;</span>
+      </div>
+    </div>
+
+    <!-- Selección de Fecha -->
+    <div class="section-card">
+      <h4 class="section-title">Selecciona el Día</h4>
+      <ion-datetime presentation="date" [(ngModel)]="selectedDate" class="custom-datetime" size="cover"></ion-datetime>
+    </div>
+
+    <!-- Selección de Horario -->
+    <div class="section-card">
+      <h4 class="section-title">Horarios Disponibles</h4>
+      <div class="time-slots">
+        <button 
+          type="button" 
+          *ngFor="let time of availableTimes" 
+          [class.active]="selectedTime === time" 
+          (click)="selectTime(time)"
+          class="time-chip">
+          {{ time }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Notas adicionales -->
+    <div class="section-card">
+      <h4 class="section-title">Comentarios o fallas adicionales</h4>
+      <textarea rows="3" placeholder="Describe brevemente si notas algún ruido o detalle extra..." [(ngModel)]="notes" class="custom-textarea"></textarea>
+    </div>
+
+    <!-- Botón de Continuar -->
+    <div class="action-container">
+      <ion-button expand="block" class="btn-confirm" (click)="proceedToConfirmation()">
+        Continuar
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior -->
+<div class="bottom-nav">
+  <div class="nav-item" routerLink="/dashboard"><ion-icon name="home-outline"></ion-icon><span>Inicio</span></div>
+  <div class="nav-item" routerLink="/cart"><ion-icon name="cart-outline"></ion-icon><span>Carrito</span></div>
+  <div class="nav-item active" routerLink="/appointments"><ion-icon name="calendar-outline"></ion-icon><span>Citas</span></div>
+  <div class="nav-item" routerLink="/vehicles"><ion-icon name="person-outline"></ion-icon><span>Perfil</span></div>
+</div>

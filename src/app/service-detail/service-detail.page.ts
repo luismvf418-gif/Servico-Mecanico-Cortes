@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonTitle } from '@ionic/angular';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { 
   chevronBackOutline, 
@@ -20,6 +20,7 @@ import {
   waterOutline,
   shieldOutline
 } from 'ionicons/icons';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-service-detail',
@@ -42,7 +43,6 @@ import {
 })
 export class ServiceDetailPage implements OnInit {
   
-  // Lista de servicios para mapear los detalles según la selección
   allServices = [
     {
       title: 'Afinación general',
@@ -102,7 +102,11 @@ export class ServiceDetailPage implements OnInit {
 
   service: any;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private cartService: CartService
+  ) {
     addIcons({ 
       chevronBackOutline, 
       constructOutline, 
@@ -122,12 +126,24 @@ export class ServiceDetailPage implements OnInit {
   }
 
   ngOnInit() {
-    // Capturamos el ID de la URL y seleccionamos el servicio correspondiente
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id !== null) {
         this.service = this.allServices[+id] || this.allServices[0];
       }
     });
+  }
+
+  // Método para agregar el servicio actual al carrito y navegar a la vista del carrito
+  addToCart() {
+    if (this.service) {
+      this.cartService.addItem(this.service);
+      this.router.navigate(['/cart']);
+    }
+  }
+
+  // Método para navegar al carrito desde la barra inferior si es necesario
+  goToCart() {
+    this.router.navigate(['/cart']);
   }
 }

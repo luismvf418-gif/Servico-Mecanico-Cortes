@@ -1,27 +1,26 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="dashboard-toolbar">
+    <!-- Logotipo real apuntando a la carpeta imagenes -->
+    <div class="logo-container">
+      <img src="assets/imagenes/Logotipo_inicial.png" alt="Servicio Automotriz Cortes" class="app-logo" />
+    </div>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding dashboard-content">
   <div class="dashboard-container">
-    
-    <!-- Encabezado con Logotipo -->
-    <div class="top-banner">
-      <div class="logo-section">
-        <img src="assets/imagenes/Logotipo_inicial.png" alt="Logo Servicio Automotriz Cortes" class="logo-img" />
-        <div class="brand-text">
-          <span class="subtitle-top">SERVICIO AUTOMOTRIZ</span>
-          <h1>CORTES</h1>
-        </div>
-      </div>
-    </div>
 
-    <!-- Saludo -->
-    <div class="welcome-header">
+    <!-- Sección de Bienvenida -->
+    <div class="welcome-section">
       <h2>¡Hola, Usuario!</h2>
       <p>¿Qué necesitas hoy?</p>
     </div>
 
-    <!-- Cuadrícula de opciones (Tarjetas) -->
-    <div class="cards-grid">
-      <!-- Tarjeta 1: Servicios -->
-      <div class="custom-card" routerLink="/services">
+    <!-- Cuadrícula de 2 columnas -->
+    <div class="menu-grid">
+      
+      <!-- Servicios -->
+      <div class="dashboard-card" routerLink="/services">
         <div class="icon-circle">
           <ion-icon name="construct-outline"></ion-icon>
         </div>
@@ -29,13 +28,13 @@
           <h3>Servicios</h3>
           <p>Conoce nuestros servicios automotrices</p>
         </div>
-        <div class="card-arrow">
+        <div class="arrow-icon">
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
       </div>
 
-      <!-- Tarjeta 2: Mis automóviles -->
-      <div class="custom-card">
+      <!-- Mis automóviles -->
+      <div class="dashboard-card" routerLink="/vehicles">
         <div class="icon-circle">
           <ion-icon name="car-outline"></ion-icon>
         </div>
@@ -43,13 +42,13 @@
           <h3>Mis automóviles</h3>
           <p>Administra tus vehículos</p>
         </div>
-        <div class="card-arrow">
+        <div class="arrow-icon">
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
       </div>
 
-      <!-- Tarjeta 3: Mis citas -->
-      <div class="custom-card">
+      <!-- Mis citas -->
+      <div class="dashboard-card" routerLink="/appointments-list">
         <div class="icon-circle">
           <ion-icon name="calendar-outline"></ion-icon>
         </div>
@@ -57,13 +56,13 @@
           <h3>Mis citas</h3>
           <p>Consulta y agenda tus citas</p>
         </div>
-        <div class="card-arrow">
+        <div class="arrow-icon">
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
       </div>
 
-      <!-- Tarjeta 4: Carrito -->
-      <div class="custom-card">
+      <!-- Carrito -->
+      <div class="dashboard-card" routerLink="/cart">
         <div class="icon-circle">
           <ion-icon name="cart-outline"></ion-icon>
         </div>
@@ -71,10 +70,11 @@
           <h3>Carrito</h3>
           <p>Revisa tus servicios y productos</p>
         </div>
-        <div class="card-arrow">
+        <div class="arrow-icon">
           <ion-icon name="chevron-forward-outline"></ion-icon>
         </div>
       </div>
+
     </div>
 
   </div>
@@ -82,16 +82,16 @@
 
 <!-- Barra de navegación inferior -->
 <div class="bottom-nav">
-  <div class="nav-item active">
+  <div class="nav-item active" routerLink="/dashboard">
     <ion-icon name="home-outline"></ion-icon>
     <span>Inicio</span>
     <div class="indicator"></div>
   </div>
-  <div class="nav-item">
+  <div class="nav-item" routerLink="/cart">
     <ion-icon name="cart-outline"></ion-icon>
     <span>Carrito</span>
   </div>
-  <div class="nav-item">
+  <div class="nav-item" routerLink="/appointments-list">
     <ion-icon name="calendar-outline"></ion-icon>
     <span>Citas</span>
   </div>
@@ -100,3 +100,4 @@
     <span>Perfil</span>
   </div>
 </div>
+
