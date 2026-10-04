@@ -32,6 +32,15 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* Desactivamos el modo oscuro automático del sistema para mantener el diseño claro del mockup */
+/* @import '@ionic/angular/css/palettes/dark.system.css'; */
+
+/* Forzar fondo blanco general y colores consistentes */
+ion-content {
+  --background: #ffffff !important;
+  background-color: #ffffff !important;
+}
+
+body {
+  background-color: #ffffff !important;
+}

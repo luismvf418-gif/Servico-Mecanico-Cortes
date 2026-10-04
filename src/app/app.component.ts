@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
+import { IonApp, IonRouterOutlet } from '@ionic/angular'; // <- Cambiado aquí
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet],
+  styleUrls: ['app.component.scss'],
+  standalone: true,
+  imports: [CommonModule, IonApp, IonRouterOutlet],
 })
 export class AppComponent {
   constructor() {}

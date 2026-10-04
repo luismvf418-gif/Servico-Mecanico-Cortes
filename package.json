@@ -11,7 +11,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "generate-icons-android": "npx capacitor-assets generate --android",
-"generate-icons-ios": "npx capacitor-assets generate --ios"
+    "generate-icons-ios": "npx capacitor-assets generate --ios"
   },
   "private": true,
   "dependencies": {
@@ -21,6 +21,7 @@
     "@angular/forms": "22.1.7",
     "@angular/platform-browser": "22.1.7",
     "@angular/router": "22.1.7",
+    "@capacitor/android": "^8.5.2",
     "@capacitor/app": "8.1.2",
     "@capacitor/core": "8.5.2",
     "@capacitor/haptics": "8.0.2",

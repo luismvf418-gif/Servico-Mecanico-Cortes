@@ -1,0 +1,99 @@
+.register-content {
+  --background: #ffffff !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px 16px 40px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  .logo-img {
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+  }
+
+  .brand-text {
+    .subtitle-top {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: #495057;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0b2545;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+.header-section {
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0b2545;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #8d99ae;
+    margin: 0;
+  }
+}
+
+.register-form {
+  .input-item {
+    margin-bottom: 14px;
+    --border-radius: 16px;
+    --background: #f8f9fa;
+    --highlight-color-focused: #134074;
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    padding-left: 10px;
+    min-height: 56px;
+  }
+
+  .btn-submit {
+    --background: #0b2545;
+    --border-radius: 16px;
+    font-weight: 600;
+    height: 52px;
+    text-transform: none;
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+  }
+
+  .btn-login-back {
+    --border-color: #0b2545;
+    --color: #0b2545;
+    --border-radius: 16px;
+    --border-width: 1.5px;
+    font-weight: 600;
+    height: 52px;
+    text-transform: none;
+    font-size: 16px;
+    --background: transparent;
+  }
+}

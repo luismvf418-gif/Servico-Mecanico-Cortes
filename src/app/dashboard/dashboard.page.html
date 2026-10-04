@@ -1,0 +1,102 @@
+<ion-content class="ion-padding dashboard-content">
+  <div class="dashboard-container">
+    
+    <!-- Encabezado con Logotipo -->
+    <div class="top-banner">
+      <div class="logo-section">
+        <img src="assets/imagenes/Logotipo_inicial.png" alt="Logo Servicio Automotriz Cortes" class="logo-img" />
+        <div class="brand-text">
+          <span class="subtitle-top">SERVICIO AUTOMOTRIZ</span>
+          <h1>CORTES</h1>
+        </div>
+      </div>
+    </div>
+
+    <!-- Saludo -->
+    <div class="welcome-header">
+      <h2>¡Hola, Usuario!</h2>
+      <p>¿Qué necesitas hoy?</p>
+    </div>
+
+    <!-- Cuadrícula de opciones (Tarjetas) -->
+    <div class="cards-grid">
+      <!-- Tarjeta 1: Servicios -->
+      <div class="custom-card" routerLink="/services">
+        <div class="icon-circle">
+          <ion-icon name="construct-outline"></ion-icon>
+        </div>
+        <div class="card-info">
+          <h3>Servicios</h3>
+          <p>Conoce nuestros servicios automotrices</p>
+        </div>
+        <div class="card-arrow">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Mis automóviles -->
+      <div class="custom-card">
+        <div class="icon-circle">
+          <ion-icon name="car-outline"></ion-icon>
+        </div>
+        <div class="card-info">
+          <h3>Mis automóviles</h3>
+          <p>Administra tus vehículos</p>
+        </div>
+        <div class="card-arrow">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3: Mis citas -->
+      <div class="custom-card">
+        <div class="icon-circle">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <div class="card-info">
+          <h3>Mis citas</h3>
+          <p>Consulta y agenda tus citas</p>
+        </div>
+        <div class="card-arrow">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+
+      <!-- Tarjeta 4: Carrito -->
+      <div class="custom-card">
+        <div class="icon-circle">
+          <ion-icon name="cart-outline"></ion-icon>
+        </div>
+        <div class="card-info">
+          <h3>Carrito</h3>
+          <p>Revisa tus servicios y productos</p>
+        </div>
+        <div class="card-arrow">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior -->
+<div class="bottom-nav">
+  <div class="nav-item active">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Inicio</span>
+    <div class="indicator"></div>
+  </div>
+  <div class="nav-item">
+    <ion-icon name="cart-outline"></ion-icon>
+    <span>Carrito</span>
+  </div>
+  <div class="nav-item">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <span>Citas</span>
+  </div>
+  <div class="nav-item">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Perfil</span>
+  </div>
+</div>
