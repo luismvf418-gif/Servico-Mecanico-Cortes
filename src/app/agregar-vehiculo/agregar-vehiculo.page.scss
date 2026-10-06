@@ -1,0 +1,175 @@
+/* :host representa al componente en sí mismo dentro del DOM. 
+   Aquí definimos que ocupe todo el ancho/alto y tenga un fondo blanco por defecto. */
+:host { 
+  display: block; 
+  background: #fff; 
+  height: 100%; 
+}
+
+/* Estilos de la barra superior de herramientas (toolbar) */
+.barra-herramientas { 
+  --background: #fff; 
+  
+  /* Estilo del texto del título principal de la pantalla */
+  ion-title { 
+    font-weight: 800; 
+    font-size: 18px; 
+    color: #0b2545; 
+    text-align: center; 
+    padding-right: 48px; /* Espacio extra para compensar visualmente el botón de regreso izquierdo */
+  } 
+  
+  /* Color personalizado para la flecha de retroceso */
+  ion-back-button { 
+    --color: #0b2545; 
+  } 
+}
+
+/* Modificaciones para el contenedor interno de contenido de Ionic */
+.contenido-principal { 
+  --background: #fff !important; 
+  --padding-bottom: 90px; /* Margen inferior amplio para evitar que la barra de navegación tape los últimos botones */
+}
+
+/* Contenedor central que limita el ancho máximo a 450px para darle apariencia de aplicación móvil */
+.contenedor-principal { 
+  max-width: 450px; 
+  margin: 0 auto; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; /* Espacio vertical automático entre cada bloque interno */
+  padding-bottom: 20px; 
+}
+
+/* Estilos para el encabezado con la ilustración y textos motivacionales */
+.encabezado-ilustracion { 
+  text-align: center; 
+  margin-bottom: 5px; 
+
+  /* Contenedor circular gris claro que envuelve el icono principal */
+  .circulo-auto { 
+    width: 70px; 
+    height: 70px; 
+    background: #f0f4f8; 
+    border-radius: 50%; /* Propiedad que vuelve completamente circular al contenedor */
+    margin: 0 auto 10px auto; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; /* Centra perfectamente el icono tanto horizontal como verticalmente */
+
+    ion-icon { 
+      font-size: 34px; 
+      color: #134074; 
+    } 
+  } 
+
+  /* Estilo para el subtítulo o encabezado principal de la sección */
+  h2 { 
+    font-size: 18px; 
+    font-weight: 800; 
+    color: #0b2545; 
+    margin: 0 0 4px 0; 
+  } 
+
+  /* Estilo para el texto descriptivo secundario */
+  p { 
+    font-size: 12px; 
+    color: #8d99ae; 
+    margin: 0; 
+  } 
+}
+
+/* Tarjeta contenedora del formulario: da el efecto de una tarjeta blanca flotante con bordes sutiles */
+.tarjeta-formulario { 
+  background: #fff; 
+  border: 1px solid #eef0f2; 
+  border-radius: 16px; 
+  padding: 16px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02); /* Sombra muy ligera para dar profundidad */
+}
+
+/* Agrupación visual de cada etiqueta (label) y su respectiva caja de texto o selector */
+.grupo-campo { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 4px; 
+
+  /* Estilo del texto que indica qué se debe escribir en el campo */
+  label { 
+    font-size: 12px; 
+    font-weight: 700; 
+    color: #495057; 
+  } 
+
+  /* Estilos comunes para los inputs de texto y los selectores desplegables */
+  input, select { 
+    background: #f8f9fa; 
+    border: 1px solid #eef0f2; 
+    border-radius: 10px; 
+    height: 42px; 
+    padding: 0 12px; 
+    font-size: 13px; 
+    color: #0b2545; 
+    outline: none; /* Elimina el borde azul por defecto al hacer clic */
+    width: 100%; 
+  } 
+}
+
+/* Contenedor de los botones inferiores para guardar o cancelar */
+.acciones-botones { 
+  margin-top: 10px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 8px; 
+
+  /* Estilo personalizado para el botón principal de confirmar/guardar */
+  .boton-guardar { 
+    --background: #134074; 
+    --border-radius: 14px; 
+    font-weight: 700; 
+    height: 48px; 
+    text-transform: none; /* Evita que Ionic convierta automáticamente el texto en mayúsculas */
+  } 
+
+  /* Estilo para el botón secundario transparente de cancelar */
+  .boton-cancelar { 
+    color: #8d99ae; 
+    font-weight: 600; 
+    text-transform: none; 
+  } 
+}
+
+/* Barra de navegación inferior fija: se queda anclada permanentemente en la parte baja de la pantalla móvil */
+.navegacion-inferior { 
+  position: fixed; /* Mantiene la barra fija aunque el usuario haga scroll hacia abajo */
+  bottom: 0; 
+  left: 0; 
+  right: 0; 
+  height: 65px; 
+  background: #fff; 
+  border-top: 1px solid #eef0f2; 
+  display: flex; 
+  justify-content: space-around; /* Reparte equitativamente los elementos a lo largo de la barra */
+  align-items: center; 
+  z-index: 1000; /* Asegura que la barra flote siempre por encima de cualquier otro elemento */
+
+  /* Estilo individual para cada opción/botón dentro de la barra de navegación inferior */
+  .elemento-navegacion { 
+    display: flex; 
+    flex-direction: column; /* Coloca el icono arriba y el texto descriptivo abajo */
+    align-items: center; 
+    color: #8d99ae; /* Color gris inactivo por defecto */
+    font-size: 11px; 
+    font-weight: 600; 
+    cursor: pointer; 
+
+    /* Estilo del icono dentro del menú inferior */
+    ion-icon { 
+      font-size: 22px; 
+      margin-bottom: 2px; 
+    } 
+  } 
+}

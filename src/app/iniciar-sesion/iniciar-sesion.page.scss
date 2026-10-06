@@ -1,0 +1,128 @@
+/* :host representa la vista completa, forzando que ocupe todo el espacio con fondo blanco */
+:host {
+  display: block;
+  background-color: #ffffff;
+  height: 100%;
+}
+
+/* --- Forzamos el fondo blanco en todo el contenido --- */
+.contenido-login {
+  --background: #ffffff !important;
+}
+
+/* Limitamos el ancho para que el formulario se vea bien centrado en pantallas más grandes */
+.contenedor-login {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px 10px 30px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* --- Sección Superior: Logotipo y Marca --- */
+.seccion-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+
+  .imagen-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain; /* Evita que la imagen se deforme */
+  }
+
+  /* Textos de "Servicio Automotriz" y "Cortes" al lado del logo */
+  .texto-marca {
+    .subtitulo-superior {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: #495057;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0b2545;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+/* --- Encabezado del Formulario (Inicia Sesión) --- */
+.seccion-encabezado {
+  margin-bottom: 25px;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0b2545;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 15px;
+    color: #8d99ae;
+    margin: 0;
+  }
+}
+
+/* --- Contenedor Principal del Formulario --- */
+.formulario-login {
+  
+  /* Estilo personalizado para los campos de entrada (Correo y Contraseña) */
+  .item-entrada {
+    margin-bottom: 18px;
+    --border-radius: 16px;
+    --background: #f8f9fa; /* Fondo gris muy clarito para los inputs */
+    --highlight-color-focused: #134074; /* Color de la línea inferior al hacer clic en el input */
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    padding-left: 10px;
+  }
+
+  /* --- Enlace: Olvidé mi contraseña --- */
+  .recuperar-contrasena {
+    text-align: right;
+    margin-bottom: 25px;
+
+    a {
+      font-size: 13px;
+      color: #134074;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline; /* Subraya al pasar el mouse en web */
+      }
+    }
+  }
+
+  /* --- Botón Primario: Iniciar Sesión --- */
+  .boton-enviar {
+    --background: #0b2545; /* Fondo azul oscuro corporativo */
+    --border-radius: 16px;
+    font-weight: 600;
+    height: 52px;
+    text-transform: none; /* Evita que Ionic ponga el texto en mayúsculas forzadas */
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  /* --- Botón Secundario: Crear Cuenta (Transparente con borde azul) --- */
+  .boton-crear {
+    --border-color: #0b2545;
+    --color: #0b2545;
+    --border-radius: 16px;
+    --border-width: 1.5px;
+    font-weight: 600;
+    height: 52px;
+    text-transform: none;
+    font-size: 16px;
+    --background: transparent;
+  }
+}

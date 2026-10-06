@@ -1,0 +1,98 @@
+<!-- Encabezado superior de la página (sin bordes) -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-citas">
+    <!-- Botón de retroceso a la pantalla de selección de vehículo -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/seleccionar-vehiculo" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <!-- Título de la página -->
+    <ion-title>Fecha y Hora</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido principal con padding -->
+<ion-content class="ion-padding contenido-citas">
+  <div class="contenedor-citas">
+
+    <!-- 
+      Tarjeta del Vehículo Seleccionado 
+      (Simulamos datos estáticos para la vista) 
+    -->
+    <div class="tarjeta-vehiculo seleccionada" routerLink="/seleccionar-vehiculo">
+      <div class="tarjeta-izq">
+        <div class="icono-auto">
+          <ion-icon name="car-outline"></ion-icon>
+        </div>
+        <div class="detalles-tarjeta">
+          <h3>Toyota Corolla</h3>
+          <p>2024 • Blanco</p>
+          <span class="placa-km">ABC-123 | 15,000 km</span>
+        </div>
+      </div>
+      <div class="tarjeta-der">
+        <span class="texto-cambiar">Cambiar &gt;</span>
+      </div>
+    </div>
+
+    <!-- Sección de Selección de Fecha (Calendario de Ionic) -->
+    <div class="tarjeta-seccion">
+      <h4 class="titulo-seccion">Selecciona el Día</h4>
+      <!-- ion-datetime nativo para seleccionar la fecha -->
+      <!-- Hemos quitado [(ngModel)] para mantener la vista estática por ahora -->
+      <ion-datetime presentation="date" class="calendario-personalizado" size="cover"></ion-datetime>
+    </div>
+
+    <!-- Sección de Selección de Horarios -->
+    <div class="tarjeta-seccion">
+      <h4 class="titulo-seccion">Horarios Disponibles</h4>
+      <div class="bloques-tiempo">
+        
+        <!-- Botones de horarios estáticos para previsualización -->
+        <!-- En un entorno real, estos se generarían con un *ngFor -->
+        <button type="button" class="chip-tiempo activo">
+          09:00 AM
+        </button>
+        <button type="button" class="chip-tiempo">
+          10:00 AM
+        </button>
+        <button type="button" class="chip-tiempo">
+          11:30 AM
+        </button>
+        <button type="button" class="chip-tiempo">
+          01:00 PM
+        </button>
+        <button type="button" class="chip-tiempo">
+          03:30 PM
+        </button>
+        <button type="button" class="chip-tiempo">
+          05:00 PM
+        </button>
+        
+      </div>
+    </div>
+
+    <!-- Notas adicionales (Textarea) -->
+    <div class="tarjeta-seccion">
+      <h4 class="titulo-seccion">Comentarios o fallas adicionales</h4>
+      <!-- Se ha removido [(ngModel)] -->
+      <textarea rows="3" placeholder="Describe brevemente si notas algún ruido o detalle extra..." class="textarea-personalizado"></textarea>
+    </div>
+
+    <!-- Botón de Continuar -->
+    <div class="contenedor-accion">
+      <!-- Ahora dirige directamente a la pantalla de resumen con routerLink -->
+      <ion-button expand="block" class="boton-confirmar" routerLink="/cita-resumen">
+        Continuar
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior anclada -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio"><ion-icon name="home-outline"></ion-icon><span>Inicio</span></div>
+  <div class="elemento-navegacion" routerLink="/carrito"><ion-icon name="cart-outline"></ion-icon><span>Carrito</span></div>
+  <div class="elemento-navegacion activo" routerLink="/citas-lista"><ion-icon name="calendar-outline"></ion-icon><span>Citas</span></div>
+  <div class="elemento-navegacion" routerLink="/perfil"><ion-icon name="person-outline"></ion-icon><span>Perfil</span></div>
+</div>

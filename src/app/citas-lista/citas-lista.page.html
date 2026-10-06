@@ -1,0 +1,104 @@
+<!-- Encabezado superior de la página (sin bordes) -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-citas">
+    <ion-title>Mis citas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido principal con padding -->
+<ion-content class="ion-padding contenido-citas">
+  <div class="contenedor-citas">
+    
+    <!-- Segmento de Pestañas (Próximamente / Historial) -->
+    <!-- Quitamos la lógica de Angular y dejamos activa la pestaña "Próximamente" para el mockup -->
+    <div class="pestanas-segmento">
+      <button class="boton-pestana activa">
+        Próximamente (1)
+      </button>
+      <button class="boton-pestana">
+        Historial (2)
+      </button>
+    </div>
+
+    <!-- LISTA: PRÓXIMAMENTE (Mockup estático) -->
+    <div class="lista-citas">
+      
+      <!-- Tarjeta de Cita Individual (Simulando un *ngFor) -->
+      <!-- El routerLink simula el (click)="selectAppointment(item)" -->
+      <div class="tarjeta-cita" routerLink="/cita-detalle">
+        
+        <div class="parte-superior-tarjeta">
+          <!-- Insignia de Fecha a la izquierda -->
+          <div class="insignia-fecha">
+            <span class="mes">AGO</span>
+            <span class="numero-dia">16</span>
+            <span class="nombre-dia">Sáb</span>
+          </div>
+
+          <!-- Información Principal a la derecha -->
+          <div class="info-derecha">
+            <div class="fila-hora-estado">
+              <span class="texto-hora">10:00 a.m.</span>
+              <!-- Estado Confirmado (verde) -->
+              <span class="insignia-estado confirmada">
+                <ion-icon name="checkmark-circle"></ion-icon>
+                Confirmada
+              </span>
+            </div>
+
+            <div class="info-auto">
+              <ion-icon name="car-outline"></ion-icon>
+              <div>
+                <h4>Toyota Corolla</h4>
+                <p>ABC-123</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divisor-tarjeta"></div>
+
+        <div class="parte-inferior-tarjeta">
+          <div class="resumen-servicios">
+            <ion-icon name="construct-outline"></ion-icon>
+            <div class="texto-lista-servicios">
+              <p>• Afinación Mayor</p>
+              <p>• Lavado de Interiores</p>
+            </div>
+          </div>
+          <!-- Flecha indicando que se puede hacer clic para ver más detalles -->
+          <ion-icon name="chevron-forward-outline" class="flecha"></ion-icon>
+        </div>
+
+      </div>
+
+      <!-- Estado vacío si no hay citas (Comentado para no chocar con la tarjeta de arriba) -->
+      <!-- 
+      <div class="estado-vacio">
+        <p>No tienes citas próximas programadas.</p>
+        <ion-button expand="block" class="boton-primario" routerLink="/seleccionar-vehiculo">Agendar una cita</ion-button>
+      </div> 
+      -->
+
+    </div>
+
+    <!-- LISTA: HISTORIAL (Comentada para mantener la vista enfocada en la primera pestaña) -->
+    <!-- 
+    <div class="lista-citas">
+      <div class="tarjeta-cita tarjeta-historial">
+        ... contenido estático similar al de arriba, pero con opacidad o estilo de "ya pasó" ...
+      </div>
+    </div>
+    -->
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior estandarizada -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio"><ion-icon name="home-outline"></ion-icon><span>Inicio</span></div>
+  <div class="elemento-navegacion" routerLink="/carrito"><ion-icon name="cart-outline"></ion-icon><span>Carrito</span></div>
+  <!-- Esta es la vista activa actual -->
+  <div class="elemento-navegacion activo" routerLink="/citas-lista"><ion-icon name="calendar-outline"></ion-icon><span>Citas</span></div>
+  <div class="elemento-navegacion" routerLink="/perfil"><ion-icon name="person-outline"></ion-icon><span>Perfil</span></div>
+</div>

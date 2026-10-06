@@ -1,0 +1,83 @@
+<!-- Encabezado superior sin bordes -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-superior">
+    <ion-buttons slot="start">
+      <!-- Botón para regresar a la pantalla de iniciar sesión (ruta actualizada a español) -->
+      <ion-back-button defaultHref="/iniciar-sesion" text="Atrás"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido principal con padding -->
+<ion-content class="ion-padding contenido-registro">
+  <div class="contenedor-registro">
+    
+    <!-- Logotipo superior y texto de la marca -->
+    <div class="seccion-logo">
+      <img src="assets/imagenes/Logotipo_inicial.png" alt="Logo Servicio Automotriz Cortes" class="imagen-logo" />
+      <div class="texto-marca">
+        <span class="subtitulo-superior">SERVICIO AUTOMOTRIZ</span>
+        <h1>CORTES</h1>
+      </div>
+    </div>
+
+    <!-- Títulos de la vista -->
+    <div class="seccion-encabezado">
+      <h2>Crear cuenta</h2>
+      <p>Regístrate para comenzar</p>
+    </div>
+
+    <!-- Contenedor del formulario de registro (Versión estática limpia de lógica) -->
+    <div class="formulario-registro">
+      
+      <!-- Campo: Correo electrónico -->
+      <ion-item lines="solid" class="item-entrada">
+        <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Correo electrónico" labelPlacement="stacked" placeholder="Correo electrónico" type="email"></ion-input>
+      </ion-item>
+
+      <!-- Campo: Contraseña -->
+      <ion-item lines="solid" class="item-entrada">
+        <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Contraseña" labelPlacement="stacked" placeholder="Contraseña" type="password"></ion-input>
+        <ion-icon name="eye-outline" slot="end" color="medium" style="cursor: pointer;"></ion-icon>
+      </ion-item>
+
+      <!-- Campo: Teléfono -->
+      <ion-item lines="solid" class="item-entrada">
+        <ion-icon name="call-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Teléfono" labelPlacement="stacked" placeholder="Teléfono" type="tel"></ion-input>
+      </ion-item>
+
+      <!-- Campo: Nombre -->
+      <ion-item lines="solid" class="item-entrada">
+        <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Nombre" labelPlacement="stacked" placeholder="Nombre" type="text"></ion-input>
+      </ion-item>
+
+      <!-- Campo: Apellido paterno -->
+      <ion-item lines="solid" class="item-entrada">
+        <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Apellido paterno" labelPlacement="stacked" placeholder="Apellido paterno" type="text"></ion-input>
+      </ion-item>
+
+      <!-- Campo: Apellido materno -->
+      <ion-item lines="solid" class="item-entrada">
+        <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+        <ion-input label="Apellido materno" labelPlacement="stacked" placeholder="Apellido materno" type="text"></ion-input>
+      </ion-item>
+
+      <!-- Botón principal de Registrarse (redirige al inicio por defecto en el mockup) -->
+      <ion-button expand="block" class="boton-enviar" routerLink="/inicio">
+        Registrarse
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+
+      <!-- Botón secundario para regresar al login (ruta en español) -->
+      <ion-button expand="block" fill="outline" class="boton-regresar-login" routerLink="/iniciar-sesion">
+        Ya tengo cuenta
+      </ion-button>
+      
+    </div>
+  </div>
+</ion-content>

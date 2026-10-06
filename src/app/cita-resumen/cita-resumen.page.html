@@ -1,0 +1,203 @@
+<!-- Encabezado de la página: sin borde inferior para mantener una estética limpia -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-herramientas">
+    <!-- Botón de regreso que solo se muestra si la cita NO ha sido confirmada aún -->
+    <ion-buttons slot="start" *ngIf="!estaConfirmada">
+      <ion-back-button defaultHref="/metodo-pago" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <!-- El título cambia dinámicamente dependiendo del estado de la variable estaConfirmada -->
+    <ion-title>{{ estaConfirmada ? '¡Cita confirmada!' : 'Confirmar cita' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido principal de la vista con margen interior (padding) -->
+<ion-content class="ion-padding contenido-resumen">
+  <div class="contenedor-principal">
+
+    <!-- ==============================================
+         VISTA 1: PRE-CONFIRMACIÓN (Antes de agendar)
+         ============================================== -->
+    <div *ngIf="!estaConfirmada">
+      
+      <!-- 1. Tarjeta resumen del Automóvil -->
+      <div class="tarjeta-resumen">
+        <div class="fila-encabezado-tarjeta">
+          <div class="titulo-con-icono">
+            <ion-icon name="car-outline"></ion-icon>
+            <h3>Automóvil</h3>
+          </div>
+          <!-- Enlace para volver a la pantalla de selección si el usuario quiere cambiar de auto -->
+          <span class="enlace-editar" routerLink="/seleccionar-vehiculo">Editar &gt;</span>
+        </div>
+        <!-- Solo muestra los detalles si hay un vehículo seleccionado -->
+        <div class="contenido-info-auto" *ngIf="vehiculoSeleccionado">
+          <div class="texto-auto">
+            <h4>{{ vehiculoSeleccionado.brand }} {{ vehiculoSeleccionado.model }}</h4>
+            <p>{{ vehiculoSeleccionado.year }}</p>
+            <!-- Placa en formato de etiqueta destacada -->
+            <span class="insignia-placa">{{ vehiculoSeleccionado.plate }}</span>
+            <span class="texto-km">{{ vehiculoSeleccionado.mileage | number }} km</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Tarjeta resumen de Fecha y Hora -->
+      <div class="tarjeta-resumen">
+        <div class="fila-encabezado-tarjeta">
+          <div class="titulo-con-icono">
+            <ion-icon name="calendar-outline"></ion-icon>
+            <h3>Fecha y hora</h3>
+          </div>
+          <span class="enlace-editar" routerLink="/citas">Editar &gt;</span>
+        </div>
+        <div class="info-fecha-hora">
+          <!-- Textos estáticos para visualizar el diseño por el momento -->
+          <p>Sábado, 16 de agosto de 2026</p>
+          <p class="texto-hora">10:00 a.m.</p>
+        </div>
+      </div>
+
+      <!-- 3. Tarjeta resumen de los Servicios Contratados -->
+      <div class="tarjeta-resumen">
+        <div class="fila-encabezado-tarjeta">
+          <div class="titulo-con-icono">
+            <ion-icon name="construct-outline"></ion-icon>
+            <!-- Muestra dinámicamente la cantidad de servicios en el título -->
+            <h3>Servicios ({{ itemsCarrito.length }})</h3>
+          </div>
+          <span class="enlace-editar" routerLink="/carrito">Editar &gt;</span>
+        </div>
+        
+        <div class="lista-servicios">
+          <!-- Bucle que recorre e imprime cada servicio que esté en el arreglo itemsCarrito -->
+          <div class="item-servicio" *ngFor="let item of itemsCarrito">
+            <div class="detalles-servicio">
+              <h4>{{ item.name }}</h4>
+              <p>{{ item.category || 'Servicio automotriz' }}</p>
+            </div>
+            <div class="precios-servicio">
+              <span>{{ item.quantity || 1 }}</span>
+              <!-- Muestra el precio formateado. Si no existe la propiedad, usa 450 por defecto -->
+              <span class="precio">${{ (item.price ?? 450) | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desglose financiero (Subtotal, IVA, Total) -->
+        <div class="desglose-costos">
+          <div class="fila-costo">
+            <span>Subtotal</span>
+            <!-- Las funciones de cálculo las crearemos falsas en el TS por ahora -->
+            <span>${{ obtenerSubtotal() | number:'1.2-2' }}</span>
+          </div>
+          <div class="fila-costo">
+            <span>IVA (16%)</span>
+            <span>${{ obtenerIva() | number:'1.2-2' }}</span>
+          </div>
+          <div class="fila-costo fila-total">
+            <span>Total estimado</span>
+            <span class="precio-total">${{ obtenerTotal() | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nota informativa al usuario -->
+      <div class="tarjeta-nota-informativa">
+        <ion-icon name="information-circle-outline"></ion-icon>
+        <p>El precio final puede variar después de una revisión en el taller.</p>
+      </div>
+
+      <!-- Botón de acción principal para agendar -->
+      <div class="contenedor-accion">
+        <ion-button expand="block" class="boton-primario" (click)="confirmarCita()">
+          Confirmar cita
+        </ion-button>
+      </div>
+
+    </div>
+
+
+    <!-- ==============================================
+         VISTA 2: CITA CONFIRMADA (Pantalla de Éxito)
+         ============================================== -->
+    <!-- Este bloque reemplaza al anterior en pantalla una vez que se hace clic en confirmar -->
+    <div *ngIf="estaConfirmada" class="contenedor-exito">
+      
+      <!-- Icono de palomita verde y título de éxito -->
+      <div class="encabezado-exito">
+        <div class="envoltorio-icono-exito">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </div>
+        <h2>¡Cita confirmada!</h2>
+        <p>Tu cita ha sido registrada correctamente.</p>
+      </div>
+
+      <!-- Tarjeta especial resaltada para mostrar el Folio generado -->
+      <div class="tarjeta-resumen tarjeta-folio">
+        <div class="fila-folio">
+          <div>
+            <span class="etiqueta">Folio de cita</span>
+            <h3>{{ folioGenerado }}</h3>
+          </div>
+          <ion-icon name="copy-outline" class="icono-copiar"></ion-icon>
+        </div>
+      </div>
+
+      <!-- Tarjeta condensada con el resumen final de lo que se agendó -->
+      <div class="tarjeta-resumen">
+        <!-- Resumen: Fecha y hora -->
+        <div class="fila-detalle-confirmado">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <div>
+            <span class="etiqueta">Fecha y Hora</span>
+            <p>Sábado, 16 de agosto de 2026 • 10:00 a.m.</p>
+          </div>
+        </div>
+
+        <!-- Resumen: Automóvil -->
+        <div class="fila-detalle-confirmado" *ngIf="vehiculoSeleccionado">
+          <ion-icon name="car-outline"></ion-icon>
+          <div>
+            <span class="etiqueta">Automóvil</span>
+            <p>{{ vehiculoSeleccionado.brand }} {{ vehiculoSeleccionado.model }} • {{ vehiculoSeleccionado.plate }}</p>
+          </div>
+        </div>
+
+        <!-- Resumen: Servicios contratados -->
+        <div class="fila-detalle-confirmado">
+          <ion-icon name="construct-outline"></ion-icon>
+          <div>
+            <span class="etiqueta">Servicios</span>
+            <p *ngFor="let item of itemsCarrito">• {{ item.name }}</p>
+          </div>
+        </div>
+
+        <!-- Resumen: Total a pagar -->
+        <div class="fila-detalle-confirmado total-confirmado">
+          <span class="etiqueta">Total estimado</span>
+          <span class="precio-total">${{ obtenerTotal() | number:'1.2-2' }}</span>
+        </div>
+      </div>
+
+      <!-- Botones de salida (Ir a mis citas o al inicio) -->
+      <div class="contenedor-accion acciones-exito">
+        <ion-button expand="block" class="boton-primario" routerLink="/citas-lista">
+          Ver mis citas
+        </ion-button>
+        <ion-button expand="block" fill="outline" class="boton-contorno" routerLink="/inicio">
+          Volver al inicio
+        </ion-button>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior anclada -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio"><ion-icon name="home-outline"></ion-icon><span>Inicio</span></div>
+  <div class="elemento-navegacion" routerLink="/carrito"><ion-icon name="cart-outline"></ion-icon><span>Carrito</span></div>
+  <div class="elemento-navegacion activo" routerLink="/citas-lista"><ion-icon name="calendar-outline"></ion-icon><span>Citas</span></div>
+  <div class="elemento-navegacion" routerLink="/perfil"><ion-icon name="person-outline"></ion-icon><span>Perfil</span></div>
+</div>

@@ -1,0 +1,212 @@
+/* :host define el estilo base del componente en la aplicación. Ocupará todo el bloque, con fondo blanco y el 100% del alto */
+:host { 
+  display: block; 
+  background: #fff; 
+  height: 100%; 
+}
+
+/* --- Barra Superior --- */
+.barra-herramientas { 
+  --background: #fff; 
+  
+  /* Estilos para el título de la pantalla centrado */
+  ion-title { 
+    font-weight: 800; 
+    font-size: 18px; 
+    color: #0b2545; 
+    text-align: center; 
+    padding-right: 48px; /* Equilibra visualmente el espacio que ocupa el botón de regreso */
+  } 
+  /* Color del botón de flecha para regresar */
+  ion-back-button { 
+    --color: #0b2545; 
+  } 
+}
+
+/* --- Contenido Principal --- */
+.contenido-detalle { 
+  --background: #fff !important; 
+  --padding-bottom: 90px; /* Añade margen abajo para que el contenido no quede oculto detrás de la barra inferior */
+}
+
+/* Contenedor central limitado a 450px para mantener una estética de celular incluso en pantallas de computadora */
+.contenedor-principal { 
+  max-width: 450px; 
+  margin: 0 auto; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 14px; /* Separación vertical entre todas las tarjetas */
+  padding-bottom: 20px; 
+}
+
+/* --- Tarjetas de Resumen Genéricas --- */
+/* Estilo base para todas las tarjetas de información (Fecha, Vehículo, Costos) */
+.tarjeta-resumen {
+  background: #fff;
+  border: 1px solid #eef0f2; /* Borde gris muy suave */
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02); /* Sombreado casi invisible para dar relieve */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  /* Fila de encabezado interno para las tarjetas que tienen título (ej. "Servicios contratados") */
+  .fila-encabezado-tarjeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .titulo-con-icono {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      ion-icon { font-size: 20px; color: #134074; }
+      h3 { font-size: 14px; font-weight: 800; color: #0b2545; margin: 0; }
+    }
+  }
+}
+
+/* --- Tarjeta Especial: Folio --- */
+/* Resalta la primera tarjeta dándole un fondo azul claro y un borde más oscuro */
+.tarjeta-folio {
+  background: #f8fbff;
+  border-color: #134074;
+  
+  .fila-folio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .etiqueta { font-size: 11px; color: #8d99ae; font-weight: 600; text-transform: uppercase; }
+    h3 { font-size: 16px; font-weight: 900; color: #134074; margin: 2px 0 0 0; letter-spacing: 0.5px; }
+    
+    /* Etiqueta ovalada que muestra el estado de la cita */
+    .insignia-estado {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      
+      /* Si la cita está confirmada, la etiqueta se vuelve verde */
+      &.confirmada { background: #e6f4ea; color: #137333; }
+      
+      ion-icon { font-size: 14px; }
+    }
+  }
+}
+
+/* --- Fila de Detalles con Icono --- */
+/* Diseño reutilizable para agrupar un icono a la izquierda con texto a la derecha (usado en Fecha y Vehículo) */
+.fila-detalle-confirmado {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+  
+  ion-icon { font-size: 20px; color: #134074; margin-top: 2px; flex-shrink: 0; } /* flex-shrink previene que el icono se deforme */
+  .etiqueta { font-size: 11px; color: #8d99ae; font-weight: 600; display: block; }
+  p { font-size: 13px; color: #0b2545; font-weight: 700; margin: 2px 0 0 0; }
+  .sub-info { font-size: 11px; color: #8d99ae; font-weight: 600; display: block; margin-top: 2px; }
+}
+
+/* --- Lista de Servicios Contratados --- */
+.lista-servicios {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid #eef0f2; /* Línea separadora inferior antes de mostrar los costos */
+  padding-bottom: 12px;
+
+  /* Estilo de cada servicio individual en la lista */
+  .item-servicio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .detalles-servicio {
+      h4 { font-size: 13px; font-weight: 700; color: #0b2545; margin: 0 0 2px 0; }
+      p { font-size: 11px; color: #8d99ae; margin: 0; }
+    }
+    .precio-servicio {
+      font-size: 13px;
+      font-weight: 700;
+      color: #0b2545;
+    }
+  }
+}
+
+/* --- Desglose de Costos (Subtotal, IVA, Total) --- */
+.desglose-costos {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  
+  .fila-costo {
+    display: flex;
+    justify-content: space-between; /* Texto alineado a la izquierda, número a la derecha */
+    font-size: 12px;
+    color: #8d99ae;
+    
+    /* Formato destacado para la última línea con el total a pagar */
+    &.fila-total {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0b2545;
+      margin-top: 4px;
+      border-top: 1px dashed #eef0f2; /* Línea punteada para separar el total */
+      padding-top: 8px;
+      
+      .precio-total { color: #134074; }
+    }
+  }
+}
+
+/* --- Botón Inferior de Acción (Cancelar) --- */
+.contenedor-accion {
+  margin-top: 10px;
+  
+  /* Botón con contorno rojo para indicar una acción destructiva */
+  .boton-peligro-contorno {
+    --border-color: #ef4444; 
+    --color: #ef4444;
+    --border-radius: 14px;
+    font-weight: 700;
+    height: 48px;
+    text-transform: none; /* Evita que el texto esté todo en MAYÚSCULAS */
+  }
+}
+
+/* --- Barra de Navegación Inferior --- */
+.navegacion-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: #fff;
+  border-top: 1px solid #eef0f2;
+  display: flex;
+  justify-content: space-around; /* Reparte equitativamente los iconos */
+  align-items: center;
+  z-index: 1000; /* Siempre visible por encima del resto */
+  
+  .elemento-navegacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8d99ae;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    
+    /* Pinta de color azul intenso el ícono de la pantalla en la que nos encontramos */
+    &.activo { color: #134074; }
+    
+    ion-icon { font-size: 22px; margin-bottom: 2px; }
+  }
+}

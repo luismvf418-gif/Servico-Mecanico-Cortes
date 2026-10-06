@@ -1,102 +1,125 @@
+<!-- Encabezado superior sin bordes -->
 <ion-header class="ion-no-border">
-  <ion-toolbar class="services-toolbar">
+  <ion-toolbar class="barra-servicios">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/dashboard" text="" icon="chevron-back-outline"></ion-back-button>
+      <!-- Botón de retroceso hacia la pantalla de inicio -->
+      <ion-back-button defaultHref="/inicio" text="" icon="chevron-back-outline"></ion-back-button>
     </ion-buttons>
     <ion-title>Servicios</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding services-content">
-  <div class="services-container">
+<!-- Contenido principal con padding -->
+<ion-content class="ion-padding contenido-servicios">
+  <div class="contenedor-servicios">
 
-    <!-- Barra de búsqueda conectada -->
-    <div class="search-box">
-      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+    <!-- Barra de búsqueda estática -->
+    <div class="caja-busqueda">
+      <ion-icon name="search-outline" class="icono-busqueda"></ion-icon>
       <input 
         type="text" 
         placeholder="Buscar servicios" 
-        class="custom-search-input" 
-        [(ngModel)]="searchQuery" />
+        class="entrada-busqueda-personalizada" />
     </div>
 
-    <!-- Filtros por categoría (Chips) -->
-    <div class="categories-scroll">
-      <button 
-        class="chip" 
-        [class.active]="selectedCategory === 'Todos'" 
-        (click)="filterCategory('Todos')">
-        Todos
-      </button>
-      <button 
-        class="chip" 
-        [class.active]="selectedCategory === 'Motor'" 
-        (click)="filterCategory('Motor')">
-        Motor
-      </button>
-      <button 
-        class="chip" 
-        [class.active]="selectedCategory === 'Frenos'" 
-        (click)="filterCategory('Frenos')">
-        Frenos
-      </button>
-      <button 
-        class="chip" 
-        [class.active]="selectedCategory === 'Afinación'" 
-        (click)="filterCategory('Afinación')">
-        Afinación
-      </button>
-      <button 
-        class="chip" 
-        [class.active]="selectedCategory === 'Suspensión'" 
-        (click)="filterCategory('Suspensión')">
-        Suspensión
-      </button>
+    <!-- Filtros por categoría (Chips estáticos) -->
+    <div class="desplazamiento-categorias">
+      <button class="chip activo">Todos</button>
+      <button class="chip">Motor</button>
+      <button class="chip">Frenos</button>
+      <button class="chip">Afinación</button>
+      <button class="chip">Suspensión</button>
     </div>
 
-    <!-- Lista de Servicios filtrados con routerLink dinámico y botón de agregar funcional -->
-    <div class="services-list">
-      <div class="service-card" *ngFor="let service of filteredServices; let i = index" [routerLink]="['/service-detail', i]">
-        <div class="service-left">
-          <div class="icon-circle">
-            <ion-icon [name]="service.icon"></ion-icon>
+    <!-- Lista de Servicios Estática -->
+    <div class="lista-servicios">
+      
+      <!-- Servicio 1: Afinación general -->
+      <div class="tarjeta-servicio" routerLink="/servicio-detalle/0">
+        <div class="servicio-izq">
+          <div class="circulo-icono">
+            <ion-icon name="construct-outline"></ion-icon>
           </div>
-          <div class="service-info">
-            <h3>{{ service.title }}</h3>
-            <p>{{ service.description }}</p>
+          <div class="info-servicio">
+            <h3>Afinación general</h3>
+            <p>Mantén tu motor en óptimas condiciones</p>
           </div>
         </div>
         
-        <div class="service-right">
-          <span class="price-label">Desde</span>
-          <span class="price-value">{{ service.price }}</span>
-          <!-- Usamos un botón HTML normal con clase de Ionic para evitar bloqueos de routerLink -->
-          <button type="button" class="btn-add-custom" (click)="addToCart(service, $event)">
+        <div class="servicio-der">
+          <span class="etiqueta-precio">Desde</span>
+          <span class="valor-precio">$1,200</span>
+          <button type="button" class="boton-agregar-personalizado" routerLink="/carrito">
             <ion-icon name="cart-outline"></ion-icon>
             Agregar
           </button>
         </div>
       </div>
+
+      <!-- Servicio 2: Cambio de aceite -->
+      <div class="tarjeta-servicio" routerLink="/servicio-detalle/1">
+        <div class="servicio-izq">
+          <div class="circulo-icono">
+            <ion-icon name="water-outline"></ion-icon>
+          </div>
+          <div class="info-servicio">
+            <h3>Cambio de aceite</h3>
+            <p>Lubricación y protección óptima</p>
+          </div>
+        </div>
+        
+        <div class="servicio-der">
+          <span class="etiqueta-precio">Desde</span>
+          <span class="valor-precio">$600</span>
+          <button type="button" class="boton-agregar-personalizado" routerLink="/carrito">
+            <ion-icon name="cart-outline"></ion-icon>
+            Agregar
+          </button>
+        </div>
+      </div>
+
+      <!-- Servicio 3: Revisión de frenos -->
+      <div class="tarjeta-servicio" routerLink="/servicio-detalle/2">
+        <div class="servicio-izq">
+          <div class="circulo-icono">
+            <ion-icon name="shield-outline"></ion-icon>
+          </div>
+          <div class="info-servicio">
+            <h3>Revisión de frenos</h3>
+            <p>Seguridad y confianza en cada kilómetro</p>
+          </div>
+        </div>
+        
+        <div class="servicio-der">
+          <span class="etiqueta-precio">Desde</span>
+          <span class="valor-precio">$800</span>
+          <button type="button" class="boton-agregar-personalizado" routerLink="/carrito">
+            <ion-icon name="cart-outline"></ion-icon>
+            Agregar
+          </button>
+        </div>
+      </div>
+
     </div>
 
   </div>
 </ion-content>
 
-<!-- Barra de navegación inferior -->
-<div class="bottom-nav">
-  <div class="nav-item" routerLink="/dashboard">
+<!-- Barra de navegación inferior estandarizada -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio">
     <ion-icon name="home-outline"></ion-icon>
     <span>Inicio</span>
   </div>
-  <div class="nav-item" routerLink="/cart">
+  <div class="elemento-navegacion" routerLink="/carrito">
     <ion-icon name="cart-outline"></ion-icon>
     <span>Carrito</span>
   </div>
-  <div class="nav-item" routerLink="/appointments">
+  <div class="elemento-navegacion" routerLink="/citas">
     <ion-icon name="calendar-outline"></ion-icon>
     <span>Citas</span>
   </div>
-  <div class="nav-item">
+  <div class="elemento-navegacion" routerLink="/perfil">
     <ion-icon name="person-outline"></ion-icon>
     <span>Perfil</span>
   </div>

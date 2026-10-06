@@ -3,94 +3,98 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'welcome',
+    redirectTo: 'bienvenida',
     pathMatch: 'full',
   },
   {
-    path: 'welcome',
+    path: 'bienvenida',
     loadComponent: () =>
-      import('./welcome/welcome.page').then((m) => m.WelcomePage),
+      import('./bienvenida/bienvenida.page').then((m) => m.BienvenidaPage),
   },
   {
-    path: 'login',
-    loadComponent: () => import('./login/login.page').then((m) => m.LoginPage),
+    path: 'iniciar-sesion',
+    loadComponent: () => 
+      import('./iniciar-sesion/iniciar-sesion.page').then(
+        (m) => m.IniciarSesionPage
+      ),
   },
   {
-    path: 'register',
+    path: 'registro',
     loadComponent: () =>
-      import('./register/register.page').then((m) => m.RegisterPage),
+      import('./registro/registro.page').then((m) => m.RegistroPage),
   },
   {
-    path: 'dashboard',
+    path: 'inicio',
     loadComponent: () =>
-      import('./dashboard/dashboard.page').then((m) => m.DashboardPage),
+      import('./inicio/inicio.page').then((m) => m.InicioPage),
   },
   {
-    path: 'services',
+    path: 'servicios',
     loadComponent: () =>
       import('./services/services.page').then((m) => m.ServicesPage),
   },
   {
-    path: 'service-detail/:id', // <--- AQUÍ AGREGAMOS /:id
+    path: 'servicio-detalle/:id',
     loadComponent: () =>
-      import('./service-detail/service-detail.page').then(
-        (m) => m.ServiceDetailPage
+      import('./servicio-detalle/servicio-detalle.page').then(
+        (m) => m.ServicioDetallePage
       ),
   },
   {
-    path: 'cart',
-    loadComponent: () => import('./cart/cart.page').then((m) => m.CartPage),
+    path: 'carrito',
+    loadComponent: () =>
+      import('./carrito/carrito.page').then((m) => m.CarritoPage),
   },
   {
-    path: 'appointments',
+    path: 'citas',
+    loadComponent: () => import('./citas/citas.page').then((m) => m.CitasPage),
+  },
+  {
+    path: 'agregar-vehiculo',
     loadComponent: () =>
-      import('./appointments/appointments.page').then(
-        (m) => m.AppointmentsPage
+      import('./agregar-vehiculo/agregar-vehiculo.page').then(
+        (m) => m.AgregarVehiculoPage
       ),
   },
   {
-    path: 'add-vehicle',
+    path: 'vehiculos',
     loadComponent: () =>
-      import('./add-vehicle/add-vehicle.page').then((m) => m.AddVehiclePage),
+      import('./vehiculos/vehiculos.page').then((m) => m.VehiculosPage),
   },
   {
-    path: 'vehicles',
+    path: 'seleccionar-vehiculo',
     loadComponent: () =>
-      import('./vehicles/vehicles.page').then((m) => m.VehiclesPage),
-  },
-  {
-    path: 'select-vehicle',
-    loadComponent: () =>
-      import('./select-vehicle/select-vehicle.page').then(
-        (m) => m.SelectVehiclePage
+      import('./seleccionar-vehiculo/seleccionar-vehiculo.page').then(
+        (m) => m.SeleccionarVehiculoPage
       ),
   },
   {
-    path: 'payment-method',
+    path: 'metodo-pago',
     loadComponent: () =>
-      import('./payment-method/payment-method.page').then(
-        (m) => m.PaymentMethodPage
-      ),
+      import('./metodo-pago/metodo-pago.page').then((m) => m.MetodoPagoPage),
   },
   {
-    path: 'appointment-summary',
+    path: 'cita-resumen',
     loadComponent: () =>
-      import('./appointment-summary/appointment-summary.page').then(
-        (m) => m.AppointmentSummaryPage
-      ),
+      import('./cita-resumen/cita-resumen.page').then((m) => m.CitaResumenPage),
   },
   {
-    path: 'appointments-list',
+    path: 'citas-lista',
     loadComponent: () =>
-      import('./appointments-list/appointments-list.page').then(
-        (m) => m.AppointmentsListPage
-      ),
+      import('./citas-lista/citas-lista.page').then((m) => m.CitaListaPage),
   },
   {
-    path: 'appointment-detail',
+    path: 'cita-detalle',
     loadComponent: () =>
-      import('./appointment-detail/appointment-detail.page').then(
-        (m) => m.AppointmentDetailPage
-      ),
+      import('./cita-detalle/cita-detalle.page').then((m) => m.CitaDetallePage),
+  },
+  {
+    path: 'perfil',
+    loadComponent: () =>
+      import('./perfil/perfil.page').then((m) => m.PerfilPage),
+  },
+  {
+    path: '**',
+    redirectTo: 'bienvenida',
   },
 ];

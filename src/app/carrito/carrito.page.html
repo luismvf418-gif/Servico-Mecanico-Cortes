@@ -1,0 +1,113 @@
+<!-- Encabezado superior de la página sin bordes, para un diseño limpio -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-carrito">
+    <!-- Botón de retroceso para regresar a la vista de inicio (dashboard) -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/inicio" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <!-- Título de la página centrado -->
+    <ion-title>Mi Carrito</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenedor principal de la página con padding -->
+<ion-content class="ion-padding contenido-carrito">
+  <div class="contenedor-carrito">
+
+    <!-- Lista de elementos en el carrito (Estática por ahora) -->
+    <div class="lista-items-carrito">
+      <!-- Tarjeta de ejemplo de un servicio en el carrito -->
+      <div class="tarjeta-carrito">
+        <div class="item-izquierdo">
+          <div class="circulo-icono">
+            <ion-icon name="construct-outline"></ion-icon>
+          </div>
+          <div class="info-item">
+            <h3>Afinación Mayor</h3>
+            <span class="precio-item">$1,500</span>
+          </div>
+        </div>
+        
+        <!-- Botón para eliminar un servicio del carrito (Estético) -->
+        <button class="boton-eliminar">
+          <ion-icon name="trash-outline"></ion-icon>
+        </button>
+      </div>
+
+       <!-- Tarjeta de ejemplo de otro servicio en el carrito -->
+       <div class="tarjeta-carrito">
+        <div class="item-izquierdo">
+          <div class="circulo-icono">
+            <ion-icon name="car-outline"></ion-icon>
+          </div>
+          <div class="info-item">
+            <h3>Lavado de Interiores</h3>
+            <span class="precio-item">$500</span>
+          </div>
+        </div>
+        
+        <!-- Botón para eliminar un servicio del carrito (Estético) -->
+        <button class="boton-eliminar">
+          <ion-icon name="trash-outline"></ion-icon>
+        </button>
+      </div>
+
+      <!-- Resumen de pago con precios estáticos de ejemplo -->
+      <div class="tarjeta-resumen">
+        <div class="fila-resumen">
+          <span>Subtotal</span>
+          <span>$2,000</span>
+        </div>
+        <div class="fila-resumen">
+          <span>Impuestos / IVA</span>
+          <span>Incluidos</span>
+        </div>
+        <div class="divisor-resumen"></div>
+        <div class="fila-resumen total">
+          <span>Total</span>
+          <span class="precio-total">$2,000</span>
+        </div>
+      </div>
+
+      <!-- Botón de acción principal para proceder con la cita -->
+      <div class="contenedor-accion">
+        <ion-button expand="block" class="boton-checkout" routerLink="/seleccionar-vehiculo">
+          Proceder a agendar cita
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Mensaje si el carrito está vacío (Comentado por ahora para ver la vista con elementos) -->
+    <!-- 
+    <div class="estado-vacio">
+      <ion-icon name="cart-outline"></ion-icon>
+      <h3>Tu carrito está vacío</h3>
+      <p>Explora nuestros servicios y añade los que necesites para tu vehículo.</p>
+      <ion-button routerLink="/servicios-globales" class="boton-explorar">Ver servicios</ion-button>
+    </div> 
+    -->
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior actualizada con rutas en español -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Inicio</span>
+  </div>
+  <!-- Se añade la clase 'activo' para resaltar que estamos en esta sección -->
+  <div class="elemento-navegacion activo" routerLink="/carrito">
+    <ion-icon name="cart-outline"></ion-icon>
+    <span>Carrito</span>
+    <div class="indicador"></div>
+  </div>
+  <div class="elemento-navegacion" routerLink="/citas">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <span>Citas</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/perfil">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Perfil</span>
+  </div>
+</div>

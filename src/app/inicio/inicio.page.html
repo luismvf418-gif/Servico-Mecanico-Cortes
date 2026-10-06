@@ -1,0 +1,105 @@
+<!-- Encabezado superior de la página, sin bordes -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-inicio">
+    <!-- Logotipo real apuntando a la carpeta de imágenes -->
+    <div class="contenedor-logo">
+      <img src="assets/imagenes/Logotipo_inicial.png" alt="Servicio Automotriz Cortes" class="logo-app" />
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido principal con padding -->
+<ion-content class="ion-padding contenido-inicio">
+  <div class="contenedor-inicio">
+
+    <!-- Sección de Bienvenida -->
+    <div class="seccion-bienvenida">
+      <h2>¡Hola, Usuario!</h2>
+      <p>¿Qué necesitas hoy?</p>
+    </div>
+
+    <!-- Cuadrícula de opciones del menú principal -->
+    <div class="cuadricula-menu">
+      
+      <!-- 1. Servicios -->
+      <div class="tarjeta-dashboard" routerLink="/servicios">
+        <div class="circulo-icono">
+          <ion-icon name="construct-outline"></ion-icon>
+        </div>
+        <div class="info-tarjeta">
+          <h3>Servicios</h3>
+          <p>Conoce nuestros servicios automotrices</p>
+        </div>
+        <div class="icono-flecha">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+
+      <!-- 2. Mis automóviles -->
+      <div class="tarjeta-dashboard" routerLink="/vehiculos">
+        <div class="circulo-icono">
+          <ion-icon name="car-outline"></ion-icon>
+        </div>
+        <div class="info-tarjeta">
+          <h3>Mis automóviles</h3>
+          <p>Administra tus vehículos</p>
+        </div>
+        <div class="icono-flecha">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+
+      <!-- 3. Mis citas -->
+      <div class="tarjeta-dashboard" routerLink="/citas-lista">
+        <div class="circulo-icono">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <div class="info-tarjeta">
+          <h3>Mis citas</h3>
+          <p>Consulta y agenda tus citas</p>
+        </div>
+        <div class="icono-flecha">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+
+      <!-- 4. Carrito -->
+      <div class="tarjeta-dashboard" routerLink="/carrito">
+        <div class="circulo-icono">
+          <ion-icon name="cart-outline"></ion-icon>
+        </div>
+        <div class="info-tarjeta">
+          <h3>Carrito</h3>
+          <p>Revisa tus servicios y productos</p>
+        </div>
+        <div class="icono-flecha">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior estandarizada (Aplicando Opción B para Perfil y rutas en español) -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion activo" routerLink="/inicio">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Inicio</span>
+    <div class="indicador"></div>
+  </div>
+  <div class="elemento-navegacion" routerLink="/carrito">
+    <ion-icon name="cart-outline"></ion-icon>
+    <span>Carrito</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/citas-lista">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <span>Citas</span>
+  </div>
+  <!-- Botón de Perfil estandarizado con ruta /perfil -->
+  <div class="elemento-navegacion" routerLink="/perfil">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Perfil</span>
+  </div>
+</div>

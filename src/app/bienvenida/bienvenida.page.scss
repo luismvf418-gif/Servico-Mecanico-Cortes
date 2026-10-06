@@ -1,0 +1,92 @@
+/* Estilo para personalizar el fondo de la pantalla de contenido en tono gris muy claro */
+.bienvenida-contenido {
+  --background: #f8f9fa;
+}
+
+/* Contenedor principal que distribuye los elementos verticalmente abarcando toda la altura disponible */
+.bienvenida-contenedor {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Distribuye el espacio equitativamente entre arriba, centro y abajo */
+  height: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* Sección superior destinada al logotipo del taller */
+.seccion-logo {
+  margin-top: 20px;
+  
+  /* Ajustes visuales para la imagen del logo */
+  .imagen-logo {
+    width: 100%;
+    max-width: 280px; /* Limitamos el ancho para que no se deforme en pantallas pequeñas */
+    height: auto;
+    margin-bottom: 15px;
+    object-fit: contain;
+  }
+
+  /* Estilo opcional para subtítulos pequeños superiores */
+  .subtitulo-superior {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: #495057;
+    letter-spacing: 0.5px;
+  }
+
+  /* Estilo para títulos principales de marca */
+  h1 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #0b2545;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+}
+
+/* Sección central con el mensaje de bienvenida e información clave */
+.seccion-informacion {
+  margin: 20px 0;
+
+  h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #134074;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #6c757d;
+    line-height: 1.5; /* Mejora la legibilidad separando un poco las líneas de texto */
+    padding: 0 10px;
+  }
+}
+
+/* Sección inferior donde se ubican los botones de acción interactivos */
+.seccion-acciones {
+  margin-bottom: 20px;
+
+  /* Estilo para el botón principal sólido de comenzar */
+  .boton-comenzar {
+    --background: #134074;
+    --border-radius: 12px;
+    font-weight: 600;
+    height: 50px;
+    margin-bottom: 10px;
+    text-transform: none; /* Evita que el texto cambie automáticamente a mayúsculas */
+    font-size: 16px;
+  }
+
+  /* Estilo para el botón secundario transparente de inicio de sesión */
+  .boton-ingresar {
+    --color: #134074;
+    font-weight: 600;
+    height: 45px;
+    text-transform: none;
+    font-size: 15px;
+  }
+}

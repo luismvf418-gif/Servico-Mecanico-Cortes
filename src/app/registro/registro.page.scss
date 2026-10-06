@@ -1,0 +1,115 @@
+/* :host asegura que el componente ocupe todo el espacio con fondo blanco */
+:host {
+  display: block;
+  background-color: #ffffff;
+  height: 100%;
+}
+
+/* --- Contenido Principal --- */
+.contenido-registro {
+  --background: #ffffff !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor central limitado a 420px para mantener la estética de app móvil */
+.contenedor-registro {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 20px 16px 40px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Sección Superior: Logotipo y Marca --- */
+.seccion-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+
+  .imagen-logo {
+    width: 45px;
+    height: 45px;
+    object-fit: contain; /* Evita deformaciones de la imagen */
+  }
+
+  .texto-marca {
+    .subtitulo-superior {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      color: #495057;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #0b2545;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+/* --- Encabezado del Formulario ("Crear cuenta") --- */
+.seccion-encabezado {
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 26px;
+    font-weight: 800;
+    color: #0b2545;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #8d99ae;
+    margin: 0;
+  }
+}
+
+/* --- Contenedor del Formulario --- */
+.formulario-registro {
+  
+  /* Estilo personalizado para los inputs (Correo, Contraseña, Teléfono, Nombres) */
+  .item-entrada {
+    margin-bottom: 14px;
+    --border-radius: 16px;
+    --background: #f8f9fa; /* Fondo gris muy tenue */
+    --highlight-color-focused: #134074; /* Color de enfoque corporativo */
+    border: 1px solid #e9ecef;
+    border-radius: 16px;
+    padding-left: 10px;
+    min-height: 56px;
+  }
+
+  /* --- Botón Primario: Registrarse --- */
+  .boton-enviar {
+    --background: #0b2545; /* Fondo azul oscuro institucional */
+    --border-radius: 16px;
+    font-weight: 600;
+    height: 52px;
+    text-transform: none; /* Previene mayúsculas forzadas en Ionic */
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+  }
+
+  /* --- Botón Secundario: Ya tengo cuenta (Transparente con borde azul) --- */
+  .boton-regresar-login {
+    --border-color: #0b2545;
+    --color: #0b2545;
+    --border-radius: 16px;
+    --border-width: 1.5px;
+    font-weight: 600;
+    height: 52px;
+    text-transform: none;
+    font-size: 16px;
+    --background: transparent;
+  }
+}

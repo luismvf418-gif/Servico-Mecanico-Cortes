@@ -1,0 +1,149 @@
+<!-- Encabezado superior de la página, sin bordes para un diseño más moderno -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-herramientas">
+    <!-- Botón de retroceso a la izquierda que envía de vuelta a la lista de citas -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/citas-lista" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <!-- Título principal centrado -->
+    <ion-title>Detalle de cita</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenedor principal con padding para que el contenido no pegue a los bordes -->
+<ion-content class="ion-padding contenido-detalle">
+  <!-- El *ngIf="appointment" fue removido para mostrar el diseño visual inmediatamente sin depender de datos -->
+  <div class="contenedor-principal">
+
+    <!-- Tarjeta de Folio y Estado (Estática para previsualización) -->
+    <div class="tarjeta-resumen tarjeta-folio">
+      <div class="fila-folio">
+        <div>
+          <span class="etiqueta">Folio de cita</span>
+          <h3>#AC-2026-001</h3> <!-- Dato de ejemplo -->
+        </div>
+        <!-- Etiqueta de estado en color verde simulando confirmación -->
+        <span class="insignia-estado confirmada">
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          Confirmada
+        </span>
+      </div>
+    </div>
+
+    <!-- Tarjeta de Fecha y Hora -->
+    <div class="tarjeta-resumen">
+      <div class="fila-detalle-confirmado">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <div>
+          <span class="etiqueta">Fecha y Hora programada</span>
+          <p>Lunes, 5 de Octubre de 2026 • 10:00 AM</p> <!-- Dato de ejemplo -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta de información del Automóvil -->
+    <div class="tarjeta-resumen">
+      <div class="fila-detalle-confirmado">
+        <ion-icon name="car-outline"></ion-icon>
+        <div>
+          <span class="etiqueta">Automóvil asignado</span>
+          <p>Toyota Corolla 2024</p> <!-- Dato de ejemplo -->
+          <span class="sub-info">Placas: ABC-123 • Color Blanco • 15,000 km</span> <!-- Dato de ejemplo -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta de Servicios y Desglose de Costos -->
+    <div class="tarjeta-resumen">
+      <div class="fila-encabezado-tarjeta">
+        <div class="titulo-con-icono">
+          <ion-icon name="construct-outline"></ion-icon>
+          <h3>Servicios contratados</h3>
+        </div>
+      </div>
+      
+      <!-- Lista de servicios (El *ngFor fue removido, se usan datos estáticos) -->
+      <div class="lista-servicios">
+        
+        <!-- Ejemplo de servicio 1 -->
+        <div class="item-servicio">
+          <div class="detalles-servicio">
+            <h4>Afinación Mayor</h4>
+            <p>Mantenimiento</p>
+          </div>
+          <div class="precio-servicio">
+            <span class="precio">$1,500</span>
+          </div>
+        </div>
+
+        <!-- Ejemplo de servicio 2 -->
+        <div class="item-servicio">
+          <div class="detalles-servicio">
+            <h4>Lavado de Interiores</h4>
+            <p>Estética</p>
+          </div>
+          <div class="precio-servicio">
+            <span class="precio">$500</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Desglose de costos (Estático) -->
+      <div class="desglose-costos">
+        <div class="fila-costo">
+          <span>Subtotal</span>
+          <span>$2,000.00</span>
+        </div>
+        <div class="fila-costo">
+          <span>IVA (16%)</span>
+          <span>$320.00</span>
+        </div>
+        <div class="fila-costo fila-total">
+          <span>Total estimado</span>
+          <span class="precio-total">$2,320.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta de Método de pago -->
+    <div class="tarjeta-resumen tarjeta-pago">
+      <div class="fila-detalle-confirmado">
+        <ion-icon name="card-outline"></ion-icon>
+        <div>
+          <span class="etiqueta">Método de pago</span>
+          <p>Pago en sucursal</p> <!-- Dato de ejemplo -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de acción para cancelar (Estético, sin función asignada) -->
+    <div class="contenedor-accion">
+      <ion-button expand="block" class="boton-peligro-contorno">
+        Cancelar cita
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior actualizada con las rutas correctas -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Inicio</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/carrito">
+    <ion-icon name="cart-outline"></ion-icon>
+    <span>Carrito</span>
+  </div>
+  <!-- Clase activo añadida a Citas para resaltar dónde estamos -->
+  <div class="elemento-navegacion activo" routerLink="/citas-lista">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <span>Citas</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/perfil">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Perfil</span>
+  </div>
+</div>

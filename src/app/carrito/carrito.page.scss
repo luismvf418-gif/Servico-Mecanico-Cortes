@@ -1,0 +1,264 @@
+/* :host representa el componente completo (la página del carrito). 
+   Le damos display en bloque, fondo blanco puro y que ocupe todo el alto disponible. */
+:host {
+  display: block;
+  background-color: #ffffff;
+  height: 100%;
+}
+
+/* --- Barra Superior (Toolbar) --- */
+.barra-carrito {
+  --background: #ffffff; /* Fuerza el fondo blanco en la barra de Ionic */
+  
+  /* Estilos para el texto del título principal */
+  ion-title {
+    font-weight: 800; /* Texto muy grueso (negrita fuerte) */
+    font-size: 18px;
+    color: #0b2545; /* Azul oscuro corporativo */
+    text-align: center;
+    padding-right: 48px; /* Compensación visual para centrar el texto respecto al botón de regreso */
+  }
+  
+  /* Color del botón de flecha para regresar */
+  ion-back-button {
+    --color: #0b2545;
+  }
+}
+
+/* --- Área de Contenido Principal --- */
+.contenido-carrito {
+  --background: #ffffff !important; /* El !important asegura que nada sobrescriba este fondo blanco */
+  --padding-bottom: 90px; /* Margen inferior amplio para evitar que la barra de navegación superponga elementos */
+}
+
+/* Contenedor central que limita el ancho para verse bien en tablets y centra el contenido en móviles */
+.contenedor-carrito {
+  max-width: 450px;
+  width: 100%;
+  margin: 0 auto; /* Centrado horizontal automático */
+  padding: 5px 4px 20px 4px; /* Espaciado interno: arriba, derecha, abajo, izquierda */
+  display: flex;
+  flex-direction: column; /* Apila los elementos uno debajo de otro */
+  gap: 16px; /* Espacio vertical de 16px entre cada bloque (lista, resumen, botón) */
+}
+
+/* --- Lista de Servicios Añadidos --- */
+/* Contenedor flexible para agrupar todas las tarjetas de servicios */
+.lista-items-carrito {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* Espacio de 12px entre cada tarjeta de servicio */
+}
+
+/* Diseño individual para cada tarjeta de servicio en el carrito */
+.tarjeta-carrito {
+  background: #ffffff;
+  border: 1px solid #eef0f2; /* Borde sutil gris claro */
+  border-radius: 18px; /* Esquinas muy redondeadas */
+  padding: 14px 16px;
+  display: flex;
+  justify-content: space-between; /* Separa la info a la izquierda y el botón de borrar a la derecha */
+  align-items: center; /* Centra los elementos verticalmente */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02); /* Sombra casi imperceptible para dar profundidad */
+
+  /* Agrupación del icono y el texto (lado izquierdo de la tarjeta) */
+  .item-izquierdo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    /* Circulito que contiene el icono del servicio */
+    .circulo-icono {
+      width: 44px;
+      height: 44px;
+      background: #eef2f7; /* Gris azulado muy claro */
+      border-radius: 14px; /* Esquinas redondeadas (no llega a ser un círculo perfecto) */
+      display: flex;
+      align-items: center;
+      justify-content: center; /* Centra el icono dentro del cuadro */
+
+      ion-icon {
+        font-size: 22px;
+        color: #134074;
+      }
+    }
+
+    /* Agrupación de los textos (Nombre del servicio y Precio) */
+    .info-item {
+      h3 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #0b2545;
+        margin: 0 0 2px 0; /* Solo margen inferior para separar del precio */
+      }
+
+      .precio-item {
+        font-size: 14px;
+        font-weight: 800;
+        color: #134074;
+      }
+    }
+  }
+
+  /* Diseño del botón del cesto de basura (Eliminar) */
+  .boton-eliminar {
+    background: #fff5f5; /* Fondo rojizo muy suave */
+    border: none;
+    border-radius: 12px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* Cambia el cursor a una manita al pasar por encima (en escritorio) */
+    transition: background 0.2s; /* Efecto suave al cambiar de color */
+
+    ion-icon {
+      font-size: 18px;
+      color: #e63946; /* Rojo intenso para advertir la acción de borrar */
+    }
+
+    /* Efecto al pasar el mouse por encima (hover) */
+    &:hover {
+      background: #ffe3e3; /* Oscurece ligeramente el fondo rojizo */
+    }
+  }
+}
+
+/* --- Tarjeta de Resumen de Pago (Subtotal, IVA, Total) --- */
+.tarjeta-resumen {
+  background: #f8f9fa; /* Fondo gris claro para diferenciarla de las tarjetas de servicios */
+  border: 1px solid #eef0f2;
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+
+  /* Diseño de cada línea del resumen (ej. "Subtotal     $2,000") */
+  .fila-resumen {
+    display: flex;
+    justify-content: space-between; /* Separa la etiqueta a la izquierda y el valor a la derecha */
+    font-size: 13px;
+    color: #6c757d;
+
+    /* Estilo especial para la última fila (El Total a pagar) */
+    &.total {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0b2545;
+    }
+  }
+
+  /* Línea divisoria muy fina antes del total */
+  .divisor-resumen {
+    height: 1px;
+    background: #dee2e6;
+    margin: 4px 0;
+  }
+}
+
+/* --- Contenedor del Botón Principal ("Proceder a agendar") --- */
+.contenedor-accion {
+  margin-top: 10px;
+
+  /* Estilos específicos para el botón principal grande */
+  .boton-checkout {
+    --background: #134074; /* Fondo azul oscuro */
+    --background-hover: #0b2545; /* Azul aún más oscuro al hacer hover */
+    --color: #ffffff; /* Texto blanco */
+    --border-radius: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    height: 48px;
+    margin: 0;
+    text-transform: none; /* Previene que Angular/Ionic lo ponga todo en MAYÚSCULAS */
+  }
+}
+
+/* --- Estado Vacío (Mensaje cuando no hay servicios) --- */
+/* Nota: Este bloque se aplica a la sección del HTML que dejamos comentada */
+.estado-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+
+  ion-icon {
+    font-size: 64px;
+    color: #8d99ae;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 18px;
+    font-weight: 800;
+    color: #0b2545;
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    font-size: 13px;
+    color: #8d99ae;
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+  }
+
+  .boton-explorar {
+    --background: #134074;
+    --border-radius: 14px;
+    font-weight: 700;
+    text-transform: none;
+  }
+}
+
+/* --- Barra de Navegación Inferior --- */
+.navegacion-inferior {
+  position: fixed; /* Ancla la barra abajo, sin importar cuánto se haga scroll */
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: #ffffff;
+  border-top: 1px solid #eef0f2;
+  display: flex;
+  justify-content: space-around; /* Reparte el espacio horizontalmente para los 4 botones */
+  align-items: center;
+  z-index: 1000; /* Lo mantiene por encima de todos los demás elementos */
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02); /* Sombrita hacia arriba */
+
+  /* Estilos de cada botón de la barra */
+  .elemento-navegacion {
+    display: flex;
+    flex-direction: column; /* Apila el icono sobre el texto */
+    align-items: center;
+    color: #8d99ae; /* Gris claro (inactivo) */
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    position: relative; /* Necesario para posicionar la barrita azul debajo (indicador) */
+
+    ion-icon {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    /* Estilos cuando el botón es el ACTIVO (en este caso, Carrito) */
+    &.activo {
+      color: #134074; /* Cambia a azul oscuro */
+
+      /* Pequeña barrita azul que aparece debajo del botón activo */
+      .indicador {
+        position: absolute;
+        bottom: -8px;
+        width: 20px;
+        height: 3px;
+        background: #134074;
+        border-radius: 2px;
+      }
+    }
+  }
+}

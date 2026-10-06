@@ -12,15 +12,25 @@ import {
   IonSearchbar, 
   IonTitle 
 } from '@ionic/angular';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { searchOutline, cartOutline, constructOutline, waterOutline, shieldOutline, carOutline, chevronBackOutline, homeOutline, calendarOutline, personOutline } from 'ionicons/icons';
-import { CartService } from '../services/cart.service';
+import { 
+  searchOutline, 
+  cartOutline, 
+  constructOutline, 
+  waterOutline, 
+  shieldOutline, 
+  carOutline, 
+  chevronBackOutline, 
+  homeOutline, 
+  calendarOutline, 
+  personOutline 
+} from 'ionicons/icons';
 
 @Component({
-  selector: 'app-services',
-  templateUrl: './services.page.html',
-  styleUrls: ['./services.page.scss'],
+  selector: 'app-services', // Se mantiene el selector original
+  templateUrl: './services.page.html', // Enlace al HTML estático adaptado
+  styleUrls: ['./services.page.scss'], // Enlace al SCSS adaptado
   standalone: true,
   imports: [
     CommonModule, 
@@ -38,44 +48,9 @@ import { CartService } from '../services/cart.service';
   ]
 })
 export class ServicesPage implements OnInit {
-  selectedCategory = 'Todos';
-  searchQuery = '';
 
-  servicesList = [
-    {
-      title: 'Afinación general',
-      description: 'Mejora el rendimiento de tu motor y reduce el consumo de combustible.',
-      price: '$1,200',
-      icon: 'construct-outline',
-      category: 'Motor'
-    },
-    {
-      title: 'Cambio de aceite',
-      description: 'Lubricación y protección para un mejor rendimiento del motor.',
-      price: '$600',
-      icon: 'water-outline',
-      category: 'Motor'
-    },
-    {
-      title: 'Revisión de frenos',
-      description: 'Seguridad y confianza en cada kilómetro.',
-      price: '$800',
-      icon: 'shield-outline',
-      category: 'Frenos'
-    },
-    {
-      title: 'Diagnóstico por escáner',
-      description: 'Identifica fallas electrónicas y mantiene tu vehículo en óptimas condiciones.',
-      price: '$500',
-      icon: 'car-outline',
-      category: 'Motor'
-    }
-  ];
-
-  constructor(
-    private cartService: CartService, 
-    private router: Router
-  ) {
+  constructor() {
+    // Registro de todos los iconos utilizados en esta vista
     addIcons({ 
       searchOutline, 
       cartOutline, 
@@ -90,30 +65,15 @@ export class ServicesPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
-  filterCategory(category: string) {
-    this.selectedCategory = category;
+  ngOnInit() {
+    // Componente limpio enfocado en el mockup visual estático
   }
 
-  // <--- Agrega el servicio y redirige automáticamente al carrito
-  addToCart(service: any, event: Event) {
-    event.stopPropagation(); 
-    this.cartService.addItem(service);
-    this.router.navigate(['/cart']);
-  }
-
-  // Método para navegar a la vista del carrito desde el menú inferior
-  goToCart() {
-    this.router.navigate(['/cart']);
-  }
-
-  get filteredServices() {
-    return this.servicesList.filter(service => {
-      const matchesCategory = this.selectedCategory === 'Todos' || service.category === this.selectedCategory;
-      const matchesSearch = service.title.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-                            service.description.toLowerCase().includes(this.searchQuery.toLowerCase());
-      return matchesCategory && matchesSearch;
-    });
-  }
+  /* 
+   * NOTA DE LIMPIEZA:
+   * 1. Se eliminó la inyección de `CartService` y `Router`.
+   * 2. Se removieron las variables de estado (`selectedCategory`, `searchQuery`, `servicesList`) 
+   *    y los métodos dinámicos (`filterCategory`, `addToCart`, `goToCart`, `filteredServices`).
+   * 3. La navegación se maneja directamente en el HTML mediante atributos `routerLink`.
+   */
 }

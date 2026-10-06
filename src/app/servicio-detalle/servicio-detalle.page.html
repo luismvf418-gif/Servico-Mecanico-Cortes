@@ -1,0 +1,123 @@
+<!-- Encabezado superior sin bordes -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-detalle">
+    <ion-buttons slot="start">
+      <!-- Botón de retroceso hacia la lista de servicios -->
+      <ion-back-button defaultHref="/servicios" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle del servicio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido principal con padding -->
+<ion-content class="ion-padding contenido-detalle">
+  <div class="contenedor-detalle">
+
+    <!-- Tarjeta Principal del Servicio (Versión estática con datos de ejemplo) -->
+    <div class="tarjeta-servicio-principal">
+      <div class="fila-encabezado-servicio">
+        <div class="circulo-icono">
+          <ion-icon name="construct-outline"></ion-icon>
+        </div>
+        <div class="titulos-servicio">
+          <h2>Mantenimiento General</h2>
+          <p>Revisión completa de sistemas esenciales</p>
+        </div>
+      </div>
+
+      <div class="fila-meta-servicio">
+        <div class="elemento-meta">
+          <div class="icono-meta">
+            <ion-icon name="pricetag-outline"></ion-icon>
+          </div>
+          <div class="textos-meta">
+            <span class="etiqueta">Precio</span>
+            <span class="valor">$1,200 MXN</span>
+          </div>
+        </div>
+
+        <div class="divisor-meta"></div>
+
+        <div class="elemento-meta">
+          <div class="icono-meta">
+            <ion-icon name="time-outline"></ion-icon>
+          </div>
+          <div class="textos-meta">
+            <span class="etiqueta">Duración estimada</span>
+            <span class="valor">2 horas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección Descripción -->
+    <div class="bloque-seccion">
+      <h3>Descripción</h3>
+      <p class="texto-descripcion">
+        Servicio preventivo diseñado para asegurar el funcionamiento óptimo de tu automóvil. Incluye revisión de fluidos, filtros, frenos y puntos de seguridad clave.
+      </p>
+    </div>
+
+    <!-- Sección ¿Qué incluye? (Estática) -->
+    <div class="bloque-seccion">
+      <h3>¿Qué incluye?</h3>
+      <div class="tarjeta-incluye">
+        
+        <div class="elemento-incluye">
+          <div class="icono-incluye">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </div>
+          <span class="texto-incluye">Cambio de aceite de motor y filtro</span>
+        </div>
+
+        <div class="elemento-incluye">
+          <div class="icono-incluye">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </div>
+          <span class="texto-incluye">Inspección de pastillas y discos de freno</span>
+        </div>
+
+        <div class="elemento-incluye no-borde">
+          <div class="icono-incluye">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </div>
+          <span class="texto-incluye">Revisión de niveles de líquidos y presión de llantas</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Botones de Acción (Redirección directa mediante routerLink) -->
+    <div class="botones-accion">
+      <ion-button expand="block" class="boton-agregar-carrito" routerLink="/carrito">
+        <ion-icon name="cart-outline" slot="start"></ion-icon>
+        Agregar al carrito
+      </ion-button>
+      
+      <ion-button expand="block" fill="clear" class="boton-volver" routerLink="/servicios">
+        Volver
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior estandarizada (Opción B para Perfil) -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Inicio</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/carrito">
+    <ion-icon name="cart-outline"></ion-icon>
+    <span>Carrito</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/citas-lista">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <span>Citas</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/perfil">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Perfil</span>
+  </div>
+</div>

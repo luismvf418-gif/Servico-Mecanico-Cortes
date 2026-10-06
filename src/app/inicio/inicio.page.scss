@@ -1,0 +1,177 @@
+/* :host controla el elemento raíz del componente para que ocupe toda la pantalla con fondo blanco */
+:host {
+  display: block;
+  background-color: #ffffff;
+  height: 100%;
+}
+
+/* --- Barra de Herramientas Superior --- */
+.barra-inicio {
+  --background: #ffffff;
+  padding: 10px 16px;
+}
+
+/* --- Logotipo --- */
+.contenedor-logo {
+  display: flex;
+  align-items: center;
+
+  .logo-app {
+    height: 48px; /* Tamaño grande y proporcionado como en la maqueta original */
+    width: auto;
+    object-fit: contain;
+  }
+}
+
+/* --- Contenido Principal --- */
+.contenido-inicio {
+  --background: #ffffff !important;
+  --padding-bottom: 90px; /* Margen inferior para que la barra fija no cubra el contenido */
+}
+
+/* Contenedor central con ancho máximo para mantener estética de app móvil */
+.contenedor-inicio {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5px 8px 20px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* --- Sección de Bienvenida ("¡Hola, Usuario!") --- */
+.seccion-bienvenida {
+  margin-top: 5px;
+  
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #0b2545;
+    margin: 0 0 2px 0;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #8d99ae;
+    margin: 0;
+  }
+}
+
+/* --- Cuadrícula de Menú (2 columnas) --- */
+.cuadricula-menu {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+/* --- Tarjeta Individual de la Cuadrícula --- */
+.tarjeta-dashboard {
+  background: #ffffff;
+  border: 1px solid #eef0f2;
+  border-radius: 18px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 170px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.1s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Círculo contenedor del icono principal */
+  .circulo-icono {
+    width: 42px;
+    height: 42px;
+    background: #f0f4f8;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 22px;
+      color: #134074;
+    }
+  }
+
+  /* Textos descriptivos dentro de la tarjeta */
+  .info-tarjeta {
+    margin-top: 10px;
+
+    h3 {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0b2545;
+      margin: 0 0 4px 0;
+    }
+
+    p {
+      font-size: 11px;
+      color: #8d99ae;
+      margin: 0;
+      line-height: 1.2;
+    }
+  }
+
+  /* Icono de flecha flotante en la esquina inferior derecha */
+  .icono-flecha {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    width: 26px;
+    height: 26px;
+    background: #f8f9fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 14px;
+      color: #134074;
+    }
+  }
+}
+
+/* --- Barra de Navegación Inferior (Estandarizada) --- */
+.navegacion-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: #ffffff;
+  border-top: 1px solid #eef0f2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02);
+
+  .elemento-navegacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8d99ae;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    position: relative;
+
+    ion-icon {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    /* Resalta en azul el elemento activo (en este caso, Inicio) */
+    &.activo {
+      color: #134074;
+    }
+  }
+}

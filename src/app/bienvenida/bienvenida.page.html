@@ -1,0 +1,34 @@
+<!-- Contenedor principal de contenido de Ionic con un relleno (padding) interno y una clase personalizada -->
+<ion-content class="ion-padding bienvenida-contenido">
+  <div class="bienvenida-contenedor">
+    
+    <!-- Sección del logotipo y textos principales de identificación -->
+    <div class="seccion-logo">
+      <!-- Imagen del logotipo institucional del taller automotriz -->
+      <img src="assets/imagenes/Logotipo_inicial.png" alt="Logo Servicio Automotriz Cortes" class="imagen-logo" />
+      <div class="texto-marca">
+        <!-- Espacio reservado para agregar textos de marca adicionales si se requiere en un futuro -->
+      </div>
+    </div>
+
+    <!-- Sección descriptiva que comunica el propósito principal de la aplicación móvil -->
+    <div class="seccion-informacion">
+      <h2>Tu taller de confianza en tu bolsillo</h2>
+      <p>Agenda tus citas, consulta servicios y administra tus vehículos, todo en un solo lugar.</p>
+    </div>
+
+    <!-- Sección de botones interactivos de acción con enrutamiento visual (routerLink) -->
+    <div class="seccion-acciones">
+      <!-- Botón principal sólido que redirige a la vista de inicio de sesión o registro -->
+      <ion-button expand="block" routerLink="/iniciar-sesion" class="boton-comenzar">
+        Comenzar
+      </ion-button>
+      
+      <!-- Botón secundario transparente que también permite acceder al login -->
+      <ion-button expand="block" fill="clear" routerLink="/iniciar-sesion" class="boton-ingresar">
+        Iniciar sesión
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>

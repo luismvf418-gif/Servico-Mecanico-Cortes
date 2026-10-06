@@ -1,0 +1,217 @@
+/* :host asegura que el componente ocupe todo el alto disponible con fondo blanco */
+:host { 
+  display: block; 
+  background: #fff; 
+  height: 100%; 
+}
+
+/* --- Barra Superior --- */
+.barra-citas { 
+  --background: #fff; 
+  
+  ion-title { 
+    font-weight: 800; 
+    font-size: 18px; 
+    color: #0b2545; 
+    text-align: center; 
+  } 
+}
+
+/* --- Contenedor Principal --- */
+.contenido-citas { 
+  --background: #fff !important; 
+  --padding-bottom: 90px; /* Espacio inferior para la barra de navegación */
+}
+
+/* Limitador central para mantener estética móvil en web/desktop */
+.contenedor-citas { 
+  max-width: 450px; 
+  margin: 0 auto; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 14px; 
+  padding-bottom: 20px; 
+}
+
+/* --- Segmento de Pestañas (Próximamente / Historial) --- */
+.pestanas-segmento {
+  background: #f0f4f8; /* Fondo gris/azul muy suave */
+  border-radius: 14px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+
+  .boton-pestana {
+    flex: 1; /* Ambas pestañas ocupan el 50% del ancho */
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #8d99ae;
+    cursor: pointer;
+    transition: all 0.2s; /* Animación suave al cambiar de pestaña */
+
+    /* Estilo de la pestaña activa */
+    &.activa {
+      background: #134074;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(19, 64, 116, 0.2);
+    }
+  }
+}
+
+/* --- Contenedor de la Lista de Citas --- */
+.lista-citas {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* --- Tarjeta Individual de Cita --- */
+.tarjeta-cita {
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  /* Pequeño efecto de elevación al pasar el mouse (hover) */
+  &:hover { transform: translateY(-2px); }
+
+  /* Parte superior: Fecha y Detalles principales */
+  .parte-superior-tarjeta {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+
+    /* Cuadro de Fecha a la izquierda */
+    .insignia-fecha {
+      width: 60px;
+      background: #134074;
+      color: #fff;
+      border-radius: 12px;
+      padding: 8px 4px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+
+      .mes { font-size: 10px; font-weight: 800; letter-spacing: 0.5px; opacity: 0.9; }
+      .numero-dia { font-size: 20px; font-weight: 900; line-height: 1.2; margin: 2px 0; }
+      .nombre-dia { font-size: 10px; font-weight: 700; opacity: 0.8; }
+
+      /* Variante de color gris para cuando es una cita pasada (Historial) */
+      &.insignia-historial { background: #8d99ae; }
+    }
+
+    /* Detalles a la derecha de la fecha */
+    .info-derecha {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      /* Fila de la hora y la etiqueta de estado */
+      .fila-hora-estado {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .texto-hora { font-size: 14px; font-weight: 800; color: #0b2545; }
+
+        /* Etiqueta dinámica de estado */
+        .insignia-estado {
+          font-size: 11px;
+          font-weight: 700;
+          padding: 3px 8px;
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+
+          /* Colores según el estado */
+          &.confirmada { background: #e6f4ea; color: #137333; }
+          &.pendiente { background: #fef7e0; color: #b06000; }
+          &.completada { background: #f1f3f5; color: #495057; }
+
+          ion-icon { font-size: 13px; }
+        }
+      }
+
+      /* Datos del vehículo asignado a la cita */
+      .info-auto {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        ion-icon { font-size: 20px; color: #134074; flex-shrink: 0; }
+        h4 { font-size: 13px; font-weight: 800; color: #0b2545; margin: 0 0 1px 0; }
+        p { font-size: 11px; color: #8d99ae; margin: 0; font-weight: 600; }
+      }
+    }
+  }
+
+  /* Línea horizontal divisoria dentro de la tarjeta */
+  .divisor-tarjeta {
+    height: 1px;
+    background: #f1f3f5;
+    width: 100%;
+  }
+
+  /* Parte inferior: Resumen de servicios y flecha indicadora */
+  .parte-inferior-tarjeta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .resumen-servicios {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      
+      ion-icon { font-size: 16px; color: #134074; margin-top: 2px; }
+      
+      .texto-lista-servicios {
+        p { font-size: 11px; color: #495057; margin: 0 0 2px 0; font-weight: 500; }
+      }
+    }
+
+    .flecha { font-size: 16px; color: #8d99ae; }
+  }
+}
+
+/* --- Barra de Navegación Inferior Estándar --- */
+.navegacion-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: #fff;
+  border-top: 1px solid #eef0f2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  
+  .elemento-navegacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8d99ae;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    
+    /* Pinta de azul intenso el elemento activo actual */
+    &.activo { color: #134074; }
+    
+    ion-icon { font-size: 22px; margin-bottom: 2px; }
+  }
+}

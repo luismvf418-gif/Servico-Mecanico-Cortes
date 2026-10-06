@@ -1,0 +1,326 @@
+/* :host controla el elemento raíz del componente Angular. Asegura que ocupe todo el espacio y tenga fondo blanco. */
+:host { 
+  display: block; 
+  background: #fff; 
+  height: 100%; 
+}
+
+/* --- Barra de Herramientas Superior --- */
+.barra-herramientas { 
+  --background: #fff; 
+  
+  /* Estilo del título centrado */
+  ion-title { 
+    font-weight: 800; 
+    font-size: 18px; 
+    color: #0b2545; 
+    text-align: center; 
+    padding-right: 48px; /* Equilibra el espacio ocupado por el botón izquierdo de regresar */
+  } 
+  
+  /* Color de la flecha de retroceso */
+  ion-back-button { 
+    --color: #0b2545; 
+  } 
+}
+
+/* --- Contenido Principal --- */
+.contenido-resumen { 
+  --background: #fff !important; 
+  --padding-bottom: 90px; /* Margen inferior para que la barra de navegación no tape el último botón */
+}
+
+/* Contenedor central limitado a 450px para dar un estilo "app móvil" centrado incluso en pantallas grandes */
+.contenedor-principal { 
+  max-width: 450px; 
+  margin: 0 auto; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 14px; /* Separación automática entre cada tarjeta del resumen */
+  padding-bottom: 20px; 
+}
+
+/* --- Tarjeta Genérica de Resumen --- */
+.tarjeta-resumen {
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02); /* Sombreado casi invisible que aporta un poco de profundidad */
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  /* Encabezado interno de la tarjeta (Ej. el que dice "Automóvil" o "Fecha y hora") */
+  .fila-encabezado-tarjeta {
+    display: flex;
+    justify-content: space-between; /* Separa el título (izquierda) del enlace Editar (derecha) */
+    align-items: center;
+    
+    .titulo-con-icono {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      ion-icon { font-size: 20px; color: #134074; }
+      h3 { font-size: 14px; font-weight: 800; color: #0b2545; margin: 0; }
+    }
+    
+    /* Enlace dinámico "Editar >" */
+    .enlace-editar { 
+      font-size: 12px; 
+      font-weight: 700; 
+      color: #134074; 
+      cursor: pointer; 
+    }
+  }
+}
+
+/* --- Sección: Automóvil (Pre-confirmación) --- */
+.contenido-info-auto {
+  .texto-auto {
+    h4 { font-size: 15px; font-weight: 800; color: #0b2545; margin: 0 0 2px 0; }
+    p { font-size: 12px; color: #8d99ae; margin: 0 0 6px 0; }
+    
+    /* Etiqueta resaltada para las placas del vehículo */
+    .insignia-placa { 
+      font-size: 11px; 
+      font-weight: 700; 
+      color: #134074; 
+      background: #eef2f7; 
+      padding: 2px 8px; 
+      border-radius: 6px; 
+      display: inline-block; 
+      margin-right: 8px; 
+    }
+    
+    .texto-km { font-size: 11px; color: #8d99ae; font-weight: 600; }
+  }
+}
+
+/* --- Sección: Fecha y Hora (Pre-confirmación) --- */
+.info-fecha-hora {
+  p { 
+    font-size: 13px; 
+    color: #495057; 
+    margin: 0; 
+    font-weight: 600; 
+    
+    /* Estilo específico para resaltar la hora */
+    &.texto-hora { 
+      color: #134074; 
+      font-weight: 800; 
+      margin-top: 2px; 
+    } 
+  }
+}
+
+/* --- Sección: Lista de Servicios (Pre-confirmación) --- */
+.lista-servicios {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-bottom: 1px solid #eef0f2; /* Línea divisoria antes de mostrar los costos totales */
+  padding-bottom: 12px;
+
+  .item-servicio {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    .detalles-servicio {
+      h4 { font-size: 13px; font-weight: 700; color: #0b2545; margin: 0 0 2px 0; }
+      p { font-size: 11px; color: #8d99ae; margin: 0; }
+    }
+    
+    .precios-servicio {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #495057;
+      
+      .precio { color: #0b2545; }
+    }
+  }
+}
+
+/* --- Desglose Financiero (Pre-confirmación) --- */
+.desglose-costos {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  
+  .fila-costo {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #8d99ae;
+    
+    /* Destaca la fila de Total Estimado */
+    &.fila-total {
+      font-size: 15px;
+      font-weight: 800;
+      color: #0b2545;
+      margin-top: 4px;
+      border-top: 1px dashed #eef0f2; /* Línea punteada que separa el total de los impuestos */
+      padding-top: 8px;
+      
+      .precio-total { color: #134074; }
+    }
+  }
+}
+
+/* --- Nota Informativa (Ej. "El precio puede variar") --- */
+.tarjeta-nota-informativa {
+  background: #f0f4f8; /* Fondo azul clarito */
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  ion-icon { font-size: 22px; color: #134074; flex-shrink: 0; }
+  p { font-size: 12px; color: #134074; margin: 0; font-weight: 500; line-height: 1.3; }
+}
+
+/* =======================================================
+   ESTILOS PARA LA VISTA DE ÉXITO (Cita Confirmada)
+   ======================================================= */
+.contenedor-exito {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  
+  /* Icono grande y mensaje de confirmación superior */
+  .encabezado-exito {
+    margin-bottom: 5px;
+    
+    .envoltorio-icono-exito {
+      width: 65px;
+      height: 65px;
+      background: #e6f4ea; /* Fondo verde claro */
+      color: #137333; /* Texto e icono verde oscuro */
+      border-radius: 50%; /* Lo hace un círculo perfecto */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 10px auto; /* Lo centra horizontalmente */
+      
+      ion-icon { font-size: 38px; }
+    }
+    
+    h2 { font-size: 20px; font-weight: 800; color: #0b2545; margin: 0 0 4px 0; }
+    p { font-size: 13px; color: #8d99ae; margin: 0; }
+  }
+  
+  /* Tarjeta especial que resalta el Folio en color rojo oscuro */
+  .tarjeta-folio {
+    background: #f8fbff;
+    border-color: #134074;
+    
+    .fila-folio {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      
+      .etiqueta { font-size: 11px; color: #8d99ae; font-weight: 600; text-transform: uppercase; }
+      h3 { font-size: 16px; font-weight: 900; color: #c53030; margin: 2px 0 0 0; letter-spacing: 0.5px; }
+      .icono-copiar { font-size: 20px; color: #134074; cursor: pointer; }
+    }
+  }
+  
+  /* Filas que resumen qué se acaba de agendar (Auto, fecha, servicios) */
+  .fila-detalle-confirmado {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    text-align: left;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f1f3f5;
+    
+    /* Le quita el borde a la última fila para que no sobre una línea */
+    &:last-child { border-bottom: none; padding-bottom: 0; }
+    
+    ion-icon { font-size: 20px; color: #134074; margin-top: 2px; }
+    .etiqueta { font-size: 11px; color: #8d99ae; font-weight: 600; display: block; }
+    p { font-size: 13px; color: #0b2545; font-weight: 700; margin: 2px 0 0 0; }
+    
+    /* Estilo del total a pagar al final del resumen */
+    &.total-confirmado {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed #eef0f2;
+      padding-top: 8px;
+      
+      .etiqueta { font-size: 14px; font-weight: 800; color: #0b2545; }
+      .precio-total { font-size: 16px; font-weight: 900; color: #134074; }
+    }
+  }
+}
+
+/* --- Contenedor de Botones (Generales y de Éxito) --- */
+.contenedor-accion {
+  margin-top: 10px;
+  
+  /* Botón Azul Sólido */
+  .boton-primario {
+    --background: #134074;
+    --border-radius: 14px;
+    font-weight: 700;
+    height: 48px;
+    text-transform: none;
+    font-size: 15px;
+  }
+  
+  /* Agrupación de botones al finalizar el proceso (Ver citas / Ir a inicio) */
+  &.acciones-exito {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Separa los dos botones un poco */
+    
+    /* Botón con fondo transparente y borde */
+    .boton-contorno {
+      --border-color: #cbd5e1;
+      --color: #495057;
+      --border-radius: 14px;
+      font-weight: 700;
+      height: 48px;
+      text-transform: none;
+    }
+  }
+}
+
+/* --- Barra de Navegación Inferior (Estandarizada) --- */
+.navegacion-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: #fff;
+  border-top: 1px solid #eef0f2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  
+  .elemento-navegacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8d99ae;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    
+    /* El elemento activo se pinta de azul */
+    &.activo { color: #134074; }
+    
+    ion-icon { font-size: 22px; margin-bottom: 2px; }
+  }
+}

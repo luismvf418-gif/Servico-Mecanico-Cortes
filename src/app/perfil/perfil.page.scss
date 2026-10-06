@@ -1,0 +1,200 @@
+:host {
+  display: block;
+  background-color: #ffffff;
+  height: 100%;
+}
+
+.barra-perfil {
+  --background: #ffffff;
+  ion-title {
+    font-weight: 800;
+    font-size: 18px;
+    color: #0b2545;
+    text-align: center;
+    padding-right: 48px;
+  }
+  ion-back-button {
+    --color: #0b2545;
+  }
+}
+
+.contenido-perfil {
+  --background: #ffffff !important;
+  --padding-bottom: 90px;
+}
+
+.contenedor-perfil {
+  max-width: 450px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 5px 4px 20px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Tarjeta de Usuario */
+.tarjeta-usuario {
+  background: #f8fbff;
+  border: 1px solid #eef0f2;
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+
+  .avatar-usuario {
+    width: 60px;
+    height: 60px;
+    background: #134074;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 30px;
+      color: #ffffff;
+    }
+  }
+
+  .info-usuario {
+    h2 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #0b2545;
+      margin: 0 0 2px 0;
+    }
+    p {
+      font-size: 13px;
+      color: #8d99ae;
+      margin: 0 0 6px 0;
+    }
+    .insignia-telefono {
+      font-size: 11px;
+      font-weight: 700;
+      color: #134074;
+      background: #eef2f7;
+      padding: 2px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+  }
+}
+
+/* Lista de Opciones */
+.lista-opciones {
+  background: #ffffff;
+  border: 1px solid #eef0f2;
+  border-radius: 20px;
+  padding: 8px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+
+  .opcion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f3f5;
+    cursor: pointer;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .opcion-izq {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .icono-opcion {
+        width: 38px;
+        height: 38px;
+        background: #eef2f7;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        ion-icon {
+          font-size: 20px;
+          color: #134074;
+        }
+      }
+
+      span {
+        font-size: 14px;
+        font-weight: 700;
+        color: #0b2545;
+      }
+    }
+
+    .flecha-derecha {
+      font-size: 16px;
+      color: #8d99ae;
+    }
+  }
+}
+
+/* Botón Cerrar Sesión */
+.contenedor-salir {
+  margin-top: 10px;
+
+  .boton-cerrar-sesion {
+    --background: transparent;
+    --color: #ef4444;
+    --border-color: #fecaca;
+    --border-radius: 16px;
+    --border-width: 1.5px;
+    font-weight: 700;
+    height: 48px;
+    text-transform: none;
+    font-size: 15px;
+    border: 1.5px solid #fecaca;
+    border-radius: 16px;
+
+    ion-icon {
+      font-size: 20px;
+      margin-right: 6px;
+    }
+  }
+}
+
+/* Barra inferior */
+.navegacion-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: #ffffff;
+  border-top: 1px solid #eef0f2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02);
+
+  .elemento-navegacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8d99ae;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+
+    ion-icon {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    &.activo {
+      color: #134074;
+    }
+  }
+}

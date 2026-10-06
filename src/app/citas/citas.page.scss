@@ -1,0 +1,231 @@
+/* :host asegura que la vista ocupe todo el espacio disponible con fondo blanco */
+:host {
+  display: block;
+  background-color: #ffffff;
+  height: 100%;
+}
+
+/* --- Barra de Herramientas Superior --- */
+.barra-citas {
+  --background: #ffffff;
+  
+  ion-title {
+    font-weight: 800;
+    font-size: 18px;
+    color: #0b2545;
+    text-align: center;
+    padding-right: 48px; /* Equilibra visualmente el espacio del botón de regresar */
+  }
+  
+  ion-back-button {
+    --color: #0b2545;
+  }
+}
+
+/* --- Área de Contenido --- */
+.contenido-citas {
+  --background: #ffffff !important;
+  --padding-bottom: 90px; /* Evita que la barra inferior tape el botón de continuar */
+}
+
+/* Contenedor centralizado y con ancho máximo para pantallas grandes */
+.contenedor-citas {
+  max-width: 450px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 20px;
+}
+
+/* --- Tarjeta del Vehículo Seleccionado --- */
+.tarjeta-vehiculo {
+  background: #fff;
+  border: 1px solid #eef0f2;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  cursor: pointer;
+  transition: all 0.2s; /* Efecto suave de transición */
+
+  /* Estilo cuando está seleccionada (borde y fondo azul claro) */
+  &.seleccionada {
+    border-color: #134074;
+    background: #f8fbff;
+  }
+
+  .tarjeta-izq {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    /* Contenedor cuadrado para el icono del auto */
+    .icono-auto {
+      width: 45px;
+      height: 45px;
+      background: #f0f4f8;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      ion-icon {
+        font-size: 22px;
+        color: #134074;
+      }
+    }
+
+    /* Detalles de texto del vehículo */
+    .detalles-tarjeta {
+      h3 {
+        font-size: 15px;
+        font-weight: 800;
+        color: #0b2545;
+        margin: 0 0 2px 0;
+      }
+      p {
+        font-size: 12px;
+        color: #8d99ae;
+        margin: 0 0 4px 0;
+      }
+      
+      /* Etiqueta azul claro para la placa y el kilometraje */
+      .placa-km {
+        font-size: 11px;
+        font-weight: 700;
+        color: #134074;
+        background: #eef2f7;
+        padding: 2px 8px;
+        border-radius: 6px;
+        display: inline-block;
+      }
+    }
+  }
+
+  .tarjeta-der {
+    .texto-cambiar {
+      font-size: 12px;
+      font-weight: 700;
+      color: #134074;
+    }
+  }
+}
+
+/* --- Estilos Generales para las Secciones --- */
+/* Tarjeta blanca genérica para agrupar contenido (Fecha, Horarios, Notas) */
+.tarjeta-seccion {
+  background: #ffffff;
+  border: 1px solid #eef0f2;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.titulo-seccion {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0b2545;
+  margin: 0 0 10px 0;
+}
+
+/* --- Calendario (Ion-Datetime) --- */
+.calendario-personalizado {
+  width: 100%;
+  max-width: 100%;
+  background: transparent;
+  --background: transparent; /* Hace transparente el fondo nativo del componente */
+  color: #0b2545;
+}
+
+/* --- Botones de Horarios --- */
+.bloques-tiempo {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas de igual tamaño */
+  gap: 10px; /* Separación entre botones */
+
+  .chip-tiempo {
+    background: #f8f9fa; /* Fondo gris claro inactivo */
+    border: 1px solid #eef0f2;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #495057;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    /* Estilo del horario cuando está seleccionado (Fondo azul oscuro) */
+    &.activo {
+      background: #0b2545;
+      color: #ffffff;
+      border-color: #0b2545;
+    }
+  }
+}
+
+/* --- Área de Texto para Notas --- */
+.textarea-personalizado {
+  width: 100%;
+  background: #f8f9fa;
+  border: 1px solid #eef0f2;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 13px;
+  color: #0b2545;
+  outline: none; /* Quita el borde azul por defecto al hacer clic */
+  resize: none; /* Evita que el usuario estire el área de texto */
+}
+
+/* --- Botón Inferior de Continuar --- */
+.contenedor-accion {
+  margin-top: 10px;
+  
+  .boton-confirmar {
+    --background: #134074;
+    --border-radius: 14px;
+    font-weight: 700;
+    height: 50px;
+    text-transform: none;
+    font-size: 15px;
+  }
+}
+
+/* --- Barra de Navegación Inferior (Estandarizada) --- */
+.navegacion-inferior {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65px;
+  background: #ffffff;
+  border-top: 1px solid #eef0f2;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.02);
+
+  .elemento-navegacion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #8d99ae;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    position: relative;
+
+    ion-icon {
+      font-size: 22px;
+      margin-bottom: 2px;
+    }
+
+    &.activo {
+      color: #134074;
+    }
+  }
+}

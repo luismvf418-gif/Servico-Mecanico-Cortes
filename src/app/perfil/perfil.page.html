@@ -1,0 +1,92 @@
+<!-- Encabezado superior sin bordes -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-perfil">
+    <ion-buttons slot="start">
+      <!-- Botón de retroceso hacia la pantalla de inicio -->
+      <ion-back-button defaultHref="/inicio" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido principal con padding -->
+<ion-content class="ion-padding contenido-perfil">
+  <div class="contenedor-perfil">
+
+    <!-- Tarjeta de Información del Usuario -->
+    <div class="tarjeta-usuario">
+      <div class="avatar-usuario">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+      <div class="info-usuario">
+        <h2>Carlos Cortés</h2>
+        <p>carlos.cortes&#64;email.com</p>
+        <span class="insignia-telefono">+52 55 1234 5678</span>
+      </div>
+    </div>
+
+    <!-- Opciones del Menú de Perfil (Estáticas y navegables) -->
+    <div class="lista-opciones">
+      
+      <div class="opcion-item" routerLink="/vehiculos">
+        <div class="opcion-izq">
+          <div class="icono-opcion">
+            <ion-icon name="car-outline"></ion-icon>
+          </div>
+          <span>Mis automóviles</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="flecha-derecha"></ion-icon>
+      </div>
+
+      <div class="opcion-item" routerLink="/citas-lista">
+        <div class="opcion-izq">
+          <div class="icono-opcion">
+            <ion-icon name="calendar-outline"></ion-icon>
+          </div>
+          <span>Historial de citas</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="flecha-derecha"></ion-icon>
+      </div>
+
+      <div class="opcion-item" routerLink="/metodo-pago">
+        <div class="opcion-izq">
+          <div class="icono-opcion">
+            <ion-icon name="card-outline"></ion-icon>
+          </div>
+          <span>Métodos de pago</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="flecha-derecha"></ion-icon>
+      </div>
+
+    </div>
+
+    <!-- Botón de Cerrar Sesión -->
+    <div class="contenedor-salir">
+      <ion-button expand="block" class="boton-cerrar-sesion" routerLink="/iniciar-sesion">
+        <ion-icon name="log-out-outline" slot="start"></ion-icon>
+        Cerrar sesión
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior estandarizada (Con Perfil activo) -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Inicio</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/carrito">
+    <ion-icon name="cart-outline"></ion-icon>
+    <span>Carrito</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/citas">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <span>Citas</span>
+  </div>
+  <div class="elemento-navegacion activo" routerLink="/perfil">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Perfil</span>
+  </div>
+</div>

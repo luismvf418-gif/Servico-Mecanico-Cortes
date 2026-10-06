@@ -1,0 +1,113 @@
+<!-- Encabezado superior de la página sin bordes, ideal para un diseño móvil limpio -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-herramientas">
+    <!-- Botón de retroceso ubicado a la izquierda para regresar a la vista de vehículos -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/vehiculos" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <!-- Título principal centrado en la barra superior -->
+    <ion-title>Registrar automóvil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenedor principal de la página con un margen de espacio interno -->
+<ion-content class="ion-padding contenido-principal">
+  <div class="contenedor-principal">
+    
+    <!-- Sección superior que contiene una ilustración visual y los textos de bienvenida -->
+    <div class="encabezado-ilustracion">
+      <div class="circulo-auto">
+        <!-- Icono representativo del automóvil -->
+        <ion-icon name="car-outline"></ion-icon>
+      </div>
+      <h2>Agrega tu automóvil</h2>
+      <p>Completa la información de tu vehículo para administrarlo fácilmente.</p>
+    </div>
+
+    <!-- Tarjeta contenedora del formulario de registro (Estética y limpia) -->
+    <div class="tarjeta-formulario">
+      
+      <!-- Grupo de entrada para la Marca -->
+      <div class="grupo-campo">
+        <label>Marca</label>
+        <input type="text" placeholder="Ej. Toyota, Nissan, Ford..." />
+      </div>
+
+      <!-- Grupo de entrada para el Modelo -->
+      <div class="grupo-campo">
+        <label>Modelo</label>
+        <input type="text" placeholder="Ej. Corolla, Sentra, Versa..." />
+      </div>
+
+      <!-- Grupo de entrada para la Matrícula o Placa -->
+      <div class="grupo-campo">
+        <label>Matrícula</label>
+        <input type="text" placeholder="Ej. ABC-123" />
+      </div>
+
+      <!-- Grupo selector para elegir el Año del vehículo -->
+      <div class="grupo-campo">
+        <label>Año</label>
+        <select>
+          <option value="" disabled selected>Selecciona el año</option>
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+          <option value="2022">2022</option>
+          <option value="2021">2021</option>
+          <option value="2020">2020</option>
+        </select>
+      </div>
+
+      <!-- Grupo de entrada numérica para el Kilometraje -->
+      <div class="grupo-campo">
+        <label>Kilometraje (km)</label>
+        <input type="number" placeholder="Ej. 45000" />
+      </div>
+
+      <!-- Grupo selector para el Color del auto -->
+      <div class="grupo-campo">
+        <label>Color</label>
+        <select>
+          <option value="" disabled selected>Selecciona el color</option>
+          <option value="Blanco">Blanco</option>
+          <option value="Negro">Negro</option>
+          <option value="Gris">Gris</option>
+          <option value="Plata">Plata</option>
+          <option value="Rojo">Rojo</option>
+          <option value="Azul">Azul</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Botones de acción inferior (Guardar y Cancelar) -->
+    <div class="acciones-botones">
+      <ion-button expand="block" class="boton-guardar">Guardar automóvil</ion-button>
+      <ion-button expand="block" fill="clear" class="boton-cancelar">Cancelar</ion-button>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior fija para cambiar de sección rápidamente -->
+<div class="navegacion-inferior">
+  <!-- Cada elemento (item) representa un botón de acceso directo a otra sección -->
+  <div class="elemento-navegacion" routerLink="/inicio">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Inicio</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/carrito">
+    <ion-icon name="cart-outline"></ion-icon>
+    <span>Carrito</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/citas">
+    <ion-icon name="calendar-outline"></ion-icon>
+    <span>Citas</span>
+  </div>
+  <div class="elemento-navegacion" routerLink="/perfil">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Perfil</span>
+  </div>
+</div>

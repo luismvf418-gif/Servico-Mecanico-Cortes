@@ -1,0 +1,101 @@
+<!-- Encabezado superior sin bordes -->
+<ion-header class="ion-no-border">
+  <ion-toolbar class="barra-herramientas">
+    <ion-buttons slot="start">
+      <!-- Botón de retroceso hacia la vista de citas/fecha y hora -->
+      <ion-back-button defaultHref="/citas" text="" icon="chevron-back-outline"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Método de pago</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- Contenido principal con padding -->
+<ion-content class="ion-padding contenido-principal">
+  <div class="contenedor-principal">
+    
+    <p class="subtitulo">Selecciona un método de pago</p>
+
+    <!-- Opciones de pago (Mockup estático, dejamos preseleccionada la tarjeta visualmente) -->
+    <div class="lista-metodos">
+      
+      <!-- 1. Tarjeta de crédito/débito -->
+      <div class="tarjeta-metodo seleccionada">
+        <div class="metodo-izq">
+          <div class="punto-radio activo"></div>
+          <div class="icono-metodo"><ion-icon name="card-outline"></ion-icon></div>
+          <div class="info-metodo">
+            <h3>Tarjeta de crédito/débito</h3>
+            <p>Pago de forma segura con tu tarjeta</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Transferencia bancaria -->
+      <div class="tarjeta-metodo">
+        <div class="metodo-izq">
+          <div class="punto-radio"></div>
+          <div class="icono-metodo"><ion-icon name="business-outline"></ion-icon></div>
+          <div class="info-metodo">
+            <h3>Transferencia bancaria</h3>
+            <p>Realiza el pago desde tu banco</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Pago en taller -->
+      <div class="tarjeta-metodo">
+        <div class="metodo-izq">
+          <div class="punto-radio"></div>
+          <div class="icono-metodo"><ion-icon name="card-outline"></ion-icon></div>
+          <div class="info-metodo">
+            <h3>Pago en taller</h3>
+            <p>Realiza el pago al momento de tu cita</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Formulario de tarjeta (Estático visible para mostrar diseño completo) -->
+    <div class="seccion-formulario-tarjeta">
+      <h3>Datos de la tarjeta</h3>
+      
+      <div class="grupo-entrada">
+        <label>Número de tarjeta</label>
+        <input type="text" placeholder="1234 5678 9012 3456" />
+      </div>
+
+      <div class="fila-entradas">
+        <div class="grupo-entrada">
+          <label>Fecha de expiración</label>
+          <input type="text" placeholder="MM/AA" />
+        </div>
+        <div class="grupo-entrada">
+          <label>CVV</label>
+          <input type="password" placeholder="123" maxlength="4" />
+        </div>
+      </div>
+
+      <div class="grupo-entrada">
+        <label>Nombre del titular</label>
+        <input type="text" placeholder="Como aparece en la tarjeta" />
+      </div>
+    </div>
+
+    <!-- Botón Continuar (redirige al resumen de la cita) -->
+    <div class="contenedor-accion">
+      <ion-button expand="block" class="boton-continuar" routerLink="/cita-resumen">
+        Continuar
+      </ion-button>
+    </div>
+
+  </div>
+</ion-content>
+
+<!-- Barra de navegación inferior estandarizada (Opción B para Perfil) -->
+<div class="navegacion-inferior">
+  <div class="elemento-navegacion" routerLink="/inicio"><ion-icon name="home-outline"></ion-icon><span>Inicio</span></div>
+  <div class="elemento-navegacion" routerLink="/carrito"><ion-icon name="cart-outline"></ion-icon><span>Carrito</span></div>
+  <div class="elemento-navegacion activo" routerLink="/citas-lista"><ion-icon name="calendar-outline"></ion-icon><span>Citas</span></div>
+  <div class="elemento-navegacion" routerLink="/perfil"><ion-icon name="person-outline"></ion-icon><span>Perfil</span></div>
+</div>
