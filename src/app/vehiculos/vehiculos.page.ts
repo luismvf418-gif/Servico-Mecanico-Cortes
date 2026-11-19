@@ -1,74 +1,85 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
-  IonTitle 
+import { Component, OnInit, inject } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonIcon,
+  IonTitle,
+  ToastController,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Conservado para el funcionamiento de los routerLink
 import { addIcons } from 'ionicons';
-
-// Importación de todos los iconos utilizados en la vista de vehículos
-import { 
-  chevronBackOutline, 
-  carOutline, 
-  addOutline, 
-  chevronForwardOutline, 
-  homeOutline, 
-  cartOutline, 
-  calendarOutline, 
-  personOutline 
+import {
+  chevronBackOutline,
+  carOutline,
+  addOutline,
+  chevronForwardOutline,
+  homeOutline,
+  cartOutline,
+  calendarOutline,
+  personOutline,
 } from 'ionicons/icons';
+import { TallerService, Vehiculo } from '../core/services/taller';
 
 @Component({
-  selector: 'app-vehiculos', // Selector actualizado a español
-  templateUrl: './vehiculos.page.html', // Enlace al HTML estático traducido
-  styleUrls: ['./vehiculos.page.scss'], // Enlace al SCSS traducido
+  selector: 'app-vehiculos',
+  templateUrl: './vehiculos.page.html',
+  styleUrls: ['./vehiculos.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
-    IonTitle, 
-    RouterModule
-  ]
+    DecimalPipe,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonIcon,
+    IonTitle,
+  ],
 })
 export class VehiculosPage implements OnInit {
+  private tallerService = inject(TallerService);
+  private toastCtrl = inject(ToastController);
 
-  // El constructor registra los iconos necesarios para que la vista los renderice correctamente
   constructor() {
-    addIcons({ 
-      chevronBackOutline, 
-      carOutline, 
-      addOutline, 
-      chevronForwardOutline, 
-      homeOutline, 
-      cartOutline, 
-      calendarOutline, 
-      personOutline 
+    addIcons({
+      chevronBackOutline,
+      carOutline,
+      addOutline,
+      chevronForwardOutline,
+      homeOutline,
+      cartOutline,
+      calendarOutline,
+      personOutline,
     });
   }
 
   ngOnInit() {
-    // Componente limpio enfocado en el mockup visual estático
+    const lista = this.tallerService.getVehiculos();
+    if (!this.tallerService.getVehiculoSeleccionado() && lista.length > 0) {
+      this.tallerService.seleccionarVehiculo(lista[0]);
+    }
   }
 
-  /* 
-   * NOTA DE LIMPIEZA:
-   * 1. Se eliminó la inyección de `VehicleService` y `Router`, así como la propiedad `vehicles`.
-   * 2. Se removieron los métodos dinámicos (`loadVehicles`, `selectVehicle`, `goToAddVehicle`).
-   * 3. Toda la navegación entre pantallas y el diseño se gestionan de forma estática mediante los atributos `routerLink` en el HTML.
-   */
+  get vehiculos(): Vehiculo[] {
+    return this.tallerService.getVehiculos();
+  }
+
+  get vehiculoSeleccionado(): Vehiculo | null {
+    return this.tallerService.getVehiculoSeleccionado();
+  }
+
+  async seleccionar(vehiculo: Vehiculo) {
+    this.tallerService.seleccionarVehiculo(vehiculo);
+    const toast = await this.toastCtrl.create({
+      message: `${vehiculo.marca} ${vehiculo.modelo} seleccionado`,
+      duration: 1500,
+      color: 'dark',
+    });
+    await toast.present();
+  }
 }

@@ -1,60 +1,48 @@
-<!-- Encabezado superior sin bordes -->
 <ion-header class="ion-no-border">
   <ion-toolbar class="barra-herramientas">
     <ion-buttons slot="start">
-      <!-- Botón de retroceso hacia la pantalla de inicio (ruta actualizada a español) -->
       <ion-back-button defaultHref="/inicio" text="" icon="chevron-back-outline"></ion-back-button>
     </ion-buttons>
     <ion-title>Mis automóviles</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<!-- Contenido principal con padding -->
 <ion-content class="ion-padding contenido-principal">
   <div class="contenedor-principal">
-    
+
     <p class="subtitulo">Administra tus vehículos registrados</p>
 
-    <!-- Lista de vehículos (Mockup estático: dos vehículos de ejemplo) -->
     <div class="lista-vehiculos">
-      
-      <!-- Vehículo 1 (Seleccionado) -->
-      <div class="tarjeta-vehiculo seleccionada">
-        <div class="tarjeta-izq">
-          <div class="icono-auto">
-            <ion-icon name="car-outline"></ion-icon>
+      @for (v of vehiculos; track v.id_vehiculo) {
+        <div
+          class="tarjeta-vehiculo"
+          [class.seleccionada]="vehiculoSeleccionado?.id_vehiculo === v.id_vehiculo"
+          (click)="seleccionar(v)">
+          <div class="tarjeta-izq">
+            <div class="icono-auto">
+              <ion-icon name="car-outline"></ion-icon>
+            </div>
+            <div class="detalles-auto">
+              <h3>{{ v.marca }} {{ v.modelo }}</h3>
+              <p>{{ v.anio }}{{ v.color ? ' • ' + v.color : '' }}</p>
+              <span class="placa-km">
+                {{ v.placas }}{{ v.kilometraje ? ' | ' + (v.kilometraje | number) + ' km' : '' }}
+              </span>
+            </div>
           </div>
-          <div class="detalles-auto">
-            <h3>Toyota Corolla</h3>
-            <p>2024 • Blanco</p>
-            <span class="placa-km">ABC-123 | 15,000 km</span>
-          </div>
-        </div>
-        <div class="tarjeta-der">
-          <div class="chequeo-radio">✓</div>
-        </div>
-      </div>
-
-      <!-- Vehículo 2 (Normal) -->
-      <div class="tarjeta-vehiculo">
-        <div class="tarjeta-izq">
-          <div class="icono-auto">
-            <ion-icon name="car-outline"></ion-icon>
-          </div>
-          <div class="detalles-auto">
-            <h3>Nissan Sentra</h3>
-            <p>2022 • Gris</p>
-            <span class="placa-km">XYZ-789 | 32,500 km</span>
+          <div class="tarjeta-der">
+            @if (vehiculoSeleccionado?.id_vehiculo === v.id_vehiculo) {
+              <div class="chequeo-radio">✓</div>
+            } @else {
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            }
           </div>
         </div>
-        <div class="tarjeta-der">
-          <ion-icon name="chevron-forward-outline"></ion-icon>
-        </div>
-      </div>
-
+      } @empty {
+        <p class="ion-text-center">Aún no tienes vehículos registrados.</p>
+      }
     </div>
 
-    <!-- Botón Agregar nuevo automóvil (Redirige a la vista de agregar vehículo de manera estática) -->
     <div class="tarjeta-agregar" routerLink="/agregar-vehiculo">
       <div class="icono-agregar">
         <ion-icon name="add-outline"></ion-icon>
@@ -68,7 +56,6 @@
   </div>
 </ion-content>
 
-<!-- Barra de navegación inferior estandarizada (Opción B para Perfil) -->
 <div class="navegacion-inferior">
   <div class="elemento-navegacion" routerLink="/inicio"><ion-icon name="home-outline"></ion-icon><span>Inicio</span></div>
   <div class="elemento-navegacion" routerLink="/carrito"><ion-icon name="cart-outline"></ion-icon><span>Carrito</span></div>

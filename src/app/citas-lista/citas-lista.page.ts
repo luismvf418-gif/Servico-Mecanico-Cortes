@@ -1,82 +1,134 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
-  IonTitle 
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButton,
+  IonIcon,
+  IonTitle,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Conservado para la barra de navegación y las tarjetas
 import { addIcons } from 'ionicons';
-
-// Importamos todos los iconos exactos de tu diseño
-import { 
-  chevronBackOutline, 
-  carOutline, 
-  constructOutline, 
-  calendarOutline, 
-  timeOutline, 
-  chevronForwardOutline, 
-  homeOutline, 
-  cartOutline, 
+import {
+  carOutline,
+  constructOutline,
+  calendarOutline,
+  chevronForwardOutline,
+  homeOutline,
+  cartOutline,
   personOutline,
   checkmarkCircle,
-  time
+  closeCircle,
 } from 'ionicons/icons';
+import { TallerService, Cita } from '../core/services/taller';
 
 @Component({
-  selector: 'app-citas-lista', // Traducido al español
-  templateUrl: './citas-lista.page.html', // Enlace al HTML que ya hicimos estático
-  styleUrls: ['./citas-lista.page.scss'], // Enlace al SCSS que acabamos de traducir
-  standalone: true, 
+  selector: 'app-citas-lista',
+  templateUrl: './citas-lista.page.html',
+  styleUrls: ['./citas-lista.page.scss'],
+  standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
-    IonTitle, 
-    RouterModule
-  ]
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButton,
+    IonIcon,
+    IonTitle,
+  ],
 })
-export class CitaListaPage implements OnInit {
-  
-  // El constructor se dedica exclusivamente a registrar los iconos de Ionic
+export class CitaListaPage {
+  private tallerService = inject(TallerService);
+  private router = inject(Router);
+
+  pestanaActiva: 'proximas' | 'historial' = 'proximas';
+
+  private meses = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+  private dias = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
   constructor() {
-    addIcons({ 
-      chevronBackOutline, 
-      carOutline, 
-      constructOutline, 
-      calendarOutline, 
-      timeOutline, 
-      chevronForwardOutline, 
-      homeOutline, 
-      cartOutline, 
+    addIcons({
+      carOutline,
+      constructOutline,
+      calendarOutline,
+      chevronForwardOutline,
+      homeOutline,
+      cartOutline,
       personOutline,
       checkmarkCircle,
-      time
+      closeCircle,
     });
   }
 
-  ngOnInit() {
-    // La lógica ha sido removida porque tu HTML ahora funciona como un diseño estático
+  get citasProximas(): Cita[] {
+    return this.tallerService
+      .getCitas()
+      .filter((c) => c.estado === 'CONFIRMADA' || c.estado === 'PENDIENTE');
   }
 
-  /* 
-   * NOTA DE SEGURIDAD Y LIMPIEZA:
-   * 1. Se eliminó la inyección de `AppointmentsService` y `Router`.
-   * 2. Se eliminaron las variables `activeTab`, `upcomingAppointments` e `historyAppointments`.
-   * 3. Las funciones `selectAppointment()`, `segmentChanged()` y `goToNewAppointment()` 
-   *    fueron borradas. La navegación ahora se maneja de forma segura y directa 
-   *    en el HTML mediante atributos `routerLink`, tal como lo definimos en el paso anterior.
-   */
+  get citasHistorial(): Cita[] {
+    return this.tallerService
+      .getCitas()
+      .filter((c) => c.estado === 'COMPLETADA' || c.estado === 'CANCELADA');
+  }
+
+  get citasVisibles(): Cita[] {
+    return this.pestanaActiva === 'proximas' ? this.citasProximas : this.citasHistorial;
+  }
+
+  verDetalle(cita: Cita): void {
+    this.tallerService.setCitaDetalle(cita);
+    this.router.navigateByUrl('/cita-detalle');
+  }
+
+  irAAgendar(): void {
+    const destino = this.tallerService.getCarrito().length > 0
+      ? '/seleccionar-vehiculo'
+      : '/servicios';
+    this.router.navigateByUrl(destino);
+  }
+
+  formatearEstado(estado: Cita['estado']): string {
+    const mapa: Record<Cita['estado'], string> = {
+      PENDIENTE: 'Pendiente',
+      CONFIRMADA: 'Confirmada',
+      COMPLETADA: 'Completada',
+      CANCELADA: 'Cancelada',
+    };
+    return mapa[estado] || estado;
+  }
+
+  private parsearFecha(fechaHora: string): Date {
+    if (fechaHora.includes('/')) {
+      const parteFecha = fechaHora.split('•')[0].trim();
+      const [dia, mes, anio] = parteFecha.split('/').map(Number);
+      return new Date(anio, mes - 1, dia);
+    }
+    return new Date(fechaHora);
+  }
+
+  obtenerMes(fechaHora: string): string {
+    const fecha = this.parsearFecha(fechaHora);
+    return isNaN(fecha.getTime()) ? 'MES' : this.meses[fecha.getMonth()];
+  }
+
+  obtenerDiaNumero(fechaHora: string): string {
+    const fecha = this.parsearFecha(fechaHora);
+    return isNaN(fecha.getTime()) ? '--' : String(fecha.getDate()).padStart(2, '0');
+  }
+
+  obtenerDiaSemana(fechaHora: string): string {
+    const fecha = this.parsearFecha(fechaHora);
+    return isNaN(fecha.getTime()) ? '' : this.dias[fecha.getDay()];
+  }
+
+  obtenerHora(fechaHora: string): string {
+    if (fechaHora.includes('•')) {
+      return fechaHora.split('•')[1].trim();
+    }
+    const fecha = new Date(fechaHora);
+    return isNaN(fecha.getTime())
+      ? 'Por confirmar'
+      : fecha.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit' });
+  }
 }

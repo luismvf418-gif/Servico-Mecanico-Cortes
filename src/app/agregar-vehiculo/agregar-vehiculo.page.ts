@@ -1,49 +1,104 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonToolbar, IonButtons, IonBackButton, IonButton, IonIcon, IonTitle } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
+  IonTitle,
+  NavController,
+  ToastController,
+} from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { chevronBackOutline, carOutline, homeOutline, cartOutline, calendarOutline, personOutline } from 'ionicons/icons';
+import {
+  chevronBackOutline,
+  carOutline,
+  homeOutline,
+  cartOutline,
+  calendarOutline,
+  personOutline,
+} from 'ionicons/icons';
+import { TallerService } from '../core/services/taller';
 
-// Decorador que define las propiedades y metadatos del componente en Angular
 @Component({
   selector: 'app-agregar-vehiculo',
   templateUrl: './agregar-vehiculo.page.html',
   styleUrls: ['./agregar-vehiculo.page.scss'],
-  standalone: true, // Indica que es un componente independiente moderno de Angular
+  standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
-    IonTitle, 
-    RouterModule
-  ]
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonButton,
+    IonIcon,
+    IonTitle,
+  ],
 })
-export class AgregarVehiculoPage implements OnInit {
+export class AgregarVehiculoPage {
+  private tallerService = inject(TallerService);
+  private navCtrl = inject(NavController);
+  private toastCtrl = inject(ToastController);
 
-  // Constructor de la clase: se ejecuta al inicializar la página
+  marca: string = '';
+  modelo: string = '';
+  placas: string = '';
+  anio: string = '';
+  kilometraje: number | null = null;
+  color: string = '';
+
+  anios: number[] = Array.from({ length: 32 }, (_, i) => 2026 - i);
+  colores: string[] = ['Blanco', 'Negro', 'Gris', 'Plata', 'Rojo', 'Azul'];
+
   constructor() {
-    // Registramos los iconos de Ionic que se utilizarán en el diseño visual de la vista
-    addIcons({ 
-      chevronBackOutline, 
-      carOutline, 
-      homeOutline, 
-      cartOutline, 
-      calendarOutline, 
-      personOutline 
+    addIcons({
+      chevronBackOutline,
+      carOutline,
+      homeOutline,
+      cartOutline,
+      calendarOutline,
+      personOutline,
     });
   }
 
-  // Método del ciclo de vida de Angular que se ejecuta cuando la vista termina de cargar
-  ngOnInit() {
-    // Por ahora se encuentra vacío ya que no requerimos cargar datos reales ni lógica compleja
+  async guardarVehiculo() {
+    if (!this.marca.trim() || !this.modelo.trim() || !this.placas.trim() || !this.anio) {
+      const toast = await this.toastCtrl.create({
+        message: 'Completa al menos marca, modelo, matrícula y año.',
+        duration: 2200,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
+
+    this.tallerService.agregarVehiculo({
+      marca: this.marca.trim(),
+      modelo: this.modelo.trim(),
+      placas: this.placas.trim().toUpperCase(),
+      anio: Number(this.anio),
+      kilometraje: this.kilometraje ? Number(this.kilometraje) : undefined,
+      color: this.color || undefined,
+    });
+
+    const toast = await this.toastCtrl.create({
+      message: 'Automóvil registrado correctamente.',
+      duration: 1800,
+      color: 'success',
+    });
+    await toast.present();
+
+    this.navCtrl.back();
   }
 
+  cancelar() {
+    this.navCtrl.back();
+  }
 }

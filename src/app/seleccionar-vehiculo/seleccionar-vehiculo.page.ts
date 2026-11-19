@@ -1,74 +1,96 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
-  IonTitle 
+import { Component, OnInit, inject } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
+  IonTitle,
+  ToastController,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Conservado para el funcionamiento de los routerLink
 import { addIcons } from 'ionicons';
-
-// Importación de todos los iconos utilizados en la vista de selección de vehículo
-import { 
-  chevronBackOutline, 
-  carOutline, 
-  addOutline, 
-  chevronForwardOutline, 
-  homeOutline, 
-  cartOutline, 
-  calendarOutline, 
-  personOutline 
+import {
+  chevronBackOutline,
+  carOutline,
+  addOutline,
+  chevronForwardOutline,
+  homeOutline,
+  cartOutline,
+  calendarOutline,
+  personOutline,
 } from 'ionicons/icons';
+import { TallerService, Vehiculo } from '../core/services/taller';
 
 @Component({
-  selector: 'app-seleccionar-vehiculo', // Selector actualizado a español
-  templateUrl: './seleccionar-vehiculo.page.html', // Enlace al HTML estático traducido
-  styleUrls: ['./seleccionar-vehiculo.page.scss'], // Enlace al SCSS traducido
+  selector: 'app-seleccionar-vehiculo',
+  templateUrl: './seleccionar-vehiculo.page.html',
+  styleUrls: ['./seleccionar-vehiculo.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
-    IonTitle, 
-    RouterModule
-  ]
+    DecimalPipe,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonButton,
+    IonIcon,
+    IonTitle,
+  ],
 })
 export class SeleccionarVehiculoPage implements OnInit {
+  private tallerService = inject(TallerService);
+  private router = inject(Router);
+  private toastCtrl = inject(ToastController);
 
-  // El constructor registra los iconos necesarios para que la vista los renderice correctamente
   constructor() {
-    addIcons({ 
-      chevronBackOutline, 
-      carOutline, 
-      addOutline, 
-      chevronForwardOutline, 
-      homeOutline, 
-      cartOutline, 
-      calendarOutline, 
-      personOutline 
+    addIcons({
+      chevronBackOutline,
+      carOutline,
+      addOutline,
+      chevronForwardOutline,
+      homeOutline,
+      cartOutline,
+      calendarOutline,
+      personOutline,
     });
   }
 
   ngOnInit() {
-    // Componente limpio enfocado en el mockup visual estático
+    const lista = this.tallerService.getVehiculos();
+    if (!this.tallerService.getVehiculoSeleccionado() && lista.length > 0) {
+      this.tallerService.seleccionarVehiculo(lista[0]);
+    }
   }
 
-  /* 
-   * NOTA DE LIMPIEZA:
-   * 1. Se eliminó la inyección de `VehicleService` y de `Router`, así como la propiedad `vehicles`.
-   * 2. Se removieron los métodos dinámicos (`loadVehicles`, `selectVehicle`, `goToAddVehicle`, `proceedToAppointments`).
-   * 3. Toda la navegación entre pantallas y el estado visual ahora se gestiona de forma estática mediante los atributos `routerLink` en el HTML.
-   */
+  get vehiculos(): Vehiculo[] {
+    return this.tallerService.getVehiculos();
+  }
+
+  get vehiculoSeleccionado(): Vehiculo | null {
+    return this.tallerService.getVehiculoSeleccionado();
+  }
+
+  seleccionar(vehiculo: Vehiculo): void {
+    this.tallerService.seleccionarVehiculo(vehiculo);
+  }
+
+  async continuar() {
+    if (!this.vehiculoSeleccionado) {
+      const toast = await this.toastCtrl.create({
+        message: 'Selecciona o registra un automóvil para continuar.',
+        duration: 2000,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
+
+    this.router.navigateByUrl('/citas');
+  }
 }

@@ -1,86 +1,142 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
-  IonTitle 
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
+  IonTitle,
+  ToastController,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Conservado para el funcionamiento de los routerLink en el HTML
 import { addIcons } from 'ionicons';
-
-// Importación de todos los iconos utilizados en la vista de detalle del servicio
-import { 
-  chevronBackOutline, 
-  constructOutline, 
-  pricetagOutline, 
-  timeOutline, 
-  carOutline, 
-  funnelOutline, 
-  flashOutline, 
-  documentTextOutline, 
-  cartOutline, 
-  homeOutline, 
-  calendarOutline, 
-  personOutline,
+import {
+  chevronBackOutline,
+  constructOutline,
   waterOutline,
-  shieldOutline
+  discOutline,
+  speedometerOutline,
+  pricetagOutline,
+  timeOutline,
+  checkmarkCircleOutline,
+  cartOutline,
+  homeOutline,
+  calendarOutline,
+  personOutline,
 } from 'ionicons/icons';
+import { TallerService, Servicio } from '../core/services/taller';
 
 @Component({
-  selector: 'app-servicio-detalle', // Selector actualizado a español
-  templateUrl: './servicio-detalle.page.html', // Enlace al HTML estático traducido
-  styleUrls: ['./servicio-detalle.page.scss'], // Enlace al SCSS traducido
+  selector: 'app-servicio-detalle',
+  templateUrl: './servicio-detalle.page.html',
+  styleUrls: ['./servicio-detalle.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonButton,
+    IonIcon,
     IonTitle,
-    RouterModule
-  ]
+  ],
 })
 export class ServicioDetallePage implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private tallerService = inject(TallerService);
+  private toastCtrl = inject(ToastController);
 
-  // El constructor registra los iconos necesarios para que la vista los renderice correctamente
+  servicio: Servicio | undefined;
+
+  private detallesExtra: Record<number, { duracion: string; incluye: string[] }> = {
+    1: {
+      duracion: '2 a 3 horas',
+      incluye: [
+        'Cambio de bujías y filtros de aire y gasolina',
+        'Cambio de aceite y limpieza de cuerpo de aceleración',
+        'Lavado de inyectores y revisión de puntos de seguridad',
+      ],
+    },
+    2: {
+      duracion: '45 minutos',
+      incluye: [
+        'Aceite sintético de alto rendimiento',
+        'Reemplazo de filtro de aceite nuevo',
+        'Revisión de niveles de líquidos y presión de llantas',
+      ],
+    },
+    3: {
+      duracion: '1.5 horas',
+      incluye: [
+        'Cambio de balatas delanteras o traseras',
+        'Rectificado de discos y limpieza de calipers',
+        'Purga y revisión de líquido de frenos',
+      ],
+    },
+    4: {
+      duracion: '40 minutos',
+      incluye: [
+        'Escaneo completo de computadora y módulos',
+        'Lectura y borrado de códigos de falla',
+        'Diagnóstico impreso de sensores y batería',
+      ],
+    },
+  };
+
   constructor() {
-    addIcons({ 
-      chevronBackOutline, 
-      constructOutline, 
-      pricetagOutline, 
-      timeOutline, 
-      carOutline, 
-      funnelOutline, 
-      flashOutline, 
-      documentTextOutline, 
-      cartOutline, 
-      homeOutline, 
-      calendarOutline, 
-      personOutline,
+    addIcons({
+      chevronBackOutline,
+      constructOutline,
       waterOutline,
-      shieldOutline
+      discOutline,
+      speedometerOutline,
+      pricetagOutline,
+      timeOutline,
+      checkmarkCircleOutline,
+      cartOutline,
+      homeOutline,
+      calendarOutline,
+      personOutline,
     });
   }
 
   ngOnInit() {
-    // Componente limpio enfocado en el mockup visual estático
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.servicio = this.tallerService.getServicioById(id) || this.tallerService.getServicios()[0];
   }
 
-  /* 
-   * NOTA DE LIMPIEZA:
-   * 1. Se eliminaron el arreglo `allServices`, la propiedad `service`, así como las inyecciones de `ActivatedRoute`, `Router` y `CartService`.
-   * 2. Se removieron los métodos dinámicos (`addToCart`, `goToCart`).
-   * 3. Toda la navegación entre pantallas y el diseño se gestionan de forma estática mediante los atributos `routerLink` en el HTML.
-   */
+  get duracionEstimada(): string {
+    if (!this.servicio) return '1 hora';
+    return this.detallesExtra[this.servicio.id_servicio]?.duracion || '1 a 2 horas';
+  }
+
+  get puntosIncluidos(): string[] {
+    if (!this.servicio) return [];
+    return (
+      this.detallesExtra[this.servicio.id_servicio]?.incluye || [
+        this.servicio.descripcion,
+        'Inspección general de seguridad',
+      ]
+    );
+  }
+
+  async agregarAlCarrito() {
+    if (!this.servicio) return;
+
+    this.tallerService.agregarAlCarrito(this.servicio);
+
+    const toast = await this.toastCtrl.create({
+      message: `${this.servicio.nombre_servicio} agregado al carrito`,
+      duration: 1500,
+      color: 'success',
+    });
+    await toast.present();
+
+    this.router.navigateByUrl('/carrito');
+  }
 }

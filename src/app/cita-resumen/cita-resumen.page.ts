@@ -1,100 +1,109 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
-  IonTitle 
+import { Component, OnInit, inject } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
+  IonTitle,
+  ToastController,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Para que funcione routerLink en la vista HTML
 import { addIcons } from 'ionicons';
-
-// Importamos exactamente los iconos que usamos en el HTML
-import { 
-  chevronBackOutline, 
-  carOutline, 
-  calendarOutline, 
-  constructOutline, 
-  informationCircleOutline, 
-  checkmarkCircleOutline, 
-  homeOutline, 
-  cartOutline, 
+import {
+  chevronBackOutline,
+  carOutline,
+  calendarOutline,
+  cardOutline,
+  constructOutline,
+  informationCircleOutline,
+  checkmarkCircleOutline,
+  homeOutline,
+  cartOutline,
   personOutline,
-  copyOutline
+  copyOutline,
 } from 'ionicons/icons';
+import { TallerService, Vehiculo, Servicio, Cita } from '../core/services/taller';
 
-// Decorador que define las propiedades principales del componente
 @Component({
-  selector: 'app-cita-resumen', // Nombre de la etiqueta HTML en español
-  templateUrl: './cita-resumen.page.html', // Enlace a la vista visual
-  styleUrls: ['./cita-resumen.page.scss'], // Enlace a la hoja de estilos
-  standalone: true, // Componente independiente moderno
+  selector: 'app-cita-resumen',
+  templateUrl: './cita-resumen.page.html',
+  styleUrls: ['./cita-resumen.page.scss'],
+  standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
-    IonTitle, 
-    RouterModule // Necesario para la barra de navegación y botones
-  ]
+    DecimalPipe,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonButton,
+    IonIcon,
+    IonTitle,
+  ],
 })
 export class CitaResumenPage implements OnInit {
-  
-  // Variables estáticas para mostrar la información en la vista de diseño
-  // Estas simulan lo que antes traíamos del VehicleService y CartService
-  estaConfirmada: boolean = false; // Controla qué pantalla se muestra (Resumen vs Éxito)
-  folioGenerado: string = ''; // Guardará el número de folio simulado
-  
-  // Objeto de ejemplo simulando un vehículo seleccionado
-  vehiculoSeleccionado = {
-    brand: 'Toyota',
-    model: 'Corolla',
-    year: 2024,
-    plate: 'ABC-123',
-    mileage: 15000
-  };
+  private tallerService = inject(TallerService);
+  private toastCtrl = inject(ToastController);
 
-  // Arreglo de ejemplo simulando los servicios del carrito
-  itemsCarrito = [
-    { name: 'Afinación Mayor', category: 'Mantenimiento', price: 1500, quantity: 1 },
-    { name: 'Lavado de Interiores', category: 'Estética', price: 500, quantity: 1 }
-  ];
+  estaConfirmada: boolean = false;
+  folioGenerado: string = '';
+  citaConfirmada: Cita | null = null;
+  totalConfirmado: number = 0;
 
-  // Constructor: Registra los iconos usados en la vista
   constructor() {
-    addIcons({ 
-      chevronBackOutline, 
-      carOutline, 
-      calendarOutline, 
-      constructOutline, 
-      informationCircleOutline, 
-      checkmarkCircleOutline, 
-      homeOutline, 
-      cartOutline, 
+    addIcons({
+      chevronBackOutline,
+      carOutline,
+      calendarOutline,
+      cardOutline,
+      constructOutline,
+      informationCircleOutline,
+      checkmarkCircleOutline,
+      homeOutline,
+      cartOutline,
       personOutline,
-      copyOutline
+      copyOutline,
     });
   }
 
   ngOnInit() {
-    // Ya no llamamos a loadData() porque usamos variables estáticas
+    const lista = this.tallerService.getVehiculos();
+    if (!this.tallerService.getVehiculoSeleccionado() && lista.length > 0) {
+      this.tallerService.seleccionarVehiculo(lista[0]);
+    }
   }
 
-  // Métodos de cálculo de costos (ahora usan la data estática)
+  get vehiculoSeleccionado(): Vehiculo | null {
+    return this.tallerService.getVehiculoSeleccionado();
+  }
+
+  get itemsCarrito(): Servicio[] {
+    return this.tallerService.getCarrito();
+  }
+
+  get metodoPago(): string {
+    return this.tallerService.getMetodoPago();
+  }
+
+  get fechaFormateada(): string {
+    const fecha = this.tallerService.getFechaCita();
+    if (!fecha) return 'Por confirmar en taller';
+    return fecha.split('•')[0].trim();
+  }
+
+  get horaFormateada(): string {
+    const fecha = this.tallerService.getFechaCita();
+    if (!fecha || !fecha.includes('•')) return '';
+    return fecha.split('•')[1].trim();
+  }
+
   obtenerSubtotal(): number {
-    return this.itemsCarrito.reduce((acumulado, item) => {
-      return acumulado + (item.price * item.quantity);
-    }, 0);
+    return this.tallerService.getTotalCarrito();
   }
 
   obtenerIva(): number {
@@ -105,13 +114,37 @@ export class CitaResumenPage implements OnInit {
     return this.obtenerSubtotal() + this.obtenerIva();
   }
 
-  // Método simulado para confirmar la cita y cambiar la vista a la pantalla de éxito
-  confirmarCita() {
-    // Genera un folio aleatorio de ejemplo
-    const numeroAleatorio = Math.floor(10000 + Math.random() * 90000);
-    this.folioGenerado = `AC-2026-${numeroAleatorio}`;
-    
-    // Cambia la variable booleana para ocultar el resumen y mostrar la vista de éxito
-    this.estaConfirmada = true;
+  async confirmarCita() {
+    if (!this.vehiculoSeleccionado || this.itemsCarrito.length === 0) {
+      const toast = await this.toastCtrl.create({
+        message: 'Asegúrate de tener un vehículo y al menos un servicio en el carrito.',
+        duration: 2200,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
+
+    const totalConIva = this.obtenerTotal();
+    const nuevaCita = this.tallerService.confirmarCita();
+
+    if (nuevaCita) {
+      this.citaConfirmada = nuevaCita;
+      this.totalConfirmado = totalConIva;
+      this.folioGenerado = `AC-2026-${nuevaCita.id_cita}`;
+      this.estaConfirmada = true;
+    }
+  }
+
+  async copiarFolio() {
+    if (!this.folioGenerado) return;
+    navigator.clipboard?.writeText(this.folioGenerado);
+
+    const toast = await this.toastCtrl.create({
+      message: `Folio ${this.folioGenerado} copiado`,
+      duration: 1500,
+      color: 'dark',
+    });
+    await toast.present();
   }
 }

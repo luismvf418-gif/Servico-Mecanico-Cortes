@@ -1,79 +1,95 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
-  IonSearchbar, 
-  IonTitle 
+import { RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonIcon,
+  IonTitle,
+  ToastController,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { 
-  searchOutline, 
-  cartOutline, 
-  constructOutline, 
-  waterOutline, 
-  shieldOutline, 
-  carOutline, 
-  chevronBackOutline, 
-  homeOutline, 
-  calendarOutline, 
-  personOutline 
+import {
+  searchOutline,
+  cartOutline,
+  constructOutline,
+  waterOutline,
+  discOutline,
+  speedometerOutline,
+  shieldOutline,
+  chevronBackOutline,
+  homeOutline,
+  calendarOutline,
+  personOutline,
 } from 'ionicons/icons';
+import { TallerService, Servicio } from '../core/services/taller';
 
 @Component({
-  selector: 'app-services', // Se mantiene el selector original
-  templateUrl: './services.page.html', // Enlace al HTML estático adaptado
-  styleUrls: ['./services.page.scss'], // Enlace al SCSS adaptado
+  selector: 'app-services',
+  templateUrl: './services.page.html',
+  styleUrls: ['./services.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
-    IonSearchbar,
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonIcon,
     IonTitle,
-    RouterModule
-  ]
+  ],
 })
-export class ServicesPage implements OnInit {
+export class ServicesPage {
+  private tallerService = inject(TallerService);
+  private toastCtrl = inject(ToastController);
+
+  categorias = ['Todos', 'Motor', 'Frenos', 'Afinación', 'Suspensión'];
+  categoriaActiva = 'Todos';
+  busqueda = '';
 
   constructor() {
-    // Registro de todos los iconos utilizados en esta vista
-    addIcons({ 
-      searchOutline, 
-      cartOutline, 
-      constructOutline, 
-      waterOutline, 
-      shieldOutline, 
-      carOutline, 
+    addIcons({
+      searchOutline,
+      cartOutline,
+      constructOutline,
+      waterOutline,
+      discOutline,
+      speedometerOutline,
+      shieldOutline,
       chevronBackOutline,
       homeOutline,
       calendarOutline,
-      personOutline
+      personOutline,
     });
   }
 
-  ngOnInit() {
-    // Componente limpio enfocado en el mockup visual estático
+  get serviciosFiltrados(): Servicio[] {
+    return this.tallerService.getServicios().filter((s) => {
+      const texto = `${s.nombre_servicio} ${s.descripcion}`.toLowerCase();
+      const coincideTexto = texto.includes(this.busqueda.toLowerCase().trim());
+
+      if (this.categoriaActiva === 'Todos') return coincideTexto;
+      if (this.categoriaActiva === 'Motor') {
+        return coincideTexto && (texto.includes('aceite') || texto.includes('escáner') || texto.includes('motor'));
+      }
+      return coincideTexto && texto.includes(this.categoriaActiva.toLowerCase());
+    });
   }
 
-  /* 
-   * NOTA DE LIMPIEZA:
-   * 1. Se eliminó la inyección de `CartService` y `Router`.
-   * 2. Se removieron las variables de estado (`selectedCategory`, `searchQuery`, `servicesList`) 
-   *    y los métodos dinámicos (`filterCategory`, `addToCart`, `goToCart`, `filteredServices`).
-   * 3. La navegación se maneja directamente en el HTML mediante atributos `routerLink`.
-   */
+  async agregarAlCarrito(event: Event, servicio: Servicio) {
+    event.stopPropagation();
+    this.tallerService.agregarAlCarrito(servicio);
+
+    const toast = await this.toastCtrl.create({
+      message: `${servicio.nombre_servicio} agregado al carrito`,
+      duration: 1800,
+      color: 'success',
+    });
+    await toast.present();
+  }
 }

@@ -1,59 +1,72 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonTitle, 
-  IonIcon 
-} from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Necesario para que funcionen los routerLink en el HTML
+import { Component, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { IonContent, IonHeader, IonToolbar, IonIcon } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-
-// Importamos todos los iconos que utiliza la vista de inicio
-import { 
-  constructOutline, 
-  calendarOutline, 
-  cartOutline, 
-  chevronForwardOutline, 
-  homeOutline, 
+import {
+  constructOutline,
+  calendarOutline,
+  cartOutline,
+  chevronForwardOutline,
+  homeOutline,
   personOutline,
-  carOutline 
+  carOutline,
 } from 'ionicons/icons';
+import { TallerService } from '../core/services/taller';
 
 @Component({
-  selector: 'app-inicio', // Selector actualizado a español
-  templateUrl: './inicio.page.html', // Enlace al HTML estático traducido
-  styleUrls: ['./inicio.page.scss'], // Enlace al SCSS traducido
+  selector: 'app-inicio',
+  templateUrl: './inicio.page.html',
+  styleUrls: ['./inicio.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonTitle, 
-    IonIcon,
-    RouterModule
-  ]
+  imports: [RouterLink, IonContent, IonHeader, IonToolbar, IonIcon],
 })
-export class InicioPage implements OnInit { // Clase principal renombrada a InicioPage
+export class InicioPage {
+  private tallerService = inject(TallerService);
 
-  // El constructor registra los iconos necesarios para que la vista los renderice correctamente
+  opcionesMenu = [
+    {
+      titulo: 'Servicios',
+      descripcion: 'Conoce nuestros servicios automotrices',
+      icono: 'construct-outline',
+      ruta: '/servicios',
+    },
+    {
+      titulo: 'Mis automóviles',
+      descripcion: 'Administra tus vehículos',
+      icono: 'car-outline',
+      ruta: '/vehiculos',
+    },
+    {
+      titulo: 'Mis citas',
+      descripcion: 'Consulta y agenda tus citas',
+      icono: 'calendar-outline',
+      ruta: '/citas-lista',
+    },
+    {
+      titulo: 'Carrito',
+      descripcion: 'Revisa tus servicios y productos',
+      icono: 'cart-outline',
+      ruta: '/carrito',
+    },
+  ];
+
   constructor() {
-    addIcons({ 
-      constructOutline, 
-      calendarOutline, 
-      cartOutline, 
-      chevronForwardOutline, 
-      homeOutline, 
+    addIcons({
+      constructOutline,
+      calendarOutline,
+      cartOutline,
+      chevronForwardOutline,
+      homeOutline,
       personOutline,
-      carOutline 
+      carOutline,
     });
   }
 
-  ngOnInit() {
-    // Componente estático enfocado en el diseño visual, sin lógica adicional requerida
+  get nombreUsuario(): string {
+    return this.tallerService.getUsuarioActual()?.nombre || 'Usuario';
+  }
+
+  get cantidadCarrito(): number {
+    return this.tallerService.getCarrito().length;
   }
 }

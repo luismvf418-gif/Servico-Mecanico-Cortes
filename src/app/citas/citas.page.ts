@@ -1,84 +1,110 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
+import { Router, RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
   IonTitle,
   IonDatetime,
-  IonTextarea
+  ToastController,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Necesario para que funcione el routerLink del HTML
 import { addIcons } from 'ionicons';
-
-// Importamos todos los iconos que tienes en tu archivo original
-import { 
-  calendarOutline, 
-  timeOutline, 
-  carOutline, 
-  documentTextOutline, 
-  chevronBackOutline, 
-  homeOutline, 
-  personOutline, 
+import {
+  chevronBackOutline,
+  carOutline,
+  homeOutline,
   cartOutline,
-  checkmarkCircleOutline,
-  createOutline
+  calendarOutline,
+  personOutline,
 } from 'ionicons/icons';
+import { TallerService, Vehiculo } from '../core/services/taller';
 
-// Decorador del componente con las rutas traducidas
 @Component({
-  selector: 'app-citas', 
-  templateUrl: './citas.page.html', 
-  styleUrls: ['./citas.page.scss'], 
-  standalone: true, 
+  selector: 'app-citas',
+  templateUrl: './citas.page.html',
+  styleUrls: ['./citas.page.scss'],
+  standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
+    DecimalPipe,
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonButton,
+    IonIcon,
     IonTitle,
-    IonDatetime,   // Mantenemos esto para que el calendario nativo no marque error en el HTML
-    IonTextarea,   // Mantenemos esto para el área de notas
-    RouterModule
-  ]
+    IonDatetime,
+  ],
 })
-export class CitasPage implements OnInit { // Clase principal traducida
-  
-  // El constructor se encarga únicamente de registrar los iconos
+export class CitasPage implements OnInit {
+  private tallerService = inject(TallerService);
+  private router = inject(Router);
+  private toastCtrl = inject(ToastController);
+
+  horarios: string[] = [
+    '09:00 AM',
+    '10:00 AM',
+    '11:30 AM',
+    '01:00 PM',
+    '03:30 PM',
+    '05:00 PM',
+  ];
+
+  fechaMinima: string = new Date().toISOString().split('T')[0];
+  fechaSeleccionada: string = this.fechaMinima;
+  horaSeleccionada: string = '09:00 AM';
+  notas: string = '';
+
   constructor() {
-    addIcons({ 
-      calendarOutline, 
-      timeOutline, 
-      carOutline, 
-      documentTextOutline, 
-      chevronBackOutline, 
-      homeOutline, 
-      personOutline, 
+    addIcons({
+      chevronBackOutline,
+      carOutline,
+      homeOutline,
       cartOutline,
-      checkmarkCircleOutline,
-      createOutline
+      calendarOutline,
+      personOutline,
     });
   }
 
   ngOnInit() {
-    // Como el HTML ahora es un mockup puramente visual, no necesitamos iniciar variables 
-    // ni inyectar los servicios de VehicleService o CartService.
+    const lista = this.tallerService.getVehiculos();
+    if (!this.tallerService.getVehiculoSeleccionado() && lista.length > 0) {
+      this.tallerService.seleccionarVehiculo(lista[0]);
+    }
+    this.notas = this.tallerService.getNotasCita();
   }
 
-  /* 
-   * NOTA:
-   * Funciones lógicas como selectTime() y proceedToConfirmation() fueron removidas.
-   * La navegación al siguiente paso ahora se hace directamente en el HTML del botón 
-   * "Continuar" usando routerLink="/cita-resumen".
-   */
+  get vehiculo(): Vehiculo | null {
+    return this.tallerService.getVehiculoSeleccionado();
+  }
+
+  async continuar() {
+    if (!this.fechaSeleccionada || !this.horaSeleccionada) {
+      const toast = await this.toastCtrl.create({
+        message: 'Selecciona una fecha y un horario disponible.',
+        duration: 2000,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
+
+    const soloFecha = this.fechaSeleccionada.split('T')[0];
+    const [anio, mes, dia] = soloFecha.split('-');
+    const fechaFormateada = `${dia}/${mes}/${anio} • ${this.horaSeleccionada}`;
+
+    this.tallerService.setFechaCita(fechaFormateada);
+    this.tallerService.setNotasCita(this.notas.trim());
+
+    this.router.navigateByUrl('/cita-resumen');
+  }
 }

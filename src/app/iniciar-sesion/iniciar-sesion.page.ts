@@ -1,68 +1,87 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonItem, 
-  IonInput, 
-  IonButton, 
-  IonIcon 
+import { Router, RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonItem,
+  IonInput,
+  IonButton,
+  IonIcon,
+  ToastController,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Conservamos esto para el funcionamiento de los routerLink
 import { addIcons } from 'ionicons';
-
-// Importamos los iconos exactos que estás usando en el diseño
-import { 
-  mailOutline, 
-  lockClosedOutline, 
-  eyeOutline, 
-  arrowForwardOutline 
+import {
+  mailOutline,
+  lockClosedOutline,
+  eyeOutline,
+  eyeOffOutline,
+  arrowForwardOutline,
 } from 'ionicons/icons';
+import { TallerService } from '../core/services/taller';
 
 @Component({
-  selector: 'app-iniciar-sesion', // Nombre del componente en español
-  templateUrl: './iniciar-sesion.page.html', // Ruta al HTML estático que creamos
-  styleUrls: ['./iniciar-sesion.page.scss'], // Ruta al SCSS traducido
-  standalone: true, 
+  selector: 'app-iniciar-sesion',
+  templateUrl: './iniciar-sesion.page.html',
+  styleUrls: ['./iniciar-sesion.page.scss'],
+  standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonItem, 
-    IonInput, 
-    IonButton, 
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonItem,
+    IonInput,
+    IonButton,
     IonIcon,
-    RouterModule
-  ]
+  ],
 })
-export class IniciarSesionPage implements OnInit {
-  
-  // El constructor se dedica exclusivamente a registrar los iconos de la vista
+export class IniciarSesionPage {
+  correo: string = '';
+  contrasena: string = '';
+  verContrasena: boolean = false;
+
+  private router = inject(Router);
+  private tallerService = inject(TallerService);
+  private toastCtrl = inject(ToastController);
+
   constructor() {
-    addIcons({ 
-      mailOutline, 
-      lockClosedOutline, 
-      eyeOutline, 
-      arrowForwardOutline 
+    addIcons({
+      mailOutline,
+      lockClosedOutline,
+      eyeOutline,
+      eyeOffOutline,
+      arrowForwardOutline,
     });
   }
 
-  ngOnInit() {
-    // Componente listo y vacío, ideal para el mockup visual
+  async onLogin() {
+    if (!this.correo.trim() || !this.contrasena.trim()) {
+      const toast = await this.toastCtrl.create({
+        message: 'Ingresa tu correo y contraseña para continuar.',
+        duration: 2000,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
+
+    this.tallerService.iniciarSesion(this.correo.trim());
+    this.router.navigateByUrl('/inicio', { replaceUrl: true });
   }
 
-  /* 
-   * NOTA: 
-   * 1. Las variables `email` y `password` fueron eliminadas, ya que quitamos los `[(ngModel)]` del HTML.
-   * 2. Se eliminó la inyección de `Router` y la función `onLogin()`. 
-   * 3. La navegación ahora se hace a través del botón con `routerLink="/inicio"`.
-   */
+  async recuperarContrasena() {
+    const toast = await this.toastCtrl.create({
+      message: 'Se enviarán instrucciones de recuperación al correo registrado.',
+      duration: 2500,
+      color: 'dark',
+    });
+    await toast.present();
+  }
 }

@@ -1,73 +1,98 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonItem, 
-  IonInput, 
-  IonButton, 
-  IonIcon 
+import { Router, RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonItem,
+  IonInput,
+  IonButton,
+  IonIcon,
+  ToastController,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Conservado para los routerLink de la vista
 import { addIcons } from 'ionicons';
-
-// Importamos todos los iconos que utiliza la vista de registro
-import { 
-  mailOutline, 
-  lockClosedOutline, 
-  callOutline, 
-  personOutline, 
-  eyeOutline, 
-  arrowForwardOutline 
+import {
+  mailOutline,
+  lockClosedOutline,
+  callOutline,
+  personOutline,
+  eyeOutline,
+  eyeOffOutline,
+  arrowForwardOutline,
 } from 'ionicons/icons';
+import { TallerService } from '../core/services/taller';
 
 @Component({
-  selector: 'app-registro', // Selector actualizado a español
-  templateUrl: './registro.page.html', // Enlace al HTML estático que traducimos
-  styleUrls: ['./registro.page.scss'], // Enlace al SCSS traducido
+  selector: 'app-registro',
+  templateUrl: './registro.page.html',
+  styleUrls: ['./registro.page.scss'],
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonItem, 
-    IonInput, 
-    IonButton, 
-    IonIcon, 
-    RouterModule
-  ]
+    FormsModule,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonItem,
+    IonInput,
+    IonButton,
+    IonIcon,
+  ],
 })
-export class RegistroPage implements OnInit {
+export class RegistroPage {
+  correo: string = '';
+  contrasena: string = '';
+  telefono: string = '';
+  nombre: string = '';
+  apellido_paterno: string = '';
+  apellido_materno: string = '';
+  verContrasena: boolean = false;
 
-  // El constructor registra los iconos necesarios para que la vista los renderice correctamente
+  private router = inject(Router);
+  private tallerService = inject(TallerService);
+  private toastCtrl = inject(ToastController);
+
   constructor() {
-    addIcons({ 
-      mailOutline, 
-      lockClosedOutline, 
-      callOutline, 
-      personOutline, 
-      eyeOutline, 
-      arrowForwardOutline 
+    addIcons({
+      mailOutline,
+      lockClosedOutline,
+      callOutline,
+      personOutline,
+      eyeOutline,
+      eyeOffOutline,
+      arrowForwardOutline,
     });
   }
 
-  ngOnInit() {
-    // Componente limpio enfocado en el mockup visual estático
-  }
+  async onRegister() {
+    if (
+      !this.correo.trim() ||
+      !this.contrasena.trim() ||
+      !this.nombre.trim() ||
+      !this.apellido_paterno.trim()
+    ) {
+      const toast = await this.toastCtrl.create({
+        message: 'Completa correo, contraseña, nombre y apellido paterno.',
+        duration: 2500,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
 
-  /* 
-   * NOTA DE LIMPIEZA:
-   * 1. Se eliminaron las variables de estado (`email`, `password`, `phone`, `name`, etc.) 
-   *    y la inyección del `Router`.
-   * 2. La función `onRegister()` fue removida. 
-   *    La navegación ahora se maneja de manera directa en el HTML con el atributo `routerLink`.
-   */
+    this.tallerService.registrarUsuario({
+      nombre: this.nombre.trim(),
+      apellido_paterno: this.apellido_paterno.trim(),
+      apellido_materno: this.apellido_materno.trim(),
+      correo: this.correo.trim(),
+      telefono: this.telefono.trim(),
+    });
+
+    this.router.navigateByUrl('/inicio', { replaceUrl: true });
+  }
 }

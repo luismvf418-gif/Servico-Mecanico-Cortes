@@ -1,70 +1,76 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { 
-  IonContent, 
-  IonHeader, 
-  IonToolbar, 
-  IonButtons, 
-  IonBackButton, 
-  IonButton, 
-  IonIcon, 
-  IonTitle 
+import { Component, inject } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import {
+  IonContent,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
+  IonBackButton,
+  IonButton,
+  IonIcon,
+  IonTitle,
 } from '@ionic/angular';
-import { RouterModule } from '@angular/router'; // Importación necesaria para que funcione el routerLink
 import { addIcons } from 'ionicons';
-import { 
-  trashOutline, 
-  cartOutline, 
-  homeOutline, 
-  calendarOutline, 
-  personOutline, 
-  chevronBackOutline, 
-  constructOutline, 
-  waterOutline 
+import {
+  trashOutline,
+  cartOutline,
+  homeOutline,
+  calendarOutline,
+  personOutline,
+  chevronBackOutline,
+  constructOutline,
+  waterOutline,
+  discOutline,
+  speedometerOutline,
 } from 'ionicons/icons';
+import { TallerService, Servicio } from '../core/services/taller';
 
-// Decorador @Component: Aquí le decimos a Angular cómo construir esta pantalla
 @Component({
-  selector: 'app-carrito', // Nombre de la etiqueta del componente, traducido al español
-  templateUrl: './carrito.page.html', // Enlace al archivo HTML del diseño visual
-  styleUrls: ['./carrito.page.scss'], // Enlace al archivo de estilos visuales
-  standalone: true, // Indica que no necesita declararse en un módulo tradicional (Angular moderno)
+  selector: 'app-carrito',
+  templateUrl: './carrito.page.html',
+  styleUrls: ['./carrito.page.scss'],
+  standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
-    IonContent, 
-    IonHeader, 
-    IonToolbar, 
-    IonButtons, 
-    IonBackButton, 
-    IonButton, 
-    IonIcon, 
+    DecimalPipe,
+    RouterLink,
+    IonContent,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonButton,
+    IonIcon,
     IonTitle,
-    RouterModule // Importante: Permite navegar usando los botones inferiores y superiores
-  ]
+  ],
 })
-export class CarritoPage implements OnInit { // Nombre de la clase traducido a CarritoPage
-  
-  // El constructor se ejecuta en el momento exacto en que se abre esta pantalla
-  constructor() { 
-    // Registramos todos los iconos que se usan en tu diseño HTML
-    addIcons({ 
-      trashOutline, 
-      cartOutline, 
-      homeOutline, 
-      calendarOutline, 
-      personOutline, 
-      chevronBackOutline, 
-      constructOutline, 
-      waterOutline 
+export class CarritoPage {
+  private tallerService = inject(TallerService);
+
+  constructor() {
+    addIcons({
+      trashOutline,
+      cartOutline,
+      homeOutline,
+      calendarOutline,
+      personOutline,
+      chevronBackOutline,
+      constructOutline,
+      waterOutline,
+      discOutline,
+      speedometerOutline,
     });
   }
 
-  // ngOnInit es parte del ciclo de vida de Angular; se ejecuta justo después del constructor
-  ngOnInit() {
-    // Lo dejamos vacío porque, por ahora, nuestra pantalla es un diseño estático
-    // Más adelante aquí podrías cargar datos desde una base de datos si fuera necesario
+  get items(): Servicio[] {
+    return this.tallerService.getCarrito();
   }
 
+  get total(): number {
+    return this.tallerService.getTotalCarrito();
+  }
+
+  eliminar(id_servicio: number): void {
+    this.tallerService.eliminarDelCarrito(id_servicio);
+  }
 }

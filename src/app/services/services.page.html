@@ -1,111 +1,69 @@
-<!-- Encabezado superior sin bordes -->
 <ion-header class="ion-no-border">
   <ion-toolbar class="barra-servicios">
     <ion-buttons slot="start">
-      <!-- Botón de retroceso hacia la pantalla de inicio -->
       <ion-back-button defaultHref="/inicio" text="" icon="chevron-back-outline"></ion-back-button>
     </ion-buttons>
     <ion-title>Servicios</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<!-- Contenido principal con padding -->
 <ion-content class="ion-padding contenido-servicios">
   <div class="contenedor-servicios">
 
-    <!-- Barra de búsqueda estática -->
     <div class="caja-busqueda">
       <ion-icon name="search-outline" class="icono-busqueda"></ion-icon>
-      <input 
-        type="text" 
-        placeholder="Buscar servicios" 
-        class="entrada-busqueda-personalizada" />
+      <input
+        type="text"
+        placeholder="Buscar servicios"
+        class="entrada-busqueda-personalizada"
+        [(ngModel)]="busqueda" />
     </div>
 
-    <!-- Filtros por categoría (Chips estáticos) -->
     <div class="desplazamiento-categorias">
-      <button class="chip activo">Todos</button>
-      <button class="chip">Motor</button>
-      <button class="chip">Frenos</button>
-      <button class="chip">Afinación</button>
-      <button class="chip">Suspensión</button>
+      @for (cat of categorias; track cat) {
+        <button
+          type="button"
+          class="chip"
+          [class.activo]="categoriaActiva === cat"
+          (click)="categoriaActiva = cat">
+          {{ cat }}
+        </button>
+      }
     </div>
 
-    <!-- Lista de Servicios Estática -->
     <div class="lista-servicios">
-      
-      <!-- Servicio 1: Afinación general -->
-      <div class="tarjeta-servicio" routerLink="/servicio-detalle/0">
-        <div class="servicio-izq">
-          <div class="circulo-icono">
-            <ion-icon name="construct-outline"></ion-icon>
+      @for (servicio of serviciosFiltrados; track servicio.id_servicio) {
+        <div class="tarjeta-servicio" [routerLink]="['/servicio-detalle', servicio.id_servicio]">
+          <div class="servicio-izq">
+            <div class="circulo-icono">
+              <ion-icon [name]="servicio.icono"></ion-icon>
+            </div>
+            <div class="info-servicio">
+              <h3>{{ servicio.nombre_servicio }}</h3>
+              <p>{{ servicio.descripcion }}</p>
+            </div>
           </div>
-          <div class="info-servicio">
-            <h3>Afinación general</h3>
-            <p>Mantén tu motor en óptimas condiciones</p>
-          </div>
-        </div>
-        
-        <div class="servicio-der">
-          <span class="etiqueta-precio">Desde</span>
-          <span class="valor-precio">$1,200</span>
-          <button type="button" class="boton-agregar-personalizado" routerLink="/carrito">
-            <ion-icon name="cart-outline"></ion-icon>
-            Agregar
-          </button>
-        </div>
-      </div>
 
-      <!-- Servicio 2: Cambio de aceite -->
-      <div class="tarjeta-servicio" routerLink="/servicio-detalle/1">
-        <div class="servicio-izq">
-          <div class="circulo-icono">
-            <ion-icon name="water-outline"></ion-icon>
-          </div>
-          <div class="info-servicio">
-            <h3>Cambio de aceite</h3>
-            <p>Lubricación y protección óptima</p>
-          </div>
-        </div>
-        
-        <div class="servicio-der">
-          <span class="etiqueta-precio">Desde</span>
-          <span class="valor-precio">$600</span>
-          <button type="button" class="boton-agregar-personalizado" routerLink="/carrito">
-            <ion-icon name="cart-outline"></ion-icon>
-            Agregar
-          </button>
-        </div>
-      </div>
-
-      <!-- Servicio 3: Revisión de frenos -->
-      <div class="tarjeta-servicio" routerLink="/servicio-detalle/2">
-        <div class="servicio-izq">
-          <div class="circulo-icono">
-            <ion-icon name="shield-outline"></ion-icon>
-          </div>
-          <div class="info-servicio">
-            <h3>Revisión de frenos</h3>
-            <p>Seguridad y confianza en cada kilómetro</p>
+          <div class="servicio-der">
+            <span class="etiqueta-precio">Desde</span>
+            <span class="valor-precio">${{ servicio.precio }}</span>
+            <button
+              type="button"
+              class="boton-agregar-personalizado"
+              (click)="agregarAlCarrito($event, servicio)">
+              <ion-icon name="cart-outline"></ion-icon>
+              Agregar
+            </button>
           </div>
         </div>
-        
-        <div class="servicio-der">
-          <span class="etiqueta-precio">Desde</span>
-          <span class="valor-precio">$800</span>
-          <button type="button" class="boton-agregar-personalizado" routerLink="/carrito">
-            <ion-icon name="cart-outline"></ion-icon>
-            Agregar
-          </button>
-        </div>
-      </div>
-
+      } @empty {
+        <p class="ion-text-center">No se encontraron servicios con ese filtro.</p>
+      }
     </div>
 
   </div>
 </ion-content>
 
-<!-- Barra de navegación inferior estandarizada -->
 <div class="navegacion-inferior">
   <div class="elemento-navegacion" routerLink="/inicio">
     <ion-icon name="home-outline"></ion-icon>
@@ -115,7 +73,7 @@
     <ion-icon name="cart-outline"></ion-icon>
     <span>Carrito</span>
   </div>
-  <div class="elemento-navegacion" routerLink="/citas">
+  <div class="elemento-navegacion" routerLink="/citas-lista">
     <ion-icon name="calendar-outline"></ion-icon>
     <span>Citas</span>
   </div>
