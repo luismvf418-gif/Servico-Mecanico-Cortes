@@ -24,6 +24,7 @@ import {
   personOutline,
 } from 'ionicons/icons';
 import { TallerService } from '../core/services/taller';
+import { PagoService } from '../core/services/pago';
 
 @Component({
   selector: 'app-metodo-pago',
@@ -45,23 +46,24 @@ import { TallerService } from '../core/services/taller';
 })
 export class MetodoPagoPage implements OnInit {
   private tallerService = inject(TallerService);
+  private pagoService = inject(PagoService);
   private router = inject(Router);
   private toastCtrl = inject(ToastController);
 
   metodos = [
     {
       titulo: 'Tarjeta de crédito/débito',
-      descripcion: 'Pago de forma segura con tu tarjeta',
+      descripcion: 'Pago inmediato vía pasarela Sandbox',
       icono: 'card-outline',
     },
     {
       titulo: 'Transferencia bancaria',
-      descripcion: 'Realiza el pago desde tu banco',
+      descripcion: 'Genera referencia SPEI (estado pendiente)',
       icono: 'business-outline',
     },
     {
       titulo: 'Pago en taller',
-      descripcion: 'Realiza el pago al momento de tu cita',
+      descripcion: 'Liquida al momento de tu cita (estado pendiente)',
       icono: 'storefront-outline',
     },
   ];
@@ -96,31 +98,48 @@ export class MetodoPagoPage implements OnInit {
     }
   }
 
+  rellenarTarjetaPrueba(tipo: 'exito' | 'pendiente' | 'fallo') {
+    const tarjetas = {
+      exito: '4242 4242 4242 4242',
+      pendiente: '4000 0000 0000 9995',
+      fallo: '4000 0000 0000 0002',
+    };
+    this.numeroTarjeta = tarjetas[tipo];
+    this.expiracion = '12/28';
+    this.cvv = '123';
+    this.titular = 'Luis Mario Verastegui';
+  }
+
   async continuar() {
     if (this.metodoSeleccionado === 'Tarjeta de crédito/débito') {
+      const digitos = this.numeroTarjeta.replace(/\s+/g, '');
+
       if (
-        !this.numeroTarjeta.trim() ||
+        digitos.length < 15 ||
         !this.expiracion.trim() ||
-        !this.cvv.trim() ||
+        this.cvv.trim().length < 3 ||
         !this.titular.trim()
       ) {
         const toast = await this.toastCtrl.create({
-          message: 'Completa todos los datos de la tarjeta para continuar.',
-          duration: 2200,
+          message: 'Completa correctamente los datos de la tarjeta (16 dígitos, MM/AA, CVV y titular).',
+          duration: 2400,
           color: 'warning',
         });
         await toast.present();
         return;
       }
 
-      const digitos = this.numeroTarjeta.replace(/\s+/g, '');
-      const terminacion = digitos.slice(-4);
-      const etiqueta = terminacion.length === 4
-        ? `Tarjeta •••• ${terminacion}`
-        : 'Tarjeta de crédito/débito';
+      this.pagoService.setDatosTarjeta({
+        numero: this.numeroTarjeta.trim(),
+        expiracion: this.expiracion.trim(),
+        cvv: this.cvv.trim(),
+        titular: this.titular.trim(),
+      });
 
-      this.tallerService.setMetodoPago(etiqueta);
+      const terminacion = digitos.slice(-4);
+      this.tallerService.setMetodoPago(`Tarjeta •••• ${terminacion}`);
     } else {
+      this.pagoService.setDatosTarjeta(null);
       this.tallerService.setMetodoPago(this.metodoSeleccionado);
     }
 

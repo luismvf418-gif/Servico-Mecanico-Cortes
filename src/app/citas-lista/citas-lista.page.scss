@@ -62,6 +62,69 @@
   }
 }
 
+/* --- Barra de Filtrado y Ordenamiento por Fecha --- */
+.barra-filtros-fecha {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  .filtro-input-grupo {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    background: #f0f4f8;
+    border: 1px solid #eef0f2;
+    border-radius: 12px;
+    padding: 6px 10px;
+
+    .input-fecha-filtro {
+      background: transparent;
+      border: none;
+      color: #0b2545;
+      font-size: 12px;
+      font-weight: 600;
+      width: 100%;
+      outline: none;
+    }
+
+    .btn-limpiar-fecha {
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border: none;
+      color: #8d99ae;
+      font-size: 16px;
+      padding: 0 0 0 4px;
+      cursor: pointer;
+    }
+  }
+
+  .btn-ordenar-fecha {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #f0f4f8;
+    border: 1px solid #eef0f2;
+    color: #134074;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+
+    &:hover {
+      background: #e2e8f0;
+    }
+
+    ion-icon {
+      font-size: 15px;
+    }
+  }
+}
+
 /* --- Contenedor de la Lista de Citas --- */
 .lista-citas {
   display: flex;
@@ -75,7 +138,7 @@
   border: 1px solid #eef0f2;
   border-radius: 16px;
   padding: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -140,6 +203,7 @@
           &.confirmada { background: #e6f4ea; color: #137333; }
           &.pendiente { background: #fef7e0; color: #b06000; }
           &.completada { background: #f1f3f5; color: #495057; }
+          &.cancelada { background: #fce8e6; color: #c5221f; }
 
           ion-icon { font-size: 13px; }
         }
@@ -183,6 +247,85 @@
     }
 
     .flecha { font-size: 16px; color: #8d99ae; }
+  }
+
+  /* Desglose de Subtotal, IVA y Total */
+  .desglose-costos-cita {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px dashed #eef0f2;
+    font-size: 11px;
+    font-weight: 600;
+    color: #495057;
+
+    strong {
+      font-size: 12px;
+      font-weight: 800;
+      color: #0b2545;
+    }
+  }
+
+  /* Botones CRUD: Editar y Eliminar */
+  .acciones-crud-cita {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+
+    .btn-accion-cita {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s;
+
+      &:hover {
+        opacity: 0.85;
+      }
+
+      ion-icon {
+        font-size: 14px;
+      }
+
+      &.editar {
+        background: #e8f0fe;
+        color: #134074;
+      }
+
+      &.eliminar {
+        background: #fce8e6;
+        color: #c5221f;
+      }
+    }
+  }
+}
+
+/* --- Estado Vacío --- */
+.estado-vacio {
+  text-align: center;
+  padding: 32px 16px;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
+
+  p {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8d99ae;
+    margin: 0 0 14px 0;
+  }
+
+  .boton-primario {
+    --background: #134074;
+    --border-radius: 12px;
+    font-weight: 700;
+    font-size: 13px;
   }
 }
 

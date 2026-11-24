@@ -24,6 +24,31 @@
       </button>
     </div>
 
+    <!-- Barra de filtrado y ordenamiento por fecha -->
+    <div class="barra-filtros-fecha">
+      <div class="filtro-input-grupo">
+        <input
+          type="date"
+          class="input-fecha-filtro"
+          [(ngModel)]="fechaFiltro"
+          aria-label="Filtrar por fecha" />
+        @if (fechaFiltro) {
+          <button
+            type="button"
+            class="btn-limpiar-fecha"
+            (click)="limpiarFiltroFecha()"
+            title="Limpiar filtro">
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        }
+      </div>
+
+      <button type="button" class="btn-ordenar-fecha" (click)="alternarOrden()">
+        <ion-icon name="swap-vertical-outline"></ion-icon>
+        <span>{{ ordenFecha === 'recientes' ? 'Más recientes' : 'Más antiguas' }}</span>
+      </button>
+    </div>
+
     <div class="lista-citas">
       @for (cita of citasVisibles; track cita.id_cita) {
         <div
@@ -67,22 +92,49 @@
               <ion-icon name="construct-outline"></ion-icon>
               <div class="texto-lista-servicios">
                 @for (serv of cita.servicios; track serv.id_servicio) {
-                  <p>• {{ serv.nombre_servicio }}</p>
+                  <p>• {{ serv.nombre_servicio }} (${{ serv.precio }})</p>
                 }
               </div>
             </div>
             <ion-icon name="chevron-forward-outline" class="flecha"></ion-icon>
           </div>
 
+          <!-- Desglose Subtotal / IVA / Total -->
+          <div class="desglose-costos-cita">
+            <span>Subtotal: ${{ cita.subtotal }}</span>
+            <span>IVA (16%): ${{ cita.iva }}</span>
+            <strong>Total: ${{ cita.total }}</strong>
+          </div>
+
+          <!-- Acciones CRUD: Editar y Eliminar -->
+          <div class="acciones-crud-cita">
+            <button
+              type="button"
+              class="btn-accion-cita editar"
+              (click)="abrirEditarCita($event, cita)">
+              <ion-icon name="create-outline"></ion-icon>
+              <span>Editar</span>
+            </button>
+            <button
+              type="button"
+              class="btn-accion-cita eliminar"
+              (click)="confirmarEliminarCita($event, cita)">
+              <ion-icon name="trash-outline"></ion-icon>
+              <span>Eliminar</span>
+            </button>
+          </div>
+
         </div>
       } @empty {
         <div class="estado-vacio">
           <p>
-            {{ pestanaActiva === 'proximas'
-              ? 'No tienes citas próximas programadas.'
-              : 'Aún no tienes citas en tu historial.' }}
+            {{ fechaFiltro
+              ? 'No hay citas registradas en la fecha seleccionada.'
+              : (pestanaActiva === 'proximas'
+                ? 'No tienes citas próximas programadas.'
+                : 'Aún no tienes citas en tu historial.') }}
           </p>
-          @if (pestanaActiva === 'proximas') {
+          @if (pestanaActiva === 'proximas' && !fechaFiltro) {
             <ion-button expand="block" class="boton-primario" (click)="irAAgendar()">
               Agendar una cita
             </ion-button>

@@ -12,6 +12,7 @@ import {
   IonButton,
   IonIcon,
   ToastController,
+  LoadingController,
 } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import {
@@ -56,6 +57,7 @@ export class RegistroPage {
   private router = inject(Router);
   private tallerService = inject(TallerService);
   private toastCtrl = inject(ToastController);
+  private loadingCtrl = inject(LoadingController);
 
   constructor() {
     addIcons({
@@ -70,6 +72,8 @@ export class RegistroPage {
   }
 
   async onRegister() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (
       !this.correo.trim() ||
       !this.contrasena.trim() ||
@@ -85,14 +89,60 @@ export class RegistroPage {
       return;
     }
 
-    this.tallerService.registrarUsuario({
-      nombre: this.nombre.trim(),
-      apellido_paterno: this.apellido_paterno.trim(),
-      apellido_materno: this.apellido_materno.trim(),
-      correo: this.correo.trim(),
-      telefono: this.telefono.trim(),
-    });
+    if (!emailRegex.test(this.correo.trim())) {
+      const toast = await this.toastCtrl.create({
+        message: 'Ingresa un correo electrónico válido.',
+        duration: 2500,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
 
-    this.router.navigateByUrl('/inicio', { replaceUrl: true });
+    if (this.contrasena.trim().length < 6) {
+      const toast = await this.toastCtrl.create({
+        message: 'La contraseña debe tener al menos 6 caracteres.',
+        duration: 2500,
+        color: 'warning',
+      });
+      await toast.present();
+      return;
+    }
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Registrando cuenta en la API...',
+      spinner: 'crescent',
+    });
+    await loading.present();
+
+    try {
+      await this.tallerService.registrarUsuarioApi({
+        nombre: this.nombre.trim(),
+        apellido_paterno: this.apellido_paterno.trim(),
+        apellido_materno: this.apellido_materno.trim(),
+        correo: this.correo.trim(),
+        telefono: this.telefono.trim(),
+        contrasena: this.contrasena.trim(),
+      });
+
+      await loading.dismiss();
+
+      const toast = await this.toastCtrl.create({
+        message: 'Cuenta creada exitosamente.',
+        duration: 2000,
+        color: 'success',
+      });
+      await toast.present();
+
+      this.router.navigateByUrl('/inicio', { replaceUrl: true });
+    } catch (error: any) {
+      await loading.dismiss();
+      const toast = await this.toastCtrl.create({
+        message: error?.message || 'No se pudo completar el registro.',
+        duration: 2800,
+        color: 'danger',
+      });
+      await toast.present();
+    }
   }
 }

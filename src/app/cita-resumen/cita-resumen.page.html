@@ -120,14 +120,14 @@
 
         <div class="contenedor-accion">
           <ion-button expand="block" class="boton-primario" (click)="confirmarCita()">
-            Confirmar cita
+            Confirmar y pagar
           </ion-button>
         </div>
 
       </div>
     }
 
-    <!-- VISTA 2: CITA CONFIRMADA -->
+    <!-- VISTA 2: CITA CONFIRMADA CON RECIBO SANDBOX -->
     @if (estaConfirmada && citaConfirmada) {
       <div class="contenedor-exito">
 
@@ -136,7 +136,7 @@
             <ion-icon name="checkmark-circle-outline"></ion-icon>
           </div>
           <h2>¡Cita confirmada!</h2>
-          <p>Tu cita ha sido registrada correctamente.</p>
+          <p>Tu cita y comprobante de pago han sido registrados.</p>
         </div>
 
         <div class="tarjeta-resumen tarjeta-folio" (click)="copiarFolio()">
@@ -144,10 +144,33 @@
             <div>
               <span class="etiqueta">Folio de cita</span>
               <h3>{{ folioGenerado }}</h3>
+              @if (resultadoPago) {
+                <span class="etiqueta" style="display: block; margin-top: 4px;">
+                  Recibo de pago: <strong>{{ resultadoPago.folioRecibo }}</strong>
+                </span>
+              }
             </div>
             <ion-icon name="copy-outline" class="icono-copiar"></ion-icon>
           </div>
         </div>
+
+        @if (resultadoPago) {
+          <div class="tarjeta-resumen">
+            <div class="fila-detalle-confirmado">
+              <ion-icon name="receipt-outline"></ion-icon>
+              <div>
+                <span class="etiqueta">Estado del pago (Sandbox)</span>
+                <p>
+                  <strong>{{ resultadoPago.estado }}</strong> • {{ resultadoPago.mensaje }}
+                </p>
+                <p style="font-size: 11px; opacity: 0.75;">
+                  ID Transacción: {{ resultadoPago.transaccionId }}
+                  {{ resultadoPago.webhookConfirmado ? '• Webhook verificado' : '' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        }
 
         <div class="tarjeta-resumen">
           <div class="fila-detalle-confirmado">
@@ -185,7 +208,7 @@
           </div>
 
           <div class="fila-detalle-confirmado total-confirmado">
-            <span class="etiqueta">Total estimado</span>
+            <span class="etiqueta">Total pagado / estimado</span>
             <span class="precio-total">${{ totalConfirmado | number:'1.2-2' }}</span>
           </div>
         </div>

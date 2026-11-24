@@ -34,13 +34,35 @@
 
     @if (metodoSeleccionado === 'Tarjeta de crédito/débito') {
       <div class="seccion-formulario-tarjeta">
-        <h3>Datos de la tarjeta</h3>
+        <h3>Datos de la tarjeta (Modo Sandbox)</h3>
+
+        <!-- Botones rápidos de prueba Sandbox -->
+        <div style="display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;">
+          <button
+            type="button"
+            style="flex: 1; padding: 6px; border-radius: 8px; border: 1px solid #137333; background: #e6f4ea; color: #137333; font-size: 11px; font-weight: 700;"
+            (click)="rellenarTarjetaPrueba('exito')">
+            Test Éxito
+          </button>
+          <button
+            type="button"
+            style="flex: 1; padding: 6px; border-radius: 8px; border: 1px solid #b06000; background: #fef7e0; color: #b06000; font-size: 11px; font-weight: 700;"
+            (click)="rellenarTarjetaPrueba('pendiente')">
+            Test Pendiente
+          </button>
+          <button
+            type="button"
+            style="flex: 1; padding: 6px; border-radius: 8px; border: 1px solid #c5221f; background: #fce8e6; color: #c5221f; font-size: 11px; font-weight: 700;"
+            (click)="rellenarTarjetaPrueba('fallo')">
+            Test Fallo
+          </button>
+        </div>
 
         <div class="grupo-entrada">
           <label>Número de tarjeta</label>
           <input
             type="text"
-            placeholder="1234 5678 9012 3456"
+            placeholder="4242 4242 4242 4242"
             maxlength="19"
             [(ngModel)]="numeroTarjeta" />
         </div>
