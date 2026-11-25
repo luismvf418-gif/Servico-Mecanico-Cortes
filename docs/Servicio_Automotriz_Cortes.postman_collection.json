@@ -1,0 +1,238 @@
+{
+  "info": {
+    "name": "Servicio Automotriz Cortes - API REST y Pagos",
+    "description": "Colección de endpoints REST (FakeStoreAPI) y Pasarela de Pago en modo Sandbox (Stripe) para la app Servicio Automotriz Cortes.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://fakestoreapi.com",
+      "type": "string"
+    },
+    {
+      "key": "stripeUrl",
+      "value": "https://api.stripe.com/v1",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.token_ejemplo",
+      "type": "string"
+    },
+    {
+      "key": "stripePublicKey",
+      "value": "pk_test_51SandboxTallerCortes2026PublicKeyDemo",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Autenticación y Usuarios",
+      "item": [
+        {
+          "name": "Login con JWT (POST /auth/login)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"johnd\",\n  \"password\": \"m38rmF$\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Consultar Usuarios / Validar Correo Único (GET /users)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Registrar Nuevo Usuario con Hash SHA-256 (POST /users)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"mario.cortes@taller.com\",\n  \"username\": \"mario.cortes\",\n  \"password\": \"8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92\",\n  \"name\": {\n    \"firstname\": \"Luis Mario\",\n    \"lastname\": \"Verastegui\"\n  },\n  \"phone\": \"2711234567\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Citas y Servicios (CRUD)",
+      "item": [
+        {
+          "name": "Sincronizar Catálogo de Servicios (GET /products)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/products?limit=4",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "4"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Consultar Citas por Usuario (GET /carts/user/:id)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/carts/user/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["carts", "user", "1"]
+            }
+          }
+        },
+        {
+          "name": "Agendar Nueva Cita (POST /carts)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"date\": \"2026-11-25\",\n  \"products\": [\n    { \"productId\": 1, \"quantity\": 1 },\n    { \"productId\": 2, \"quantity\": 1 }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/carts",
+              "host": ["{{baseUrl}}"],
+              "path": ["carts"]
+            }
+          }
+        },
+        {
+          "name": "Actualizar Cita Existente (PUT /carts/:id)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"date\": \"2026-11-28\",\n  \"products\": [\n    { \"productId\": 1, \"quantity\": 1 }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/carts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["carts", "1"]
+            }
+          }
+        },
+        {
+          "name": "Eliminar Cita (DELETE /carts/:id)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/carts/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["carts", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Pasarela de Pago (Stripe Sandbox)",
+      "item": [
+        {
+          "name": "Tokenizar Tarjeta Sandbox - Éxito (POST /tokens)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{stripePublicKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "card[number]", "value": "4242424242424242", "type": "text" },
+                { "key": "card[exp_month]", "value": "12", "type": "text" },
+                { "key": "card[exp_year]", "value": "2028", "type": "text" },
+                { "key": "card[cvc]", "value": "123", "type": "text" },
+                { "key": "card[name]", "value": "Luis Mario Verastegui", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{stripeUrl}}/tokens",
+              "host": ["{{stripeUrl}}"],
+              "path": ["tokens"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
